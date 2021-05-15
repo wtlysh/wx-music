@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "新歌榜",
+  "usingComponents": {
+    "playlist-con": "/components/playlistCon"
+  }
+}

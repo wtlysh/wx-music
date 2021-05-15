@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/search/index",
+    "pages/playlist/index",
+    "pages/playlist/playlistDetail",
+    "pages/song/index",
+    "pages/song/songList",
+    "pages/song/player",
+    "pages/me/index"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "音乐",
+    "navigationBarBackgroundColor": "#000",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#6b6b6b",
+    "selectedColor": "#1E90FF",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      {
+        "text": "音乐",
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/home.png",
+        "selectedIconPath": "static/images/home-active.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/me/index",
+        "iconPath": "static/images/me.png",
+        "selectedIconPath": "static/images/me-active.png"
+      }
+    ]
+  },
+  "permission": {},
+  "usingComponents": {}
+}

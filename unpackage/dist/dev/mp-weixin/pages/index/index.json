@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "search": "/pages/index/components/search",
+    "hotsong-list": "/pages/index/components/hotsongList",
+    "newsong-list": "/pages/index/components/newsongList",
+    "playlist": "/pages/index/components/playlist"
+  }
+}

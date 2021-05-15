@@ -1,0 +1,101 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*每个页面公共css */
+page {
+	height: 100%;
+}
+.song-text {
+	font-size: 28rpx;
+	color: #6b6b6b;
+}
+.active {
+	color: #8dc63f;
+	border-bottom: 2px solid;
+	padding-bottom: 20rpx;
+}
+.bg{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	-webkit-filter: blur(35px);
+	        filter: blur(35px);
+	background-position: 0 0px;
+	background-repeat: no-repeat;
+	/* background-size: cover; */
+	background-size: 100%;
+}
+

@@ -1,0 +1,1 @@
+<view class="songlist data-v-57e4cc91"><view class="songlist-top data-v-57e4cc91"><image class="songlist-img data-v-57e4cc91" src="{{album.bgimg}}" mode></image></view><playlist-con vue-id="b69572d6-1" top="{{top}}" tracks="{{tracks}}" trackCount="{{album.trackCount}}" class="data-v-57e4cc91" bind:__l="__l"></playlist-con></view>

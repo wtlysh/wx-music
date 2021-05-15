@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "音乐推荐",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "playlist-con": "/components/playlistCon"
+  }
+}

@@ -1,0 +1,158 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.list-box.data-v-9e3c1cf4 {
+  padding-top: 100rpx;
+  height: 100%;
+  width: 100%;
+  background-color: #FFFFFF;
+}
+.list-box .keyword-list-box.data-v-9e3c1cf4 {
+  height: calc(100vh - 110rpx);
+  padding-top: 10rpx;
+  border-radius: 20rpx 20rpx 0 0;
+  background-color: #fff;
+  width: 90%;
+  margin: 0 auto;
+}
+.list-box .keyword-list-box .keyword-search.data-v-9e3c1cf4 {
+  font-size: 36rpx;
+  padding: 20rpx 0;
+  color: #8dc63f;
+}
+.list-box .keyword-list-box .keyword-entry-tap.data-v-9e3c1cf4 {
+  background-color: #eee;
+}
+.list-box .keyword-list-box .keyword-entry.data-v-9e3c1cf4 {
+  height: 80rpx;
+  margin: 10rpx 0;
+  font-size: 32rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.list-box .keyword-list-box .keyword-entry .keyword-text.data-v-9e3c1cf4 {
+  height: 80rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  padding-left: 20rpx;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.list-box .keyword-box.data-v-9e3c1cf4 {
+  height: calc(100vh - 110rpx);
+  border-radius: 20rpx 20rpx 0 0;
+  background-color: #fff;
+}
+.list-box .keyword-box .keyword-block.data-v-9e3c1cf4 {
+  padding: 10rpx 0;
+}
+.list-box .keyword-box .keyword-block .keyword-list-header.data-v-9e3c1cf4 {
+  width: 94%;
+  padding: 10rpx 3%;
+  font-size: 27rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.list-box .keyword-box .keyword-block .keyword-list-header .keyword-title.data-v-9e3c1cf4 {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.list-box .keyword-box .keyword-block .keyword-list-header .keyword-image.data-v-9e3c1cf4 {
+  width: 40rpx;
+  height: 40rpx;
+}
+.list-box .keyword-box .keyword-block .keyword.data-v-9e3c1cf4 {
+  width: 94%;
+  padding: 3px 3%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: wrap;
+          flex-flow: wrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+}
+.list-box .keyword-box .keyword-block .keyword .view.data-v-9e3c1cf4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  padding: 0 20rpx;
+}
+.list-box .keyword-box .keyword-block .keyword .keyword-hisview.data-v-9e3c1cf4 {
+  margin: 10rpx 20rpx 10rpx 0;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  border-radius: 60rpx;
+  height: 60rpx;
+  font-size: 28rpx;
+  background-color: #f2f2f2;
+  color: #6b6b6b;
+}
+.list-box .keyword-box .keyword-block .keyword .keyword-hotview.data-v-9e3c1cf4 {
+  margin: 15rpx 0;
+  width: 100%;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.list-box .keyword-box .keyword-block .keyword .keyword-hotview .keyword-index.data-v-9e3c1cf4 {
+  width: 60rpx;
+  color: #6b6b6b;
+}
+.list-box .keyword-box .keyword-block .keyword .keyword-hotview .keyword-index.hot-active.data-v-9e3c1cf4 {
+  color: red;
+}
+.list-box .keyword-box .keyword-block .hide-hot-tis.data-v-9e3c1cf4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  font-size: 28rpx;
+  color: #6b6b6b;
+}
+

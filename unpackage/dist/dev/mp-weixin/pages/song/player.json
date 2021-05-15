@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "play-bottom": "/pages/song/components/playBottom"
+  }
+}

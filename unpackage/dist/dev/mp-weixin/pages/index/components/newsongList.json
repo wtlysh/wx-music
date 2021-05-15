@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "song-top": "/pages/index/components/songTop"
+  },
+  "component": true
+}
