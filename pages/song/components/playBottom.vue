@@ -23,6 +23,10 @@
 <script>
 	export default{
 		props:{
+			userId:{
+				type:String,
+				default:''
+			},
 			isLike:{
 				type:Boolean,
 				default:false
@@ -30,58 +34,20 @@
 			likeSong:{
 				type:Object,
 				default:{}
+			},
+			songId:{
+				type:String,
+				default:''
 			}
 		},
 		methods:{
-			//收藏歌曲
+			//收藏或取消收藏歌曲
 			toLike(){
 				if(this.isLike){
-					return ;
-				};
-				this.isLike = true;
-				const db = wx.cloud.database();
-				let likeSong = this.likeSong;
-				uni.getStorage({
-					key:"userId",
-					success:res=>{
-						let id = res.data;
-						db.collection('userLike').doc(id).get({
-							success:re=>{
-								// console.log("成功："+re);
-								let song = re.data.like_songs;
-								// console.log(re.data);
-								song.unshift(likeSong);
-								// console.log(song);
-								db.collection('userLike').doc(id).update({
-								  data: {
-									  like_songs:song
-								  },
-								  success: (es) => {
-								    // console.log(es.data)
-								  },
-								  fail:er=>{
-									  // console.log(er);
-								  }
-								})
-							},
-							fail:err=>{
-								// console.log("失败："+err);
-								db.collection('userLike').add({
-								  data: {
-								    _id: id,
-								    like_songs:[likeSong],
-								  },
-								  success: (r) => {
-								    // console.log(r)
-								  }
-								})
-							}
-						})
-					},
-					fail:err=>{
-						console.log(err);
-					}
-				})
+					this.$emit('cancle');
+				}else{
+					this.$emit('confirm')
+				}
 			}
 		}
 	}

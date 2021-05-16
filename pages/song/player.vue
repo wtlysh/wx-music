@@ -28,7 +28,14 @@
 					</view>
 				</scroll-view>
 			</view>
-			<playBottom :isLike="isLike" :likeSong="likeSong"></playBottom>
+			<playBottom 
+			:userId="userId" 
+			:isLike="isLike" 
+			:likeSong="likeSong"
+			:songId="song.id"
+			@cancle="cancleLike"
+			@confirm="addLike"
+			></playBottom>
 		</view>
 	</view>
 </template>
@@ -46,6 +53,7 @@
 	import playBottom from './components/playBottom.vue'
 	import Vue from 'vue'
 	let update = true;
+	const db = wx.cloud.database();
 	export default {
 		components:{
 			playBottom
@@ -75,9 +83,11 @@
 				windowHeight: 0 ,//屏幕高度
 				likeSong:{}  ,//收藏歌曲
 				isLike:false,//是否收藏
+				userId:"" ,//用户收藏id
 			}
 		},
 		onLoad(param) {
+			let id = param.songId;
 			uni.getSystemInfo({
 				success: (res) => {
 					// 　　console.log(res.windowHeight) // 获取可使用窗口高度
@@ -85,8 +95,8 @@
 					// 　　console.log(this.windowHeight) //最后获得转化后得rpx单位的窗口高度
 				}
 			})
-			// console.log(this.isLike);
-			this.initPlay(param.songId);
+			this.initPlay(id);
+			this.judgeLike(id);
 		},
 		computed: {
 			...mapGetters(['audiolist']),
@@ -99,6 +109,95 @@
 		},
 		methods: {
 			...mapMutations(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
+			//添加收藏
+			addLike(){
+				this.isLike = true;
+				let id = this.userId;
+				let likeSong = this.likeSong;
+				db.collection('userLike').doc(id).get({
+					success:res=>{
+						// console.log("成功："+res);
+						let song = res.data.like_songs;
+						// console.log(re.data);
+						song.unshift(likeSong);
+						// console.log(song);
+						db.collection('userLike').doc(id).update({
+						  data: {
+							  like_songs:song
+						  },
+						  success: (res) => {
+						    // console.log(es.data)
+						  },
+						  fail:err=>{
+							  // console.log(er);
+						  }
+						})
+					},
+					fail:err=>{
+						// console.log("失败："+err);
+						db.collection('userLike').add({
+						  data: {
+						    _id: id,
+						    like_songs:[likeSong],
+						  },
+						  success: (res) => {
+						    // console.log(res)
+						  }
+						})
+					}
+				})
+			},
+			//取消收藏
+			cancleLike(){
+				this.isLike = false;
+				let id =this.userId;
+				let _id = this.song.id;
+				db.collection('userLike').doc(id).get({
+					success:res=>{
+						let song = res.data.like_songs;
+						song.forEach((item,index)=>{
+							if(item.id==_id){
+								song.splice(index,1)
+							}
+						});
+						// console.log(song);
+						db.collection('userLike').doc(id).update({
+						  data: {
+							  like_songs:song
+						  },
+						  success: (res) => {
+						    // console.log(es.data)
+						  },
+						  fail:err=>{
+							  // console.log(er);
+						  }
+						})
+					},
+				})
+			},
+			//判断歌曲是否收藏
+			judgeLike(id){
+				uni.getStorage({
+					key:"userId",
+					success:res=>{
+						let _id = res.data;
+						this.userId = _id;
+						db.collection('userLike').doc(_id).get({
+							success:res=>{
+								console.log("成功：");
+								let song = res.data.like_songs;
+								song.forEach(item=>{
+									if(item.id==id){
+										this.isLike = true;
+									}
+								})
+							},
+						})
+					},
+				});
+				this.$forceUpdate()
+				// console.log(this.isLike);
+			},
 			//控制歌曲播放
 			playCtrol() {
 				if (this.isPlay) {

@@ -103,7 +103,7 @@
 				uni.getStorage({
 					key: 'OldKeys',
 					success: (res) => {
-						var OldKeys = JSON.parse(res.data);
+						let OldKeys = JSON.parse(res.data);
 						this.oldKeywordList = OldKeys;
 					}
 				});
