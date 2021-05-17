@@ -21,13 +21,8 @@
 		methods: {
 			closeOther(vm) {
 				if (this.openItem && this.openItem !== vm) {
-					// #ifdef APP-VUE || H5 || MP-WEIXIN
 					this.openItem.button.show = 'none'
-					// #endif
-
-					// #ifndef APP-VUE || H5 || MP-WEIXIN
 					this.openItem.close()
-					// #endif
 				}
 				this.openItem = vm
 			}

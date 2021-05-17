@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons",
     "me-top": "/pages/me/components/meTop",
     "type-tab": "/components/typeTab",
     "plylist-con": "/components/playlistCon"

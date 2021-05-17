@@ -24,4 +24,15 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.me .delete-fab.data-v-373b9194 {
+  position: fixed;
+  bottom: 100rpx;
+  right: 70rpx;
+  height: 30px;
+  width: 30px;
+  background: #8dc63f;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 15px;
+}
 
