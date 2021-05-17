@@ -1,8 +1,8 @@
 {
-  "navigationBarTitleText": "搜索音乐",
-  "enablePullDownRefresh": false,
   "usingComponents": {
+    "search-box": "/pages/search/components/searchBox",
     "search-keyword": "/pages/search/components/searchKeyword",
+    "type-tab": "/components/typeTab",
     "searchsonglist": "/pages/search/components/searchsonglist",
     "searchplaylist": "/pages/search/components/searchplaylist"
   }

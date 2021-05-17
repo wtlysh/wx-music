@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "me-top": "/pages/me/components/meTop",
+    "type-tab": "/components/typeTab",
     "plylist-con": "/components/playlistCon"
   }
 }

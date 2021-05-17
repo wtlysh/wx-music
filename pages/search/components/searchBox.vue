@@ -1,125 +1,166 @@
 <template>
-	<view class="search-box">
-		<view class="search-form round">
-			<view class="search-box-icon search-icon">
-				<icon type="search" size="16" />
+	<view class="searchbox">
+		<view class="search__box" @click="searchClick">
+			<view class="search__box-icon-search">
+				<slot name="searchIcon">
+					<uni-icons color="#6b6b6b" size="18" type="search" />
+				</slot>
 			</view>
-			<input class="search-input" type="text" confirm-type="search"
-				:placeholder="isDefault ? defaultKeyword : placeholder" @input="inputChange"
-				@confirm="triggerConfirm" :focus="isFocus" v-model="keyword" @focus="focus" @blur="blur"></input>
-			<view class="search-box-icon search-clear" v-show="showClose" @tap="clearWord">
-				<icon type="clear" size="16" />
-			</view>
-			<view class="search-cancel" v-show="showCancel" @click="cancel">
-				取消
+			<input :focus="showSync" :placeholder="placeholder" 
+			class="search__box-search-input"
+			confirm-type="search" type="text" v-model="searchVal" 
+			@confirm="confirm" @blur="blur" @focus="emitFocus" />
+			<view v-show="clearButton" class="searchbar__box-icon-clear"
+			 @click="clear">
+				<slot name="clearIcon">
+					<uni-icons color="#c0c4cc" size="18" type="clear" />
+				</slot>
 			</view>
 		</view>
+		<text @click="cancel" class="searchbox__cancel" v-if="cancelButton">{{cancelText}}</text>
 	</view>
 </template>
 
 <script>
-	import {
-		apiSerchSuggest,
-		apiSearchDefault
-	} from '../../api/search.js'
-	export default{
-		props:['isShowKeywordList','']
-		data(){
-			return{
-				keyword: "",
-				isFocus: false, //焦点
-				showCancel: false, //是否显示取消
-				showClose: false,  //是否显示清除按钮
-				defaultKeyword: '',
-				isDefault: true, //是否有搜索建议词
-				placeholder: "搜索你想听的歌曲"
+	export default {
+		name: "SearchBox",
+		props: {
+			placeholder: {
+				type: String,
+				default: "搜索你想听的歌曲"
+			},
+			clearButton: {
+				type: Boolean,
+				default: false
+			},
+			cancelButton: {
+				type: Boolean,
+				default: false
+			},
+			cancelText: {
+				type: String,
+				default: '取消'
+			},
+			value: {
+				type: [Number, String],
+				default: ""
+			},
+			focus: {
+				type: Boolean,
+				default: false
 			}
 		},
-		mounted(){
-			this.loadDefaultKeyword();
+		data() {
+			return {
+				showSync: false,
+				searchVal: ''
+			}
 		},
-		methods:{
-			//加载默认搜索关键字
-			loadDefaultKeyword() {
-				//定义默认搜索关键字，可以自己实现ajax请求数据再赋值,用户未输入时，以水印方式显示在输入框，直接不输入内容搜索会搜索默认关键字
-				apiSearchDefault().then(res => {
-					// console.log(res)
-					let word = res.data.realkeyword;
-					if (word == null || word.length == 0) {
-						this.isDefault = false;
-						return;
-					};
-					this.defaultKeyword = word;
-				});
+		watch: {
+			value: {
+				immediate: true,
+				handler(newVal) {
+					this.searchVal = newVal
+				}
+			},
+			focus: {
+				immediate: true,
+				handler(newVal) {
+					if (newVal) {
+						this.$nextTick(() => {
+							this.showSync = true
+						})
+					}
+				}
+			},
+			searchVal(newVal, oldVal) {
+				this.$emit("input", newVal)
+			}
+		},
+		methods: {
+			searchClick() {
+				this.$nextTick(() => {
+					this.showSync = true
+				})
+			},
+			clear() {
+				this.searchVal = "";
+				this.$emit("clear");
+			},
+			cancel() {
+				this.searchVal = "";
+				this.$emit("cancel");
+				this.showSync = false
+				uni.hideKeyboard();
+			},
+			confirm() {
+				uni.hideKeyboard();
+				this.$emit("confirm", {
+					value: this.searchVal
+				})
 			},
 			blur() {
 				uni.hideKeyboard();
-				this.showClose = !!(this.keyword)
+				this.$emit("blur", {
+					value: this.searchVal
+				})
 			},
-			focus() {
-				this.showCancel = true;
-				this.showClose = !!(this.keyword);
-				if (!this.isShowContent) {
-					uni.pageScrollTo({
-						duration: 100,
-						scrollTop: 0
-					})
-				}
-				this.isShowKeywordList = true;
-				this.keywordList = [];
-				this.isShowContent = true;
-			},
+			emitFocus(e) {
+				this.$emit("focus", e.detail)
+			}
 		}
-	}
+	};
 </script>
 
-<style lang="scss">
-	.search-box {
-		position: fixed;
-		z-index: 999;
-		width: 100%;
-		padding-top: 20rpx;
-	
-		.search-form {
-			width: 90%;
-			margin: 0 auto;
-			position: relative;
-			height: 100rpx;
+<style lang="scss" scoped>
+	$uni-searchbar-height: 70rpx;
+
+	.searchbox {
+		display: flex;
+		flex-direction: row;
+		position: relative;
+		padding: 0 50rpx;
+		height: 90rpx;
+		// background-color: $uni-bg-color;
+		.search__box {
+			background: #f2f2f2;
 			display: flex;
-	
-			.search-box-icon {
-				position: absolute;
-				height: 70rpx;
-				line-height: 70rpx;
+			box-sizing: border-box;
+			overflow: hidden;
+			position: relative;
+			flex: 1;
+			justify-content: center;
+			flex-direction: row;
+			align-items: center;
+			height: $uni-searchbar-height;
+			padding: 5px 8px 5px 0px;
+			// border: 0.5px solid #6b6b6b;
+			border-radius: $uni-searchbar-height/2;
+			.search__box-icon-search {
+				display: flex;
+				flex-direction: row;
+				// width: 32px;
+				padding: 0 8px;
+				justify-content: center;
+				align-items: center;
+				color: $uni-text-color-placeholder;
 			}
-	
-			.search-icon {
-				left: 30rpx;
-			}
-	
-			.search-input {
-				background: #f0f0f0;
-				height: 70rpx;
-				border-radius: 35rpx;
-				padding-left: 80rpx;
+			.search__box-search-input {
 				flex: 1;
-				font-size: 32rpx;
+				color: $uni-text-color;
+				font-size: $uni-font-size-base;
 			}
-	
-			.search-clear {
-				right: 120rpx;
-				width: 70rpx;
-				text-align: center;
+			.search__box-icon-clear {
+				align-items: center;
+				line-height: 24px;
+				padding-left: 8px;
 			}
-	
-			.search-cancel {
-				height: 70rpx;
-				width: 100rpx;
-				line-height: 70rpx;
-				font-size: 32rpx;
-				text-align: center;
-	
-			}
+		}
+		.searchbox__cancel {
+			padding-left: 10px;
+			line-height: $uni-searchbar-height;
+			font-size: 14px;
+			// color: $uni-text-color;
 		}
 	}
 </style>

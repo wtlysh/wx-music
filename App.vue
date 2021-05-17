@@ -98,4 +98,5 @@
 		// background-size: cover;
 		background-size: 100%;
 	}
+	
 </style>

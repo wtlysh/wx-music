@@ -1,9 +1,9 @@
 <!-- 显示历史搜索，热门搜索，搜索建议内容组件 -->
 <template>
-	<view class="list-box"  v-show="isShowContent">
+	<view class="list-box"  v-if="isShowContent">
 		<view class="search-keyword">
 			<!-- 搜索建议 -->
-			<scroll-view class="keyword-list-box" v-show="isShowKeywordList" scroll-y>
+			<scroll-view class="keyword-list-box" v-if="isShowKeywordList" scroll-y>
 				<view class="keyword-search">
 					{{searchTip}}
 				</view>

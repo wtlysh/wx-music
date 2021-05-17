@@ -24,24 +24,4 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.me .song-type.data-v-373b9194 {
-  position: fixed;
-  z-index: 999;
-  border-bottom: 1px solid #f2f2f2;
-  width: 100%;
-  top: 320rpx;
-}
-.me .song-type .song-type-box.data-v-373b9194 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  padding: 0 50rpx;
-}
-.me .song-type .song-type-box .song-type-list.data-v-373b9194 {
-  width: 50%;
-  text-align: center;
-  height: 100rpx;
-  line-height: 100rpx;
-  color: #6b6b6b;
-}
 

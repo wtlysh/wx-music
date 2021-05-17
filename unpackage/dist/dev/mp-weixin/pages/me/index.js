@@ -139,10 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var meTop = function meTop() {__webpack_require__.e(/*! require.ensure | pages/me/components/meTop */ "pages/me/components/meTop").then((function () {return resolve(__webpack_require__(/*! ./components/meTop.vue */ 155));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var plylistCon = function plylistCon() {__webpack_require__.e(/*! require.ensure | components/playlistCon */ "components/playlistCon").then((function () {return resolve(__webpack_require__(/*! ../../components/playlistCon.vue */ 141));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
-
-
-
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var meTop = function meTop() {__webpack_require__.e(/*! require.ensure | pages/me/components/meTop */ "pages/me/components/meTop").then((function () {return resolve(__webpack_require__(/*! ./components/meTop.vue */ 162));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 86));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var plylistCon = function plylistCon() {__webpack_require__.e(/*! require.ensure | components/playlistCon */ "components/playlistCon").then((function () {return resolve(__webpack_require__(/*! ../../components/playlistCon.vue */ 148));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -174,18 +171,20 @@ __webpack_require__.r(__webpack_exports__);
 {
   components: {
     meTop: meTop,
+    typeTab: typeTab,
     plylistCon: plylistCon },
 
   data: function data() {
     return {
       bg: 'http://p4.music.126.net/NDdtSac66rpsF_jMBh1JMQ==/109951164929306650.jpg',
       isActive: 0,
+      tab: ['最近', '喜欢'],
       hisTracks: [],
       hisCount: 0,
       likeCount: 0,
       top: 420,
-      isLike: 1, //是否收藏
-      likeTracks: [] };
+      likeTracks: [],
+      isShowIcon: true };
 
   },
   onShow: function onShow() {
