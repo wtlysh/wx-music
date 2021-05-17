@@ -13,113 +13,143 @@
 		</view>
 		<view class="playlist-list" :style="{top:(top+170)+'rpx'}">
 			<scroll-view scroll-y="true">
-				<view class="playlist-list-item" 
-				v-for="(item,index) in tracks" :key="index"
-				@click="toSong(item.id)">
-					<view class="item-con">
-						<view style="font-size: 36rpx;width: 60rpx;" class="text-color">
-							{{index+1}}
-						</view>
-						<view style="padding-left: 30rpx;">
-							<view class="item-name">
-								{{item.name}}
-							</view>	
-							<view class="song-text text-color">
-								{{item.ar[0].name}}
+				<swipeAction>
+					<swipeActionItem
+					    class="playlist-list-item"
+					    :threshold="0"
+					    :right-options="options"
+						v-for="(item,index) in tracks" :key="index"
+						@click="change(item.id)"
+					>
+						<view class="item-con" @click="toSong(item.id)">
+							<view style="font-size: 36rpx;width: 60rpx;" class="text-color">
+								{{index+1}}
+							</view>
+							<view style="padding-left: 30rpx;width: 470rpx;">
+								<view class="item-name">
+									{{item.name}}
+								</view>
+								<view class="song-text text-color">
+									{{item.ar[0].name}}
+								</view>
+							</view>
+							<view style="width: 90rpx;">
+								<image class="item-img" src="../static/images/topaly.svg" mode="">
+								</image>
 							</view>
 						</view>
-					</view>
-					<view v-if="isShowIcon">
-						<image class="item-img" style="margin:0 20rpx;" src="../static/images/topaly.svg" mode=""></image>
-					    <image class="item-img" src="../static/images/more.svg" mode=""></image>
-					</view>
-				</view>
+					</swipeActionItem>
+				</swipeAction>
 			</scroll-view>
 		</view>
 	</view>
 </template>
 
 <script>
-	export default{
-		props:{
-			top:{
-				type:Number,
-				default:0
+	import swipeAction from "./swipe-action/index.vue"
+	import swipeActionItem from './swipe-action/swipe-action-item/index.vue'
+	export default {
+		components:{
+			swipeAction,
+			swipeActionItem
+		},
+		props: {
+			top: {
+				type: Number,
+				default: 0
 			},
-			tracks:{
+			tracks: {
+				type: Array,
+				default: []
+			},
+			trackCount: {
+				type: Number,
+				default: 0
+			},
+			options:{
 				type:Array,
 				default:[]
 			},
-			trackCount:{
-				type:Number,
-				default:0
-			},
-			isShowIcon:{
-				type:Boolean,
-				default:false
+			disabled: {
+				type: Boolean,
+				default: true
 			}
 		},
-		methods:{
+		methods: {
 			//跳转到歌曲播放页面
-			toSong(id){
+			toSong(id) {
 				uni.navigateTo({
-					url:`/pages/song/player?songId=${id}`
+					url: `/pages/song/player?songId=${id}`
 				})
+			},
+			//删除或取消收藏
+			change(id){
+				// console.log(id);
+				this.$emit('change',id)
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.playlist-list-con{
+	.playlist-list-con {
 		background: #FFFFFF;
 		position: relative;
 		top: -50rpx;
-		.playlist-list-top{
+
+		.playlist-list-top {
 			position: fixed;
 			// top: 380rpx;
 			z-index: 1000;
 			background: #fff;
 			width: 650rpx;
 			height: 70rpx;
-			padding:0 50rpx;
+			padding: 0 50rpx;
 			border-top-left-radius: 50rpx;
 			// border-top-right-radius: 50rpx;
 			border-bottom: 1px solid #f2f2f2;
-			.top-con{
+
+			.top-con {
 				display: flex;
-				.play-all{
+
+				.play-all {
 					// display: flex;
 					font-size: 32rpx;
 				}
 			}
 		}
-		.playlist-list{
+
+		.playlist-list {
 			position: relative;
 			// top: 550rpx;
 			padding: 0 50rpx;
-			.playlist-list-item{
+
+			.playlist-list-item {
 				display: flex;
 				align-items: center;
 				margin-bottom: 30rpx;
-				.item-con{
-					flex: 1;
+
+				.item-con {
 					display: flex;
 					align-items: center;
-					.item-name{
-						width: 420rpx;
+
+					.item-name {
+						width: 450rpx;
 						font-size: 32rpx;
 						padding-bottom: 10rpx;
 						white-space: nowrap; //文本强制不换行；
 						text-overflow: ellipsis; //文本溢出显示省略号；
 						overflow: hidden; //溢出的部分隐藏
 					}
+					.item-img {
+						width: 50rpx;
+						height: 50rpx;
+						margin:0 20rpx;
+					}
+					
 				}
-				.item-img{
-					width: 50rpx;
-					height: 50rpx;
-				}
-				.text-color{
+
+				.text-color {
 					color: #6b6b6b;
 				}
 			}

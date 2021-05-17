@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "swipe-action": "/components/swipe-action/index",
+    "swipe-action-item": "/components/swipe-action/swipe-action-item/index"
+  },
   "component": true
 }

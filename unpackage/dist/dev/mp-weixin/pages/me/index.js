@@ -139,7 +139,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var meTop = function meTop() {__webpack_require__.e(/*! require.ensure | pages/me/components/meTop */ "pages/me/components/meTop").then((function () {return resolve(__webpack_require__(/*! ./components/meTop.vue */ 162));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 86));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var plylistCon = function plylistCon() {__webpack_require__.e(/*! require.ensure | components/playlistCon */ "components/playlistCon").then((function () {return resolve(__webpack_require__(/*! ../../components/playlistCon.vue */ 148));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var meTop = function meTop() {__webpack_require__.e(/*! require.ensure | pages/me/components/meTop */ "pages/me/components/meTop").then((function () {return resolve(__webpack_require__(/*! ./components/meTop.vue */ 176));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 127));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var plylistCon = function plylistCon() {__webpack_require__.e(/*! require.ensure | components/playlistCon */ "components/playlistCon").then((function () {return resolve(__webpack_require__(/*! ../../components/playlistCon.vue */ 155));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 
@@ -157,23 +157,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-{
+// import popupDialog from './components/popupDialog/index.vue'
+var _default = {
   components: {
     meTop: meTop,
     typeTab: typeTab,
-    plylistCon: plylistCon },
-
+    plylistCon: plylistCon
+    // popupDialog
+  },
   data: function data() {
     return {
       bg: 'http://p4.music.126.net/NDdtSac66rpsF_jMBh1JMQ==/109951164929306650.jpg',
@@ -184,31 +175,79 @@ __webpack_require__.r(__webpack_exports__);
       likeCount: 0,
       top: 420,
       likeTracks: [],
-      isShowIcon: true };
+      userId: "",
+      options1: [{
+        text: '删除记录',
+        style: {
+          backgroundColor: '#dd524d' } }],
+
+
+      options2: [{
+        text: '取消收藏',
+        style: {
+          backgroundColor: '#dd524d' } }],
+
+
+      disabled: false };
 
   },
   onShow: function onShow() {
     this.getData();
   },
   methods: {
+    deleteSong: function deleteSong(id) {var _this = this;
+      this.hisTracks.forEach(function (item, index) {
+        if (item.id == id) {
+          _this.hisTracks.splice(index, 1);
+        }
+      });
+      // console.log(this.hisTracks)
+      this.hisCount = this.hisTracks.length;
+      uni.setStorage({
+        key: 'OldSongs',
+        data: this.hisTracks,
+        success: function success(res) {} });
+
+    },
+    cancleLike: function cancleLike(id) {var _this2 = this;
+      var db = wx.cloud.database();
+      this.likeTracks.forEach(function (item, index) {
+        if (item.id == id) {
+          _this2.likeTracks.splice(index, 1);
+        }
+      });
+      this.likeCount = this.likeTracks.length;
+      db.collection('userLike').doc(this.userId).update({
+        data: {
+          like_songs: this.likeTracks },
+
+        success: function success(res) {
+          // console.log(es.data)
+        },
+        fail: function fail(err) {
+          // console.log(er);
+        } });
+
+    },
     //获取历史播放和收藏歌曲
-    getData: function getData() {var _this = this;
+    getData: function getData() {var _this3 = this;
       var db = wx.cloud.database();
       uni.getStorage({
         key: 'OldSongs',
         success: function success(res) {
-          _this.hisTracks = res.data;
-          _this.hisCount = res.data.length;
+          _this3.hisTracks = res.data;
+          _this3.hisCount = res.data.length;
         } });
 
       uni.getStorage({
         key: "userId",
         success: function success(res) {
           var id = res.data;
+          _this3.userId = id;
           db.collection('userLike').doc(id).get({
             success: function success(re) {
-              _this.likeTracks = re.data.like_songs;
-              _this.likeCount = _this.likeTracks.length;
+              _this3.likeTracks = re.data.like_songs;
+              _this3.likeCount = _this3.likeTracks.length;
             } });
 
         } });
