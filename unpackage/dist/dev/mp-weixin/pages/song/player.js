@@ -234,6 +234,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 8);
 
 
@@ -305,17 +316,14 @@ var db = wx.cloud.database();var _default =
       }, 1000);
     }
   },
-  onShow: function onShow() {
-    console.log(this.playdetail);
-  },
-  computed: _objectSpread(_objectSpread({},
-  (0, _vuex.mapGetters)(['playdetail'])), {}, {
+  computed: {
+    // ...mapGetters(['playdetail']),
     playTimeNum: function playTimeNum() {
       return this.$util.formatTime(this.playTime);
     },
     curPlayTimeNum: function curPlayTimeNum() {
       return this.$util.formatTime(this.curPlayTime);
-    } }),
+    } },
 
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive'])), {}, {

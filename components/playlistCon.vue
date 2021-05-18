@@ -95,6 +95,7 @@
 </script>
 
 <style lang="scss" scoped>
+	@import "../static/scss/songList.scss";
 	.playlist-list-con {
 		background: #FFFFFF;
 		position: relative;
@@ -125,44 +126,12 @@
 		.playlist-list {
 			position: relative;
 			// top: 550rpx;
-			padding: 0 50rpx;
+			// padding: 0 50rpx;
 
 			.playlist-list-item {
 				display: flex;
 				align-items: center;
-				margin-bottom: 30rpx;
-
-				.item-con {
-					display: flex;
-					align-items: center;
-
-					&.active {
-						color: #8dc63f;
-						.num{
-							color: #8dc63f;
-						}
-					}
-
-					.item-name {
-						width: 450rpx;
-						font-size: 32rpx;
-						padding-bottom: 10rpx;
-						white-space: nowrap; //文本强制不换行；
-						text-overflow: ellipsis; //文本溢出显示省略号；
-						overflow: hidden; //溢出的部分隐藏
-					}
-
-					.item-img {
-						width: 50rpx;
-						height: 50rpx;
-						margin: 0 20rpx;
-					}
-					
-					.text-color {
-						color: #6b6b6b;
-					}
-
-				}
+				// margin-bottom: 30rpx;
 			}
 		}
 	}

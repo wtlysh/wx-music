@@ -45,7 +45,7 @@
 		</view>
 		<view class="poplist-box" :class="[isOpentList?'':'hide']">
 			<view class="title">
-				<text class="total">当前播放(25)</text>
+				<text class="total">当前播放({{copyAudioList.length}})</text>
 				<text class="model"  v-if="playModel==0" @click="setPlayModel">
 					<text class="iconfont">&#xe66c;</text>
 					<text>列表循环</text>
@@ -60,15 +60,26 @@
 				</text>
 			</view>
 			<scroll-view scroll-y="true" style="height: 578rpx;">
-				<view class="item" :class="[index == curPlayIndex?' current':'']" v-for="(val,index) in copyAudioList" :key="index">
-					<view class="img num">
-						{{index + 1}}
+				<view class="item-con" 
+				:class="[index == curPlayIndex?'active':'']" 
+				v-for="(item,index) in copyAudioList" 
+				:key="index"
+				@click="initPlay(item.id,index)">
+					<view style="font-size: 36rpx;width: 60rpx;" class="num text-color">
+						{{index+1}}
 					</view>
-					<view class="text ellipsis" @click="initPlay(val.id,index)">
-						<text class="name ellipsis">{{val.name}}</text>
-						<text class="ar ellipsis">{{val.name}} · {{val.ar[0].name}}</text>
+					<view style="padding-left: 30rpx;width: 470rpx;">
+						<view class="item-name">
+							{{item.name}}
+						</view>
+						<view class="num song-text text-color">
+							{{item.ar[0].name}}
+						</view>
 					</view>
-					<text class="cuIcon-close" @click="listCloseOne(index)"></text>
+					<view style="width: 90rpx;">
+						<image class="item-img" src="../static/images/topaly.svg" mode="">
+						</image>
+					</view>
 				</view>
 			</scroll-view>
 			<view class="poplist-close" @click="closeList">
@@ -150,11 +161,8 @@
 				},1000)
 			}
 		},
-		onShow() {
-			console.log(this.playdetail)
-		},
 		computed: {
-			...mapGetters(['playdetail']),
+			// ...mapGetters(['playdetail']),
 			playTimeNum() {
 				return this.$util.formatTime(this.playTime)
 			},
@@ -492,6 +500,7 @@
 </script>
 
 <style lang='scss' scoped>
+	@import "../../static/scss/songList.scss";
 	.song-player {
 		height: 100%;
 
@@ -637,7 +646,7 @@
 	    	bottom: 0;
 	    	height: 800rpx;
 	    	width: 100%;
-	    	background-color: #F0F0F0;
+	    	background-color: #FFFFFF;
 	    	z-index: 1001;
 	    	border-radius: 5% 5% 0 0;
 	    	&.hide{
@@ -653,60 +662,10 @@
 	    		font-size: 34rpx;
 	    		.total{
 	    			font-size: 40rpx;
+					margin-left: 50rpx;
 	    		}
 	    		.model{
-	    			margin-right: 20rpx;
-	    		}
-	    	}
-	    	.item{
-	    		
-	    		display: flex;
-	    		align-items: center;
-	    		margin-bottom: 15rpx;
-	    		.img{
-	    			height: 100rpx;
-	    			width: 100rpx;
-	    			border-radius: 18rpx;
-	    		}
-	    		.num{
-	    			height: 100rpx;
-	    			width: 50rpx;
-	    			line-height: 100rpx;
-	    			text-align: center;
-	    			border-radius: 18rpx;
-	    			font-size: 38rpx;
-	    			color: #9E9E9E;
-	    		}
-	    		&.current{
-	    			color: #e54d42;
-	    			.num{
-	    				color: #e54d42;
-	    			}
-	    		}
-	    		.text{
-	    			flex: 1;
-	    			margin-left: 20rpx;
-	    			;
-	    			text{
-	    				display: block;
-	    			}
-	    			.name{
-	    				font-size: 32rpx;
-	    				overflow: hidden;
-	    			}
-	    			.ar{
-	    				font-size: 24rpx;
-	    				overflow: hidden;
-	    				.point{
-	    					font-size: 40rpx;
-	    				}
-	    			}
-	    		}
-	    		.cuIcon-close{
-	    			font-size: 38rpx;
-	    			color: #9E9E9E;
-	    			width: 68rpx;
-	    			height: 80rpx;
+	    			margin-right: 50rpx;
 	    		}
 	    	}
 	        .poplist-close{
@@ -714,7 +673,6 @@
 				bottom: 0;
 				width: 100%;
 				height: 100rpx;
-				border-top: 2px solid #ccc;
 				background: #fff;
 				text-align: center;
 				line-height: 100rpx;
