@@ -4,7 +4,7 @@
 		<view class="playlist-list-top" :style="{top:top + 'rpx'}">
 			<view class="top-con">
 				<view style="font-size: 36rpx;font-weight: bold;flex: 1;">
-					共{{trackCount}}首歌曲
+					共{{tracks.length}}首歌曲
 				</view>
 				<view class="play-all">
 					播放全部
@@ -12,44 +12,40 @@
 			</view>
 		</view>
 		<view class="playlist-list" :style="{top:(top+170)+'rpx'}">
-			<scroll-view scroll-y="true">
-				<swipeAction>
-					<swipeActionItem
-					    class="playlist-list-item"
-					    :threshold="0"
-					    :right-options="options"
-						v-for="(item,index) in tracks" :key="index"
-						@click="change(item.id)"
-					>
-						<view class="item-con" @click="toSong(item.id)">
-							<view style="font-size: 36rpx;width: 60rpx;" class="text-color">
-								{{index+1}}
+			<swipeAction>
+				<swipeActionItem class="playlist-list-item" :threshold="0" :right-options="options"
+					v-for="(item,index) in tracks" :key="index" @click="change(item.id)">
+					<view :class="['item-con',playdetail.id==item.id?'active':'']" @click="toSong(item.id)">
+						<view style="font-size: 36rpx;width: 60rpx;" class="num text-color">
+							{{index+1}}
+						</view>
+						<view style="padding-left: 30rpx;width: 470rpx;">
+							<view class="item-name">
+								{{item.name}}
 							</view>
-							<view style="padding-left: 30rpx;width: 470rpx;">
-								<view class="item-name">
-									{{item.name}}
-								</view>
-								<view class="song-text text-color">
-									{{item.ar[0].name}}
-								</view>
-							</view>
-							<view style="width: 90rpx;">
-								<image class="item-img" src="../static/images/topaly.svg" mode="">
-								</image>
+							<view class="num song-text text-color">
+								{{item.ar[0].name}}
 							</view>
 						</view>
-					</swipeActionItem>
-				</swipeAction>
-			</scroll-view>
+						<view style="width: 90rpx;">
+							<image class="item-img" src="../static/images/topaly.svg" mode="">
+							</image>
+						</view>
+					</view>
+				</swipeActionItem>
+			</swipeAction>
 		</view>
 	</view>
 </template>
 
 <script>
+	import {
+		mapGetters
+	} from 'vuex'
 	import swipeAction from "./swipe-action/index.vue"
 	import swipeActionItem from './swipe-action/swipe-action-item/index.vue'
 	export default {
-		components:{
+		components: {
 			swipeAction,
 			swipeActionItem
 		},
@@ -62,30 +58,37 @@
 				type: Array,
 				default: []
 			},
-			trackCount: {
-				type: Number,
-				default: 0
-			},
-			options:{
-				type:Array,
-				default:[]
+			options: {
+				type: Array,
+				default: []
 			},
 			disabled: {
 				type: Boolean,
 				default: true
 			}
 		},
+		computed:{
+			...mapGetters(['playdetail']),
+		},
 		methods: {
 			//跳转到歌曲播放页面
 			toSong(id) {
+				const list = this.tracks;
+				let index = 0;
+				list.forEach((v,i)=>{
+					if(v.id == id ){
+						index = i;
+					}
+				})
+				// console.log(index)
 				uni.navigateTo({
-					url: `/pages/song/player?songId=${id}`
+					url: '/pages/song/player?songId='+id+'&index='+index+'&list='+ encodeURIComponent(JSON.stringify(list))
 				})
 			},
 			//删除或取消收藏
-			change(id){
+			change(id) {
 				// console.log(id);
-				this.$emit('change',id)
+				this.$emit('change', id)
 			}
 		}
 	}
@@ -133,6 +136,13 @@
 					display: flex;
 					align-items: center;
 
+					&.active {
+						color: #8dc63f;
+						.num{
+							color: #8dc63f;
+						}
+					}
+
 					.item-name {
 						width: 450rpx;
 						font-size: 32rpx;
@@ -141,16 +151,17 @@
 						text-overflow: ellipsis; //文本溢出显示省略号；
 						overflow: hidden; //溢出的部分隐藏
 					}
+
 					.item-img {
 						width: 50rpx;
 						height: 50rpx;
-						margin:0 20rpx;
+						margin: 0 20rpx;
 					}
 					
-				}
+					.text-color {
+						color: #6b6b6b;
+					}
 
-				.text-color {
-					color: #6b6b6b;
 				}
 			}
 		}

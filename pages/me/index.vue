@@ -4,15 +4,14 @@
 		<meTop :bg="bg"></meTop>
 		<typeTab :top="320" :tab="tab" :isActive="isActive" @tab="isActive=0" @toTab="isActive=1"></typeTab>
 		<view v-if="isActive==0">
-			<plylistCon :top="top" :trackCount="hisCount" :tracks="hisTracks" :options="options1" :disabled="disabled"
-				@change="deleteSong">
+			<plylistCon :top="top" :tracks="hisTracks" :options="options1" :disabled="disabled" @change="deleteSong">
 			</plylistCon>
-			<view class="delete-fab" @click="deleteAll">
-				<uni-icons type="trash-filled" color="#fff" size="20"></uni-icons>
+			<view class="delete-fab" v-if="hisTracks.length>0" @click="deleteAll">
+				<uni-icons type="trash-filled" color="#fff" size="25"></uni-icons>
 			</view>
 		</view>
-		<plylistCon v-if="isActive==1" :top="top" :trackCount="likeCount" :tracks="likeTracks" :options="options2"
-			:disabled="disabled" @change="cancleLike">
+		<plylistCon v-if="isActive==1" :top="top" :tracks="likeTracks" :options="options2" :disabled="disabled"
+			@change="cancleLike">
 		</plylistCon>
 	</view>
 </template>
@@ -34,8 +33,6 @@
 				isActive: 0,
 				tab: ['最近', '喜欢'],
 				hisTracks: [],
-				hisCount: 0,
-				likeCount: 0,
 				top: 420,
 				likeTracks: [],
 				userId: "",
@@ -55,7 +52,8 @@
 			}
 		},
 		onShow() {
-			this.getData()
+			this.getData();
+			// console.log(this.playdetail)
 		},
 		methods: {
 			deleteSong(id) {
@@ -64,23 +62,24 @@
 						this.hisTracks.splice(index, 1);
 					}
 				})
-				// console.log(this.hisTracks)
-				this.hisCount = this.hisTracks.length;
 				uni.setStorage({
 					key: 'OldSongs',
 					data: this.hisTracks,
 					success: res => {}
 				});
 			},
-			deleteAll(){
+			//删除所有历史播放记录
+			deleteAll() {
 				uni.showModal({
 					content: '确定删除所有播放记录？',
 					success: (res) => {
 						if (res.confirm) {
 							// console.log('用户点击确定');
-							this.hisTracks = [];
 							uni.removeStorage({
-								key: 'OldKeys'
+								key: 'OldKeys',
+								success: () => {
+									this.hisTracks = [];
+								}
 							});
 						} else if (res.cancel) {
 							// console.log('用户点击取消');
@@ -95,7 +94,6 @@
 						this.likeTracks.splice(index, 1);
 					}
 				})
-				this.likeCount = this.likeTracks.length;
 				db.collection('userLike').doc(this.userId).update({
 					data: {
 						like_songs: this.likeTracks
@@ -114,7 +112,6 @@
 					key: 'OldSongs',
 					success: res => {
 						this.hisTracks = res.data;
-						this.hisCount = res.data.length
 					}
 				});
 				uni.getStorage({
@@ -125,7 +122,6 @@
 						db.collection('userLike').doc(id).get({
 							success: re => {
 								this.likeTracks = re.data.like_songs;
-								this.likeCount = this.likeTracks.length
 							},
 						})
 					},
@@ -141,12 +137,12 @@
 			position: fixed;
 			bottom: 100rpx;
 			right: 70rpx;
-			height: 30px;
-			width: 30px;
+			height: 40px;
+			width: 40px;
 			background: #8dc63f;
 			text-align: center;
-			line-height: 30px;
-			border-radius: 15px;
+			line-height: 40px;
+			border-radius: 20px;
 		}
 	}
 </style>

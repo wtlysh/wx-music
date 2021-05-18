@@ -22,7 +22,6 @@
 			closeOther(vm) {
 				if (this.openItem && this.openItem !== vm) {
 					this.openItem.button.show = 'none'
-					this.openItem.close()
 				}
 				this.openItem = vm
 			}

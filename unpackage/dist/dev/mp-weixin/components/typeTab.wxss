@@ -44,4 +44,9 @@
   line-height: 100rpx;
   color: #6b6b6b;
 }
+.type .type-box .type-list .active.data-v-60397110 {
+  color: #8dc63f;
+  border-bottom: 2px solid;
+  padding-bottom: 20rpx;
+}
 

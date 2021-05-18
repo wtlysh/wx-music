@@ -5,7 +5,7 @@
 		<playlistCon 
 		:top="top"
 		:tracks="tracks" 
-		:trackCount="album.trackCount"></playlistCon>
+		></playlistCon>
 	</view>
 </template>
 
@@ -23,7 +23,6 @@
 				album: {
 					id:'',
 					name:'',
-					trackCount:0,
 					creator:{
 						avatarUrl:'',
 						nickname:'',
@@ -55,7 +54,6 @@
 					this.album = {
 						id:album.id,
 						name:album.name,
-						trackCount:album.trackCount,
 						creator:{
 							avatarUrl:album.creator.avatarUrl,
 							nickname:album.creator.nickname

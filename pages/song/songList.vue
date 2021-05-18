@@ -12,7 +12,7 @@
 				</swiper-item>
 			</block>
 		</swiper>
-		<playlistCon :top="top" :tracks="songList[current].tracks" :trackCount="songList[current].trackCount"></playlistCon>
+		<playlistCon :top="top" :tracks="songList[current].tracks" ></playlistCon>
 	</view>
 </template>
 
@@ -31,7 +31,6 @@
 				top:380,
 				songList: [{
 					tracks: [],
-					trackCount: 0,
 				}],
 				current: 0,
 				cat: [{
@@ -48,10 +47,6 @@
 					name: '韩 语'
 				}],
 				imgs: [],
-				album: {
-					tracks: [],
-					trackCount: 0,
-				}
 			}
 		},
 		created() {
@@ -75,8 +70,7 @@
 						let list = res[i].playlist;
 						vm.imgs[i] = list.backgroundCoverUrl;
 						vm.songList[i] = {
-							tracks: list.tracks,
-							trackCount: list.trackCount
+							tracks: list.tracks
 						}
 					}
 				})

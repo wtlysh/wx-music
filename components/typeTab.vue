@@ -56,6 +56,11 @@
 				height: 100rpx;
 				line-height: 100rpx;
 				color: #6b6b6b;
+				.active {
+					color: #8dc63f;
+					border-bottom: 2px solid;
+					padding-bottom: 20rpx;
+				}
 			}
 		}
 		

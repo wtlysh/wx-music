@@ -28,11 +28,11 @@
   position: fixed;
   bottom: 100rpx;
   right: 70rpx;
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   background: #8dc63f;
   text-align: center;
-  line-height: 30px;
-  border-radius: 15px;
+  line-height: 40px;
+  border-radius: 20px;
 }
 

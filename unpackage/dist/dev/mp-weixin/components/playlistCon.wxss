@@ -68,6 +68,12 @@
   -webkit-align-items: center;
           align-items: center;
 }
+.playlist-list-con .playlist-list .playlist-list-item .item-con.active.data-v-4c5cbf36 {
+  color: #8dc63f;
+}
+.playlist-list-con .playlist-list .playlist-list-item .item-con.active .num.data-v-4c5cbf36 {
+  color: #8dc63f;
+}
 .playlist-list-con .playlist-list .playlist-list-item .item-con .item-name.data-v-4c5cbf36 {
   width: 450rpx;
   font-size: 32rpx;
@@ -81,7 +87,7 @@
   height: 50rpx;
   margin: 0 20rpx;
 }
-.playlist-list-con .playlist-list .playlist-list-item .text-color.data-v-4c5cbf36 {
+.playlist-list-con .playlist-list .playlist-list-item .item-con .text-color.data-v-4c5cbf36 {
   color: #6b6b6b;
 }
 

@@ -41,11 +41,11 @@ const actions = {
 		context.commit('setIsplayingmusic', param)
 	}
 }
-var vuexStore = new Vuex.Store({
+const store = new Vuex.Store({
 	state,
 	mutations,
 	getters,
 	actions
 })
 
-export default vuexStore
+export default store

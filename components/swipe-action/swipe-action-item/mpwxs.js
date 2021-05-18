@@ -21,9 +21,6 @@ export default {
 			}
 			this.button.show = newVal
 		},
-		leftOptions() {
-			this.init()
-		},
 		rightOptions() {
 			this.init()
 		}

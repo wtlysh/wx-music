@@ -1,7 +1,7 @@
 <!-- 歌曲播放页面 -->
 <template>
 	<view class="song-player">
-		<view class="player-content">
+		<view class="player-content" v-if="isCanPlay">
 			<view class="player-bgimg" :style="'background-image:url('+song.picUrl+')'"></view>
 			<view v-show="!isLyric">
 				<view class="player-img" :class="[isPlay ? '' : 'stoped']">
@@ -20,22 +20,60 @@
 					<view class="ric">{{lybot}}</view>
 				</view>
 			</view>
-			<view class="lyric-opcity all-lyric" v-show="isLyric" :style="{height:(windowHeight-300) + 'rpx'}" @click="toLyric">
-				<scroll-view scroll-y="true" :scroll-into-view="'view-' + ctrolIndex" style="height: 100%;width: 100%;">
+			<view v-show="isLyric" class="lyric-opcity all-lyric" :style="{height:(windowHeight-300) + 'rpx'}"
+				@click="toLyric">
+				<scroll-view v-if="lyric.length>0" scroll-y="true" :scroll-into-view="'view-' + ctrolIndex"
+					style="height: 100%;width: 100%;">
 					<view :class="['ric',index==lyricIndex?'cur':'']" :id="'view-'+index"
 						:style="{height:((windowHeight-300)/13) + 'rpx'}" v-for="(item,index) in lyric" :key="index">
 						{{item.text}}
 					</view>
 				</scroll-view>
+				<view v-if="lyric.length<=0" class="nolyric ric cur">
+					{{lycur}}
+				</view>
 			</view>
-			<playBottom 
-			:userId="userId" 
-			:isLike="isLike" 
-			:likeSong="likeSong"
-			:songId="song.id"
-			@cancle="cancleLike"
-			@confirm="addLike"
-			></playBottom>
+			<playBottom :isLike="isLike" @cancle="cancleLike" @confirm="addLike"></playBottom>
+		    <view class="poplist-icon" 
+			v-if="!isOpentList && copyAudioList.length>0" 
+			@click="openList">
+		    	<view style="display: flex;flex-wrap: wrap;justify-content: center;">
+		    		<uni-icons type="list" color="#6b6b6b" size="25"></uni-icons>
+		    		<text style="font-size: 28rpx;">列表</text>
+		    	</view>
+			</view>
+		</view>
+		<view class="poplist-box" :class="[isOpentList?'':'hide']">
+			<view class="title">
+				<text class="total">当前播放(25)</text>
+				<text class="model"  v-if="playModel==0" @click="setPlayModel">
+					<text class="iconfont">&#xe66c;</text>
+					<text>列表循环</text>
+				</text>
+				<text class="model"  v-if="playModel==1" @click="setPlayModel">
+					<text class="iconfont">&#xe66b;</text>
+					<text>随机播放</text>
+				</text>
+				<text class="model"  v-if="playModel==2" @click="setPlayModel">
+					<text class="iconfont">&#xe66d;</text>
+					<text>单曲循环</text>
+				</text>
+			</view>
+			<scroll-view scroll-y="true" style="height: 578rpx;">
+				<view class="item" :class="[index == curPlayIndex?' current':'']" v-for="(val,index) in copyAudioList" :key="index">
+					<view class="img num">
+						{{index + 1}}
+					</view>
+					<view class="text ellipsis" @click="initPlay(val.id,index)">
+						<text class="name ellipsis">{{val.name}}</text>
+						<text class="ar ellipsis">{{val.name}} · {{val.ar[0].name}}</text>
+					</view>
+					<text class="cuIcon-close" @click="listCloseOne(index)"></text>
+				</view>
+			</scroll-view>
+			<view class="poplist-close" @click="closeList">
+				关闭
+			</view>
 		</view>
 	</view>
 </template>
@@ -55,11 +93,13 @@
 	let update = true;
 	const db = wx.cloud.database();
 	export default {
-		components:{
+		components: {
 			playBottom
 		},
 		data() {
 			return {
+				isOpentList:false, //是否打开播放列表
+				playModel: 0,//播放模式
 				song: {
 					id: '',
 					url: '',
@@ -68,6 +108,7 @@
 					time: 0,
 					picUrl: '',
 				},
+				isCanPlay: true, //资源是否有用
 				lyric: [], //歌词
 				lytop: '',
 				lycur: '',
@@ -80,26 +121,40 @@
 				curPlayTime: 0,
 				curPlayIndex: 0,
 				copyAudioList: [],
-				windowHeight: 0 ,//屏幕高度
-				likeSong:{}  ,//收藏歌曲
-				isLike:false,//是否收藏
-				userId:"" ,//用户收藏id
+				windowHeight: 0, //屏幕高度
+				likeSong: {}, //收藏歌曲
+				isLike: false, //是否收藏
+				userId: "", //用户收藏id
 			}
 		},
 		onLoad(param) {
-			let id = param.songId;
+			if(!param.songId){
+					return ;
+			}
 			uni.getSystemInfo({
 				success: (res) => {
 					// 　　console.log(res.windowHeight) // 获取可使用窗口高度
 					this.windowHeight = (res.windowHeight * (750 / res.windowWidth)); //将高度乘以换算后的该设备的rpx与px的比例
 					// 　　console.log(this.windowHeight) //最后获得转化后得rpx单位的窗口高度
 				}
-			})
+			});
+			let id = param.songId;
 			this.initPlay(id);
 			this.judgeLike(id);
+			if(param.index && param.list){
+				const list = JSON.parse(decodeURIComponent(param.list));
+				this.curPlayIndex = Number(param.index);
+				//列表延后渲染
+				setTimeout(()=>{
+					this.copyAudioList = list;
+				},1000)
+			}
+		},
+		onShow() {
+			console.log(this.playdetail)
 		},
 		computed: {
-			...mapGetters(['audiolist']),
+			...mapGetters(['playdetail']),
 			playTimeNum() {
 				return this.$util.formatTime(this.playTime)
 			},
@@ -109,111 +164,54 @@
 		},
 		methods: {
 			...mapMutations(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
-			//添加收藏
-			addLike(){
-				this.isLike = true;
-				let id = this.userId;
-				let likeSong = this.likeSong;
-				db.collection('userLike').doc(id).get({
-					success:res=>{
-						// console.log("成功："+res);
-						let song = res.data.like_songs;
-						// console.log(re.data);
-						song.unshift(likeSong);
-						// console.log(song);
-						db.collection('userLike').doc(id).update({
-						  data: {
-							  like_songs:song
-						  },
-						  success: (res) => {
-						    // console.log(es.data)
-						  },
-						  fail:err=>{
-							  // console.log(er);
-						  }
-						})
-					},
-					fail:err=>{
-						// console.log("失败："+err);
-						db.collection('userLike').add({
-						  data: {
-						    _id: id,
-						    like_songs:[likeSong],
-						  },
-						  success: (res) => {
-						    // console.log(res)
-						  }
-						})
+			//设置播放模式
+			setPlayModel() {
+				this.playModel = this.playModel == 2 ? 0 : this.playModel + 1;
+				uni.showToast({
+					icon: 'none',
+					title: ['列表循环', '随机播放', '单曲循环'][this.playModel]
+				})
+			},
+			openList() {
+				this.isOpentList = !this.isOpentList;
+			},
+			closeList(){
+				this.isOpentList = !this.isOpentList;
+			},
+			listCloseOne(index){
+				const list  = this.copyAudioList;
+				console.log(index)
+				list.splice(index,1)
+				if(list.length>0){
+					if(index == this.curPlayIndex){
+						if(index<list.length){
+							this.initPlay(list[index].id);
+							this.curPlayIndex = index
+						}else{
+							this.initPlay(list[0].id);
+							this.curPlayIndex = 0;
+						}
+					}else{
+						this.curPlayIndex = index>this.curPlayIndex?this.curPlayIndex:this.curPlayIndex-1;
 					}
-				})
-			},
-			//取消收藏
-			cancleLike(){
-				this.isLike = false;
-				let id =this.userId;
-				let _id = this.song.id;
-				db.collection('userLike').doc(id).get({
-					success:res=>{
-						let song = res.data.like_songs;
-						song.forEach((item,index)=>{
-							if(item.id==_id){
-								song.splice(index,1)
-							}
-						});
-						// console.log(song);
-						db.collection('userLike').doc(id).update({
-						  data: {
-							  like_songs:song
-						  },
-						  success: (res) => {
-						    // console.log(es.data)
-						  },
-						  fail:err=>{
-							  // console.log(er);
-						  }
-						})
-					},
-				})
-			},
-			//判断歌曲是否收藏
-			judgeLike(id){
-				uni.getStorage({
-					key:"userId",
-					success:res=>{
-						let _id = res.data;
-						this.userId = _id;
-						db.collection('userLike').doc(_id).get({
-							success:res=>{
-								console.log("成功：");
-								let song = res.data.like_songs;
-								song.forEach(item=>{
-									if(item.id==id){
-										this.isLike = true;
-									}
-								})
-							},
-						})
-					},
-				});
-				this.$forceUpdate()
-				// console.log(this.isLike);
-			},
-			//控制歌曲播放
-			playCtrol() {
-				if (this.isPlay) {
-					this.$au_player.pause();
-				} else {
-					this.$au_player.play();
+					
+					this.copyAudioList = list;
+					this.setAudiolist(list)
+					this.setIsplayactive(true)
+					
+				}else{
+					this.$au_player.stop();
+					uni.navigateBack({
+						delta: 1
+					});
 				}
-				this.isPlay = !this.isPlay;
-				this.setIsplayingmusic(this.isPlay)
 			},
-			//显示或隐藏全部歌词
-			toLyric() {
-				this.isLyric = !this.isLyric;
-			},
+			
 			//获取歌曲数据并开始播放
-			initPlay(id) {
+			initPlay(id,index) {
+				if(index){
+					this.curPlayIndex = index;
+				}
 				Vue.prototype.cusPlay = this.onPlayFn
 				Vue.prototype.cusTimeUpdate = this.onTimeUpdateFn
 				Vue.prototype.cusEnded = this.onEndedFn
@@ -223,13 +221,16 @@
 				}), apiSongDetail({
 					ids: id
 				})]).then(res => {
-
+					// console.log(res[0])
 					const surl = res[0].data[0].url;
 					if (!surl) {
-						uni.showToast({
-							icon: 'none',
-							title: '资源已经失效!请返回'
-						})
+						this.isCanPlay = false;
+						setTimeout(() => {
+							uni.showToast({
+								icon: 'none',
+								title: '资源已失效!请返回'
+							})
+						}, 1000);
 						return;
 					}
 					const sdetail = res[1].songs[0];
@@ -266,7 +267,7 @@
 					let OldSong = {
 						id,
 						name: sdetail.name,
-						ar:sdetail.ar,
+						ar: sdetail.ar,
 					}
 					// console.log(OldSong)
 					this.saveSong(OldSong);
@@ -281,9 +282,15 @@
 				apiLyic({
 					id
 				}).then(res => {
+					// console.log(res)
 					if (res.uncollected) {
 						console.log('暂未收录歌词');
-						this.lycur = '~暂未收录歌词~'
+						this.lycur = '~暂未收录歌词~';
+						return;
+					}
+					if (res.nolyric) {
+						this.lycur = '~此歌曲为纯音乐，请欣赏~';
+						return;
 					}
 					const lines = res.lrc.lyric.split('\n');
 					const target = []
@@ -301,11 +308,12 @@
 					}
 					this.lyric = target;
 					// console.log(this.lyric)
-				}).catch(e => {
-					this.$au_player.play();
-					console.log('歌词加载失败', e)
-					this.lycur = '~歌词加载失败~'
 				})
+				// .catch(err => {
+				// 	this.$au_player.play();
+				// 	// console.log('歌词加载失败', err)
+				// 	this.lycur = '~歌词加载失败~'
+				// })
 				this.$forceUpdate();
 			},
 			//歌曲正在播放
@@ -375,7 +383,110 @@
 						})
 					}
 				})
-			},  
+			},
+		    //添加收藏
+		    addLike() {
+		    	this.isLike = true;
+		    	let id = this.userId;
+		    	let likeSong = this.likeSong;
+		    	db.collection('userLike').doc(id).get({
+		    		success: res => {
+		    			// console.log("成功："+res);
+		    			let song = res.data.like_songs;
+		    			// console.log(re.data);
+		    			song.unshift(likeSong);
+		    			// console.log(song);
+		    			db.collection('userLike').doc(id).update({
+		    				data: {
+		    					like_songs: song
+		    				},
+		    				success: (res) => {
+		    					// console.log(es.data)
+		    				},
+		    				fail: err => {
+		    					// console.log(er);
+		    				}
+		    			})
+		    		},
+		    		fail: err => {
+		    			// console.log("失败："+err);
+		    			db.collection('userLike').add({
+		    				data: {
+		    					_id: id,
+		    					like_songs: [likeSong],
+		    				},
+		    				success: (res) => {
+		    					// console.log(res)
+		    				}
+		    			})
+		    		}
+		    	})
+		    },
+		    //取消收藏
+		    cancleLike() {
+		    	this.isLike = false;
+		    	let id = this.userId;
+		    	let _id = this.song.id;
+		    	db.collection('userLike').doc(id).get({
+		    		success: res => {
+		    			let song = res.data.like_songs;
+		    			song.forEach((item, index) => {
+		    				if (item.id == _id) {
+		    					song.splice(index, 1)
+		    				}
+		    			});
+		    			// console.log(song);
+		    			db.collection('userLike').doc(id).update({
+		    				data: {
+		    					like_songs: song
+		    				},
+		    				success: (res) => {
+		    					// console.log(es.data)
+		    				},
+		    				fail: err => {
+		    					// console.log(er);
+		    				}
+		    			})
+		    		},
+		    	})
+		    },
+		    //判断歌曲是否收藏
+		    judgeLike(id) {
+		    	uni.getStorage({
+		    		key: "userId",
+		    		success: res => {
+		    			let _id = res.data;
+		    			this.userId = _id;
+		    			db.collection('userLike').doc(_id).get({
+		    				success: res => {
+		    					console.log("成功：");
+		    					let song = res.data.like_songs;
+		    					song.forEach(item => {
+		    						if (item.id == id) {
+		    							this.isLike = true;
+		    						}
+		    					})
+		    				},
+		    			})
+		    		},
+		    	});
+		    	this.$forceUpdate()
+		    	// console.log(this.isLike);
+		    },
+		    //控制歌曲播放
+		    playCtrol() {
+		    	if (this.isPlay) {
+		    		this.$au_player.pause();
+		    	} else {
+		    		this.$au_player.play();
+		    	}
+		    	this.isPlay = !this.isPlay;
+		    	this.setIsplayingmusic(this.isPlay)
+		    },
+		    //显示或隐藏全部歌词
+		    toLyric() {
+		    	this.isLyric = !this.isLyric;
+		    },
 		}
 	}
 </script>
@@ -388,7 +499,18 @@
 			height: 100%;
 			position: relative;
 			overflow: hidden;
-
+			
+            .poplist-icon{
+				position: fixed;
+				bottom: 450rpx;
+				right: 60rpx;
+				height: 60px;
+				width: 30px;
+				background: #FFFFFF;
+				border-radius: 15px;
+				display: flex;
+				align-items: center;
+			}
 			.player-bgimg {
 				width: 100%;
 				height: 100%;
@@ -416,18 +538,6 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-
-				@keyframes rotate {
-					0% {
-						transform: rotateZ(0deg);
-						/*从0度开始*/
-					}
-
-					100% {
-						transform: rotateZ(360deg);
-						/*360度结束*/
-					}
-				}
 
 				.circle {
 					width: 92%;
@@ -471,7 +581,8 @@
 				}
 
 			}
-            .lyric-opcity{
+
+			.lyric-opcity {
 				-webkit-mask-image: linear-gradient(to bottom,
 						rgba(255, 255, 255, 0) 0,
 						rgba(255, 255, 255, .6) 15%,
@@ -480,6 +591,7 @@
 						rgba(255, 255, 255, .6) 85%,
 						rgba(255, 255, 255, 0) 100%);
 			}
+
 			.player-lyric {
 				position: absolute;
 				bottom: 250rpx;
@@ -490,6 +602,14 @@
 			.all-lyric {
 				width: 100%;
 				margin-top: 70rpx;
+
+				.nolyric {
+					height: 100%;
+					width: 100%;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
 			}
 
 			.ric {
@@ -511,5 +631,106 @@
 				}
 			}
 		}
+	    .poplist-box{
+	    	position: fixed;
+	    	display: block;
+	    	bottom: 0;
+	    	height: 800rpx;
+	    	width: 100%;
+	    	background-color: #F0F0F0;
+	    	z-index: 1001;
+	    	border-radius: 5% 5% 0 0;
+	    	&.hide{
+	    		bottom:-800rpx;
+	    	}
+	    	transition: all .15s linear;
+	    	.title{
+	    		display: flex;
+	    		justify-content: space-between;
+	    		width: 100%;
+	    		height: 120rpx;
+	    		line-height: 120rpx;
+	    		font-size: 34rpx;
+	    		.total{
+	    			font-size: 40rpx;
+	    		}
+	    		.model{
+	    			margin-right: 20rpx;
+	    		}
+	    	}
+	    	.item{
+	    		
+	    		display: flex;
+	    		align-items: center;
+	    		margin-bottom: 15rpx;
+	    		.img{
+	    			height: 100rpx;
+	    			width: 100rpx;
+	    			border-radius: 18rpx;
+	    		}
+	    		.num{
+	    			height: 100rpx;
+	    			width: 50rpx;
+	    			line-height: 100rpx;
+	    			text-align: center;
+	    			border-radius: 18rpx;
+	    			font-size: 38rpx;
+	    			color: #9E9E9E;
+	    		}
+	    		&.current{
+	    			color: #e54d42;
+	    			.num{
+	    				color: #e54d42;
+	    			}
+	    		}
+	    		.text{
+	    			flex: 1;
+	    			margin-left: 20rpx;
+	    			;
+	    			text{
+	    				display: block;
+	    			}
+	    			.name{
+	    				font-size: 32rpx;
+	    				overflow: hidden;
+	    			}
+	    			.ar{
+	    				font-size: 24rpx;
+	    				overflow: hidden;
+	    				.point{
+	    					font-size: 40rpx;
+	    				}
+	    			}
+	    		}
+	    		.cuIcon-close{
+	    			font-size: 38rpx;
+	    			color: #9E9E9E;
+	    			width: 68rpx;
+	    			height: 80rpx;
+	    		}
+	    	}
+	        .poplist-close{
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				height: 100rpx;
+				border-top: 2px solid #ccc;
+				background: #fff;
+				text-align: center;
+				line-height: 100rpx;
+				font-size: 32rpx;
+			}
+		}
 	}
+    @keyframes rotate {
+    	0% {
+    		transform: rotateZ(0deg);
+    		/*从0度开始*/
+    	}
+    
+    	100% {
+    		transform: rotateZ(360deg);
+    		/*360度结束*/
+    	}
+    }
 </style>

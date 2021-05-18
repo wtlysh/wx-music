@@ -23,22 +23,10 @@
 <script>
 	export default{
 		props:{
-			userId:{
-				type:String,
-				default:''
-			},
 			isLike:{
 				type:Boolean,
 				default:false
 			},
-			likeSong:{
-				type:Object,
-				default:{}
-			},
-			songId:{
-				type:String,
-				default:''
-			}
 		},
 		methods:{
 			//收藏或取消收藏歌曲

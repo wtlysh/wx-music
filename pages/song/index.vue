@@ -2,9 +2,9 @@
 <template>
 	<view class="songlist">
 		<view class="songlist-top">
-			<image class="songlist-img" :src="album.bgimg" mode=""></image>
+			<image class="songlist-img" :src="bgimg" mode=""></image>
 		</view>
-		<playlistCon :top="top" :tracks="tracks" :trackCount="album.trackCount"></playlistCon>
+		<playlistCon :top="top" :tracks="tracks"></playlistCon>
 	</view>
 </template>
 
@@ -21,10 +21,7 @@
 			return{
 				top:380,
 				tracks:[],
-				album:{
-					trackCount:0,
-					bgimg:''
-				}
+			    bgimg:''
 			}
 		},
 		onLoad(param) {
@@ -39,10 +36,7 @@
 					// console.log(res)
 					let list =res.playlist
 					this.tracks=list.tracks;
-					this.album={
-						trackCount:list.trackCount,
-						bgimg:list.coverImgUrl
-					};
+					this.bgimg=list.coverImgUrl;
 				})
 			}
 		}
