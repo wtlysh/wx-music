@@ -141,9 +141,10 @@ var _default =
   },
   methods: {
     //跳转到播放页面
-    toPlay: function toPlay(id, index, list) {
+    toPlay: function toPlay(item) {
+      var list = [item];
       uni.navigateTo({
-        url: '/pages/song/player?songId=' + id });
+        url: '/pages/song/player?songId=' + item.id + '&index=0' + '&list=' + encodeURIComponent(JSON.stringify(list)) });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

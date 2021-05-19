@@ -2,7 +2,7 @@
 <template>
 	<view class="song-list">
 		<view class="song-list-item" v-for="(item, index) in songList" :key="index"
-			@click="toPlay(item.id,index,songList)">
+			@click="toPlay(item)">
 			<view class="con">
 				<view class="song-list-name">{{item.name}}</view>
 				<view class="desc song-text">{{item.desc}}</view>
@@ -25,9 +25,10 @@
 		},
 		methods: {
 			//跳转到播放页面
-			toPlay(id, index, list) {
+			toPlay(item) {
+				let list = [item];
 				uni.navigateTo({
-					url: '/pages/song/player?songId=' + id
+					url:'/pages/song/player?songId='+item.id+'&index=0'+'&list='+ encodeURIComponent(JSON.stringify(list))
 				})
 			}
 

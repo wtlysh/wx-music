@@ -7,7 +7,7 @@
 				<view class="hotsong-list">
 					<view class="hotsong-li" v-for="(list,index) in songs" :key="index">
 						<view class="hotsong-item" 
-						@click="toSong(item.id)"
+						@click="toSong(item)"
 						v-for="item in list" :key="item.id">
 							<image class="hotsong-img" :src="item.al.picUrl" mode=""></image>
 						    <view style="padding-left: 20rpx;">
@@ -45,9 +45,10 @@
 		},
 		methods:{
 			//跳转到歌曲播放页面
-			toSong(id){
+			toSong(item){
+				let list = [item];
 				uni.navigateTo({
-					url:'/pages/song/player?songId='+id,
+					url:'/pages/song/player?songId='+item.id+'&index=0'+'&list='+ encodeURIComponent(JSON.stringify(list))
 				})
 
 			},

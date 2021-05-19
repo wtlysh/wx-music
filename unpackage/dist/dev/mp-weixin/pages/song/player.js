@@ -96,7 +96,7 @@ var components
 try {
   components = {
     uniIcons: function() {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 169))
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 162))
     }
   }
 } catch (e) {
@@ -245,6 +245,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 8);
 
 
@@ -255,7 +259,7 @@ var _player = __webpack_require__(/*! ../../api/player.js */ 74);
 
 
 
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var playBottom = function playBottom() {__webpack_require__.e(/*! require.ensure | pages/song/components/playBottom */ "pages/song/components/playBottom").then((function () {return resolve(__webpack_require__(/*! ./components/playBottom.vue */ 162));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var playBottom = function playBottom() {__webpack_require__.e(/*! require.ensure | pages/song/components/playBottom */ "pages/song/components/playBottom").then((function () {return resolve(__webpack_require__(/*! ./components/playBottom.vue */ 170));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var update = true;
 var db = wx.cloud.database();var _default =
 {
@@ -310,20 +314,21 @@ var db = wx.cloud.database();var _default =
     if (param.index && param.list) {
       var list = JSON.parse(decodeURIComponent(param.list));
       this.curPlayIndex = Number(param.index);
+      this.setAudiolist(list);
       //列表延后渲染
       setTimeout(function () {
         _this.copyAudioList = list;
       }, 1000);
     }
   },
-  computed: {
-    // ...mapGetters(['playdetail']),
+  computed: _objectSpread(_objectSpread({},
+  (0, _vuex.mapGetters)(['audiolist'])), {}, {
     playTimeNum: function playTimeNum() {
       return this.$util.formatTime(this.playTime);
     },
     curPlayTimeNum: function curPlayTimeNum() {
       return this.$util.formatTime(this.curPlayTime);
-    } },
+    } }),
 
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive'])), {}, {
@@ -341,38 +346,40 @@ var db = wx.cloud.database();var _default =
     closeList: function closeList() {
       this.isOpentList = !this.isOpentList;
     },
-    listCloseOne: function listCloseOne(index) {
-      var list = this.copyAudioList;
-      console.log(index);
-      list.splice(index, 1);
-      if (list.length > 0) {
-        if (index == this.curPlayIndex) {
-          if (index < list.length) {
-            this.initPlay(list[index].id);
-            this.curPlayIndex = index;
-          } else {
-            this.initPlay(list[0].id);
-            this.curPlayIndex = 0;
-          }
-        } else {
-          this.curPlayIndex = index > this.curPlayIndex ? this.curPlayIndex : this.curPlayIndex - 1;
-        }
-
-        this.copyAudioList = list;
-        this.setAudiolist(list);
-        this.setIsplayactive(true);
-
-      } else {
-        this.$au_player.stop();
-        uni.navigateBack({
-          delta: 1 });
-
+    getIndex: function getIndex(type, isAuto) {
+      //['列表循环', '随机播放', '单曲循环']
+      var next = 0;
+      var prev = 0;
+      var cur = this.curPlayIndex;
+      var last = this.audiolist.length - 1;
+      if (this.playModel === 0 || this.playModel === 2) {
+        next = cur == last ? 0 : cur + 1;
+        prev = cur == 0 ? last : cur - 1;
       }
+      if (this.playModel === 1) {
+        next = Math.floor(Math.random() * (last + 1));
+        prev = Math.floor(Math.random() * (last + 1));
+      }
+      if (isAuto && this.playModel === 2) {
+        next = cur;
+      }
+      return type == 'next' ? next : prev;
     },
-
+    prev: function prev() {
+      var index = this.getIndex('prev');
+      this.initPlay(this.audiolist[index].id);
+      this.curPlayIndex = index;
+    },
+    next: function next(isAuto) {
+      var index = this.getIndex('next', isAuto);
+      // console.log(this.audiolist);
+      this.initPlay(this.audiolist[index].id);
+      this.curPlayIndex = index;
+    },
     //获取歌曲数据并开始播放
     initPlay: function initPlay(id, index) {var _this2 = this;
-      if (index) {
+      // console.log(index);
+      if (index || index >= 0) {
         this.curPlayIndex = index;
       }
       _vue.default.prototype.cusPlay = this.onPlayFn;
@@ -514,12 +521,10 @@ var db = wx.cloud.database();var _default =
     //歌曲播放结束
     onEndedFn: function onEndedFn() {
       // console.log('ended')
-      this.isPlay = true;
-      this.$au_player.url = this.song.url;
-      this.$au_player.title = this.song.name;
-      this.$au_player.coverImgUrl = this.song.picUrl;
-      this.$au_player.singer = this.song.singer;
-      this.$au_player.src = this.song.url;
+      this.isPlay = false;
+      this.setIsplayingmusic(false);
+      this.setIsplayactive(false);
+      this.next(true);
     },
     //保存歌曲到历史记录
     saveSong: function saveSong(OldSong) {

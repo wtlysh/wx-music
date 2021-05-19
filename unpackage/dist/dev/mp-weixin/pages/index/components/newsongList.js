@@ -129,9 +129,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     //跳转到歌曲播放
-    toSong: function toSong(id) {
+    toSong: function toSong(item) {
+      var list = [item];
       uni.navigateTo({
-        url: '/pages/song/player?songId=' + id });
+        url: '/pages/song/player?songId=' + item.id + '&index=0' + '&list=' + encodeURIComponent(JSON.stringify(list)) });
 
 
     },

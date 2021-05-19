@@ -9,10 +9,18 @@
 						<image class="img" :src="song.picUrl" mode=""></image>
 					</view>
 				</view>
-				<view class="isplay" @click="playCtrol">
-					<view class="isplay-bg"></view>
-					<image class="isplay-img" v-show="isPlay" src="../../static/images/play.svg" mode=""></image>
-					<image class="isplay-img" v-show="!isPlay" src="../../static/images/notplay.svg" mode=""></image>
+				<view class="play-ctrol">
+					<view v-if="copyAudioList.length>1" class="flex-item" @click="prev">
+						<uni-icons type="arrowleft" color="#fff" size="25"></uni-icons>
+					</view>
+					<view class="isplay" @click="playCtrol">
+						<view class="isplay-bg"></view>
+						<image class="isplay-img" v-show="isPlay" src="../../static/images/play.svg" mode=""></image>
+						<image class="isplay-img" v-show="!isPlay" src="../../static/images/notplay.svg" mode=""></image>
+					</view>
+					<view v-if="copyAudioList.length>1" class="flex-item" @click="next(false)">
+						<uni-icons type="arrowright" color="#fff" size="25"></uni-icons>
+					</view>
 				</view>
 				<view class="lyric-opcity player-lyric" @click="toLyric">
 					<view class="ric">{{lytop}}</view>
@@ -34,37 +42,33 @@
 				</view>
 			</view>
 			<playBottom :isLike="isLike" @cancle="cancleLike" @confirm="addLike"></playBottom>
-		    <view class="poplist-icon" 
-			v-if="!isOpentList && copyAudioList.length>0" 
-			@click="openList">
-		    	<view style="display: flex;flex-wrap: wrap;justify-content: center;">
-		    		<uni-icons type="list" color="#6b6b6b" size="25"></uni-icons>
-		    		<text style="font-size: 28rpx;">列表</text>
-		    	</view>
+			<view class="poplist-icon" v-if="!isOpentList && copyAudioList.length>0" @click="openList">
+				<view style="display: flex;flex-wrap: wrap;justify-content: center;">
+					<uni-icons type="list" color="#6b6b6b" size="25"></uni-icons>
+					<text style="font-size: 28rpx;">列表</text>
+				</view>
 			</view>
 		</view>
 		<view class="poplist-box" :class="[isOpentList?'':'hide']">
 			<view class="title">
 				<text class="total">当前播放({{copyAudioList.length}})</text>
-				<text class="model"  v-if="playModel==0" @click="setPlayModel">
+				<text class="model" v-if="playModel==0" @click="setPlayModel">
 					<text class="iconfont">&#xe66c;</text>
 					<text>列表循环</text>
 				</text>
-				<text class="model"  v-if="playModel==1" @click="setPlayModel">
+				<text class="model" v-if="playModel==1" @click="setPlayModel">
 					<text class="iconfont">&#xe66b;</text>
 					<text>随机播放</text>
 				</text>
-				<text class="model"  v-if="playModel==2" @click="setPlayModel">
+				<text class="model" v-if="playModel==2" @click="setPlayModel">
 					<text class="iconfont">&#xe66d;</text>
 					<text>单曲循环</text>
 				</text>
 			</view>
 			<scroll-view scroll-y="true" style="height: 578rpx;">
-				<view class="item-con" 
-				:class="[index == curPlayIndex?'active':'']" 
-				v-for="(item,index) in copyAudioList" 
-				:key="index"
-				@click="initPlay(item.id,index)">
+				<view class="item-con" :class="[index == curPlayIndex?'active':'']"
+					v-for="(item,index) in copyAudioList" :key="index" 
+					@click="initPlay(item.id,index)">
 					<view style="font-size: 36rpx;width: 60rpx;" class="num text-color">
 						{{index+1}}
 					</view>
@@ -109,8 +113,8 @@
 		},
 		data() {
 			return {
-				isOpentList:false, //是否打开播放列表
-				playModel: 0,//播放模式
+				isOpentList: false, //是否打开播放列表
+				playModel: 0, //播放模式
 				song: {
 					id: '',
 					url: '',
@@ -139,8 +143,8 @@
 			}
 		},
 		onLoad(param) {
-			if(!param.songId){
-					return ;
+			if (!param.songId) {
+				return;
 			}
 			uni.getSystemInfo({
 				success: (res) => {
@@ -152,17 +156,18 @@
 			let id = param.songId;
 			this.initPlay(id);
 			this.judgeLike(id);
-			if(param.index && param.list){
+			if (param.index && param.list) {
 				const list = JSON.parse(decodeURIComponent(param.list));
 				this.curPlayIndex = Number(param.index);
+				this.setAudiolist(list);
 				//列表延后渲染
-				setTimeout(()=>{
+				setTimeout(() => {
 					this.copyAudioList = list;
-				},1000)
+				}, 1000)
 			}
 		},
 		computed: {
-			// ...mapGetters(['playdetail']),
+			...mapGetters(['audiolist']),
 			playTimeNum() {
 				return this.$util.formatTime(this.playTime)
 			},
@@ -183,41 +188,43 @@
 			openList() {
 				this.isOpentList = !this.isOpentList;
 			},
-			closeList(){
+			closeList() {
 				this.isOpentList = !this.isOpentList;
 			},
-			listCloseOne(index){
-				const list  = this.copyAudioList;
-				console.log(index)
-				list.splice(index,1)
-				if(list.length>0){
-					if(index == this.curPlayIndex){
-						if(index<list.length){
-							this.initPlay(list[index].id);
-							this.curPlayIndex = index
-						}else{
-							this.initPlay(list[0].id);
-							this.curPlayIndex = 0;
-						}
-					}else{
-						this.curPlayIndex = index>this.curPlayIndex?this.curPlayIndex:this.curPlayIndex-1;
-					}
-					
-					this.copyAudioList = list;
-					this.setAudiolist(list)
-					this.setIsplayactive(true)
-					
-				}else{
-					this.$au_player.stop();
-					uni.navigateBack({
-						delta: 1
-					});
+			getIndex(type, isAuto) {
+				//['列表循环', '随机播放', '单曲循环']
+				let next = 0;
+				let prev = 0;
+				const cur = this.curPlayIndex;
+				const last = this.audiolist.length - 1;
+				if (this.playModel === 0 || this.playModel === 2) {
+					next = cur == last ? 0 : cur + 1;
+					prev = cur == 0 ? last : cur - 1;
 				}
+				if (this.playModel === 1) {
+					next = Math.floor(Math.random() * (last + 1))
+					prev = Math.floor(Math.random() * (last + 1))
+				}
+				if (isAuto && this.playModel === 2) {
+					next = cur
+				}
+				return type == 'next' ? next : prev
 			},
-			
+			prev() {
+				const index = this.getIndex('prev')
+				this.initPlay(this.audiolist[index].id)
+				this.curPlayIndex = index;
+			},
+			next(isAuto) {
+				const index = this.getIndex('next', isAuto)
+				// console.log(this.audiolist);
+				this.initPlay(this.audiolist[index].id)
+				this.curPlayIndex = index;
+			},
 			//获取歌曲数据并开始播放
-			initPlay(id,index) {
-				if(index){
+			initPlay(id, index) {
+				// console.log(index);
+				if (index || index>=0) {
 					this.curPlayIndex = index;
 				}
 				Vue.prototype.cusPlay = this.onPlayFn
@@ -359,12 +366,10 @@
 			//歌曲播放结束
 			onEndedFn() {
 				// console.log('ended')
-				this.isPlay = true
-				this.$au_player.url = this.song.url;
-				this.$au_player.title = this.song.name;
-				this.$au_player.coverImgUrl = this.song.picUrl;
-				this.$au_player.singer = this.song.singer;
-				this.$au_player.src = this.song.url;
+				this.isPlay = false;
+				this.setIsplayingmusic(false)
+				this.setIsplayactive(false)
+				this.next(true);
 			},
 			//保存歌曲到历史记录
 			saveSong(OldSong) {
@@ -392,115 +397,116 @@
 					}
 				})
 			},
-		    //添加收藏
-		    addLike() {
-		    	this.isLike = true;
-		    	let id = this.userId;
-		    	let likeSong = this.likeSong;
-		    	db.collection('userLike').doc(id).get({
-		    		success: res => {
-		    			// console.log("成功："+res);
-		    			let song = res.data.like_songs;
-		    			// console.log(re.data);
-		    			song.unshift(likeSong);
-		    			// console.log(song);
-		    			db.collection('userLike').doc(id).update({
-		    				data: {
-		    					like_songs: song
-		    				},
-		    				success: (res) => {
-		    					// console.log(es.data)
-		    				},
-		    				fail: err => {
-		    					// console.log(er);
-		    				}
-		    			})
-		    		},
-		    		fail: err => {
-		    			// console.log("失败："+err);
-		    			db.collection('userLike').add({
-		    				data: {
-		    					_id: id,
-		    					like_songs: [likeSong],
-		    				},
-		    				success: (res) => {
-		    					// console.log(res)
-		    				}
-		    			})
-		    		}
-		    	})
-		    },
-		    //取消收藏
-		    cancleLike() {
-		    	this.isLike = false;
-		    	let id = this.userId;
-		    	let _id = this.song.id;
-		    	db.collection('userLike').doc(id).get({
-		    		success: res => {
-		    			let song = res.data.like_songs;
-		    			song.forEach((item, index) => {
-		    				if (item.id == _id) {
-		    					song.splice(index, 1)
-		    				}
-		    			});
-		    			// console.log(song);
-		    			db.collection('userLike').doc(id).update({
-		    				data: {
-		    					like_songs: song
-		    				},
-		    				success: (res) => {
-		    					// console.log(es.data)
-		    				},
-		    				fail: err => {
-		    					// console.log(er);
-		    				}
-		    			})
-		    		},
-		    	})
-		    },
-		    //判断歌曲是否收藏
-		    judgeLike(id) {
-		    	uni.getStorage({
-		    		key: "userId",
-		    		success: res => {
-		    			let _id = res.data;
-		    			this.userId = _id;
-		    			db.collection('userLike').doc(_id).get({
-		    				success: res => {
-		    					console.log("成功：");
-		    					let song = res.data.like_songs;
-		    					song.forEach(item => {
-		    						if (item.id == id) {
-		    							this.isLike = true;
-		    						}
-		    					})
-		    				},
-		    			})
-		    		},
-		    	});
-		    	this.$forceUpdate()
-		    	// console.log(this.isLike);
-		    },
-		    //控制歌曲播放
-		    playCtrol() {
-		    	if (this.isPlay) {
-		    		this.$au_player.pause();
-		    	} else {
-		    		this.$au_player.play();
-		    	}
-		    	this.isPlay = !this.isPlay;
-		    	this.setIsplayingmusic(this.isPlay)
-		    },
-		    //显示或隐藏全部歌词
-		    toLyric() {
-		    	this.isLyric = !this.isLyric;
-		    },
+			//添加收藏
+			addLike() {
+				this.isLike = true;
+				let id = this.userId;
+				let likeSong = this.likeSong;
+				db.collection('userLike').doc(id).get({
+					success: res => {
+						// console.log("成功："+res);
+						let song = res.data.like_songs;
+						// console.log(re.data);
+						song.unshift(likeSong);
+						// console.log(song);
+						db.collection('userLike').doc(id).update({
+							data: {
+								like_songs: song
+							},
+							success: (res) => {
+								// console.log(es.data)
+							},
+							fail: err => {
+								// console.log(er);
+							}
+						})
+					},
+					fail: err => {
+						// console.log("失败："+err);
+						db.collection('userLike').add({
+							data: {
+								_id: id,
+								like_songs: [likeSong],
+							},
+							success: (res) => {
+								// console.log(res)
+							}
+						})
+					}
+				})
+			},
+			//取消收藏
+			cancleLike() {
+				this.isLike = false;
+				let id = this.userId;
+				let _id = this.song.id;
+				db.collection('userLike').doc(id).get({
+					success: res => {
+						let song = res.data.like_songs;
+						song.forEach((item, index) => {
+							if (item.id == _id) {
+								song.splice(index, 1)
+							}
+						});
+						// console.log(song);
+						db.collection('userLike').doc(id).update({
+							data: {
+								like_songs: song
+							},
+							success: (res) => {
+								// console.log(es.data)
+							},
+							fail: err => {
+								// console.log(er);
+							}
+						})
+					},
+				})
+			},
+			//判断歌曲是否收藏
+			judgeLike(id) {
+				uni.getStorage({
+					key: "userId",
+					success: res => {
+						let _id = res.data;
+						this.userId = _id;
+						db.collection('userLike').doc(_id).get({
+							success: res => {
+								console.log("成功：");
+								let song = res.data.like_songs;
+								song.forEach(item => {
+									if (item.id == id) {
+										this.isLike = true;
+									}
+								})
+							},
+						})
+					},
+				});
+				this.$forceUpdate()
+				// console.log(this.isLike);
+			},
+			//控制歌曲播放
+			playCtrol() {
+				if (this.isPlay) {
+					this.$au_player.pause();
+				} else {
+					this.$au_player.play();
+				}
+				this.isPlay = !this.isPlay;
+				this.setIsplayingmusic(this.isPlay)
+			},
+			//显示或隐藏全部歌词
+			toLyric() {
+				this.isLyric = !this.isLyric;
+			},
 		}
 	}
 </script>
 
 <style lang='scss' scoped>
 	@import "../../static/scss/songList.scss";
+
 	.song-player {
 		height: 100%;
 
@@ -508,8 +514,8 @@
 			height: 100%;
 			position: relative;
 			overflow: hidden;
-			
-            .poplist-icon{
+
+			.poplist-icon {
 				position: fixed;
 				bottom: 450rpx;
 				right: 60rpx;
@@ -520,6 +526,7 @@
 				display: flex;
 				align-items: center;
 			}
+
 			.player-bgimg {
 				width: 100%;
 				height: 100%;
@@ -539,9 +546,9 @@
 				animation: rotate 25s linear infinite;
 				position: absolute;
 				top: 70rpx;
-				left: 100rpx;
-				width: 550rpx;
-				height: 550rpx;
+				left: 150rpx;
+				width: 450rpx;
+				height: 450rpx;
 				border-radius: 50%;
 				background-color: rgba(255, 255, 255, 0.1);
 				display: flex;
@@ -564,33 +571,45 @@
 					}
 				}
 			}
-
-			.isplay {
+            
+			.play-ctrol{
 				position: relative;
-				top: 290rpx;
+				top: 250rpx;
 				display: flex;
-				justify-content: center;
 				align-items: center;
-				height: 120rpx;
-
-				.isplay-bg {
-					position: absolute;
-					width: 120rpx;
-					height: 100%;
-					background: rgba(0, 0, 0, 0.8);
-					opacity: 0.8;
-					border-radius: 75rpx;
-					z-index: 1;
-				}
-
-				.isplay-img {
+				height: 100rpx;
+				
+				.flex-item{
+					padding: 0 50rpx;
 					width: 50rpx;
-					height: 50rpx;
-					z-index: 100;
+					height: 100%;
 				}
-
+				.isplay {
+					width: 450rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					height: 100%;
+					margin: 0 auto;
+					.isplay-bg {
+						position: absolute;
+						width: 100rpx;
+						height: 100%;
+						background: rgba(0, 0, 0, 0.8);
+						opacity: 0.8;
+						border-radius: 50%;
+						z-index: 1;
+					}
+				
+					.isplay-img {
+						width: 50rpx;
+						height: 50rpx;
+						z-index: 100;
+					}
+				
+				}
+				
 			}
-
 			.lyric-opcity {
 				-webkit-mask-image: linear-gradient(to bottom,
 						rgba(255, 255, 255, 0) 0,
@@ -640,35 +659,42 @@
 				}
 			}
 		}
-	    .poplist-box{
-	    	position: fixed;
-	    	display: block;
-	    	bottom: 0;
-	    	height: 800rpx;
-	    	width: 100%;
-	    	background-color: #FFFFFF;
-	    	z-index: 1001;
-	    	border-radius: 5% 5% 0 0;
-	    	&.hide{
-	    		bottom:-800rpx;
-	    	}
-	    	transition: all .15s linear;
-	    	.title{
-	    		display: flex;
-	    		justify-content: space-between;
-	    		width: 100%;
-	    		height: 120rpx;
-	    		line-height: 120rpx;
-	    		font-size: 34rpx;
-	    		.total{
-	    			font-size: 40rpx;
+
+		.poplist-box {
+			position: fixed;
+			display: block;
+			bottom: 0;
+			height: 800rpx;
+			width: 100%;
+			background-color: #FFFFFF;
+			z-index: 1001;
+			border-radius: 5% 5% 0 0;
+
+			&.hide {
+				bottom: -800rpx;
+			}
+
+			transition: all .15s linear;
+
+			.title {
+				display: flex;
+				justify-content: space-between;
+				width: 100%;
+				height: 120rpx;
+				line-height: 120rpx;
+				font-size: 34rpx;
+
+				.total {
+					font-size: 40rpx;
 					margin-left: 50rpx;
-	    		}
-	    		.model{
-	    			margin-right: 50rpx;
-	    		}
-	    	}
-	        .poplist-close{
+				}
+
+				.model {
+					margin-right: 50rpx;
+				}
+			}
+
+			.poplist-close {
 				position: absolute;
 				bottom: 0;
 				width: 100%;
@@ -680,15 +706,16 @@
 			}
 		}
 	}
-    @keyframes rotate {
-    	0% {
-    		transform: rotateZ(0deg);
-    		/*从0度开始*/
-    	}
-    
-    	100% {
-    		transform: rotateZ(360deg);
-    		/*360度结束*/
-    	}
-    }
+
+	@keyframes rotate {
+		0% {
+			transform: rotateZ(0deg);
+			/*从0度开始*/
+		}
+
+		100% {
+			transform: rotateZ(360deg);
+			/*360度结束*/
+		}
+	}
 </style>
