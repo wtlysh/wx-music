@@ -6,6 +6,7 @@
 		:top="top"
 		:tracks="tracks" 
 		></playlistCon>
+		<playing-box></playing-box>
 	</view>
 </template>
 

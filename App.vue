@@ -92,5 +92,8 @@
 		// background-size: cover;
 		background-size: 100%;
 	}
+	.playing{
+		margin-bottom: 110rpx;
+	}
 	
 </style>

@@ -76,11 +76,12 @@
 				const list = this.tracks;
 				let index = 0;
 				list.forEach((v,i)=>{
+					this.$set(v,'index',i)
 					if(v.id == id ){
 						index = i;
 					}
 				})
-				// console.log(index)
+				// console.log(list)
 				uni.navigateTo({
 					url: '/pages/song/player?songId='+id+'&index='+index+'&list='+ encodeURIComponent(JSON.stringify(list))
 				})

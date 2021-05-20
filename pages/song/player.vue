@@ -10,15 +10,15 @@
 					</view>
 				</view>
 				<view class="play-ctrol">
-					<view v-if="copyAudioList.length>1" class="flex-item" @click="prev">
+					<view v-if="audiolist.length>1" class="flex-item" @click="prev">
 						<uni-icons type="arrowleft" color="#fff" size="25"></uni-icons>
 					</view>
 					<view class="isplay" @click="playCtrol">
 						<view class="isplay-bg"></view>
-						<image class="isplay-img" v-show="isPlay" src="../../static/images/play.svg" mode=""></image>
-						<image class="isplay-img" v-show="!isPlay" src="../../static/images/notplay.svg" mode=""></image>
+						<image class="isplay-img" v-if="isPlay" src="../../static/images/play.svg" mode=""></image>
+						<image class="isplay-img" v-if="!isPlay" src="../../static/images/notplay.svg" mode=""></image>
 					</view>
-					<view v-if="copyAudioList.length>1" class="flex-item" @click="next(false)">
+					<view v-if="audiolist.length>1" class="flex-item" @click="next(false)">
 						<uni-icons type="arrowright" color="#fff" size="25"></uni-icons>
 					</view>
 				</view>
@@ -42,54 +42,16 @@
 				</view>
 			</view>
 			<playBottom :isLike="isLike" @cancle="cancleLike" @confirm="addLike"></playBottom>
-			<view class="poplist-icon" v-if="!isOpentList && copyAudioList.length>0" @click="openList">
+			<view class="poplist-icon" @click="isOpentList=true">
 				<view style="display: flex;flex-wrap: wrap;justify-content: center;">
 					<uni-icons type="list" color="#6b6b6b" size="25"></uni-icons>
 					<text style="font-size: 28rpx;">列表</text>
 				</view>
 			</view>
 		</view>
-		<view class="poplist-box" :class="[isOpentList?'':'hide']">
-			<view class="title">
-				<text class="total">当前播放({{copyAudioList.length}})</text>
-				<text class="model" v-if="playModel==0" @click="setPlayModel">
-					<text class="iconfont">&#xe66c;</text>
-					<text>列表循环</text>
-				</text>
-				<text class="model" v-if="playModel==1" @click="setPlayModel">
-					<text class="iconfont">&#xe66b;</text>
-					<text>随机播放</text>
-				</text>
-				<text class="model" v-if="playModel==2" @click="setPlayModel">
-					<text class="iconfont">&#xe66d;</text>
-					<text>单曲循环</text>
-				</text>
-			</view>
-			<scroll-view scroll-y="true" style="height: 578rpx;">
-				<view class="item-con" :class="[index == curPlayIndex?'active':'']"
-					v-for="(item,index) in copyAudioList" :key="index" 
-					@click="initPlay(item.id,index)">
-					<view style="font-size: 36rpx;width: 60rpx;" class="num text-color">
-						{{index+1}}
-					</view>
-					<view style="padding-left: 30rpx;width: 470rpx;">
-						<view class="item-name">
-							{{item.name}}
-						</view>
-						<view class="num song-text text-color">
-							{{item.ar[0].name}}
-						</view>
-					</view>
-					<view style="width: 90rpx;">
-						<image class="item-img" src="../static/images/topaly.svg" mode="">
-						</image>
-					</view>
-				</view>
-			</scroll-view>
-			<view class="poplist-close" @click="closeList">
-				关闭
-			</view>
-		</view>
+		<popList :isOpentList="isOpentList" ref="child" 
+		@close="isOpentList=false"
+		@play="initPlay"></popList>
 	</view>
 </template>
 
@@ -104,17 +66,18 @@
 		apiLyic
 	} from '../../api/player.js'
 	import playBottom from './components/playBottom.vue'
+	import popList from '../../components/popList.vue'
 	import Vue from 'vue'
 	let update = true;
 	const db = wx.cloud.database();
 	export default {
 		components: {
-			playBottom
+			playBottom,
+			popList
 		},
 		data() {
 			return {
 				isOpentList: false, //是否打开播放列表
-				playModel: 0, //播放模式
 				song: {
 					id: '',
 					url: '',
@@ -124,18 +87,17 @@
 					picUrl: '',
 				},
 				isCanPlay: true, //资源是否有用
+				isPlay: true,//是否播放
 				lyric: [], //歌词
 				lytop: '',
 				lycur: '',
 				lybot: '',
-				isPlay: true, //是否播放
 				isLyric: false, //是否显示全部歌词
 				lyricIndex: 0, //定位当前歌词
 				ctrolIndex: 0, //控制高亮歌词
+				curPlayIndex: 0, //当前播放歌曲在list内的索引
 				playTime: 0,
-				curPlayTime: 0,
-				curPlayIndex: 0,
-				copyAudioList: [],
+				curPlayTime: 0 ,
 				windowHeight: 0, //屏幕高度
 				likeSong: {}, //收藏歌曲
 				isLike: false, //是否收藏
@@ -154,20 +116,17 @@
 				}
 			});
 			let id = param.songId;
+			this.curPlayIndex = Number(param.index);
 			this.initPlay(id);
 			this.judgeLike(id);
-			if (param.index && param.list) {
+			if(param.list){
 				const list = JSON.parse(decodeURIComponent(param.list));
-				this.curPlayIndex = Number(param.index);
 				this.setAudiolist(list);
-				//列表延后渲染
-				setTimeout(() => {
-					this.copyAudioList = list;
-				}, 1000)
 			}
+			// console.log(this.playdetail)
 		},
 		computed: {
-			...mapGetters(['audiolist']),
+			...mapGetters(['playdetail','audiolist','isplayingmusic']),
 			playTimeNum() {
 				return this.$util.formatTime(this.playTime)
 			},
@@ -177,60 +136,21 @@
 		},
 		methods: {
 			...mapMutations(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
-			//设置播放模式
-			setPlayModel() {
-				this.playModel = this.playModel == 2 ? 0 : this.playModel + 1;
-				uni.showToast({
-					icon: 'none',
-					title: ['列表循环', '随机播放', '单曲循环'][this.playModel]
-				})
-			},
-			openList() {
-				this.isOpentList = !this.isOpentList;
-			},
-			closeList() {
-				this.isOpentList = !this.isOpentList;
-			},
-			getIndex(type, isAuto) {
-				//['列表循环', '随机播放', '单曲循环']
-				let next = 0;
-				let prev = 0;
-				const cur = this.curPlayIndex;
-				const last = this.audiolist.length - 1;
-				if (this.playModel === 0 || this.playModel === 2) {
-					next = cur == last ? 0 : cur + 1;
-					prev = cur == 0 ? last : cur - 1;
-				}
-				if (this.playModel === 1) {
-					next = Math.floor(Math.random() * (last + 1))
-					prev = Math.floor(Math.random() * (last + 1))
-				}
-				if (isAuto && this.playModel === 2) {
-					next = cur
-				}
-				return type == 'next' ? next : prev
-			},
 			prev() {
-				const index = this.getIndex('prev')
-				this.initPlay(this.audiolist[index].id)
+				const index = this.$refs.child.getIndex('prev');
 				this.curPlayIndex = index;
+				this.initPlay(this.audiolist[index].id)
 			},
 			next(isAuto) {
-				const index = this.getIndex('next', isAuto)
-				// console.log(this.audiolist);
-				this.initPlay(this.audiolist[index].id)
+				const index = this.$refs.child.getIndex('next', isAuto)
 				this.curPlayIndex = index;
+				this.initPlay(this.audiolist[index].id)
 			},
 			//获取歌曲数据并开始播放
-			initPlay(id, index) {
-				// console.log(index);
-				if (index || index>=0) {
-					this.curPlayIndex = index;
-				}
-				Vue.prototype.cusPlay = this.onPlayFn
+			initPlay(id) {
+				Vue.prototype.cusPlay = this.onPlayFn;
 				Vue.prototype.cusTimeUpdate = this.onTimeUpdateFn
-				Vue.prototype.cusEnded = this.onEndedFn
-
+				Vue.prototype.cusEnded = this.onEndedFn;
 				Promise.all([apiSong({
 					id
 				}), apiSongDetail({
@@ -267,8 +187,11 @@
 						title: this.song.name
 					})
 					this.setPlaydetail({
+						index:this.curPlayIndex,
 						id,
-						pic: sdetail.al.picUrl
+						picUrl: sdetail.al.picUrl,
+						desc: sdetail.name,
+						time: Math.floor(sdetail.dt / 1000) // 播放时长
 					})
 					this.$au_player.url = this.song.url;
 					this.$au_player.title = this.song.name;
@@ -278,7 +201,6 @@
 					this.$au_player.autoplay = true;
 					//app
 					this.$au_player.src = this.song.url;
-
 					let OldSong = {
 						id,
 						name: sdetail.name,
@@ -334,8 +256,8 @@
 			//歌曲正在播放
 			onPlayFn() {
 				this.playTime = this.song.time;
-				this.isPlay = true
-				this.setIsplayingmusic(true)
+				this.isPlay = true;
+				this.setIsplayingmusic(true);
 				this.setIsplayactive(true)
 				// console.log('onplaying')
 			},
@@ -361,12 +283,10 @@
 					}
 				}
 				this.$forceUpdate()
-
 			},
-			//歌曲播放结束
+			// //歌曲播放结束
 			onEndedFn() {
 				// console.log('ended')
-				this.isPlay = false;
 				this.setIsplayingmusic(false)
 				this.setIsplayactive(false)
 				this.next(true);
@@ -505,8 +425,6 @@
 </script>
 
 <style lang='scss' scoped>
-	@import "../../static/scss/songList.scss";
-
 	.song-player {
 		height: 100%;
 
@@ -657,52 +575,6 @@
 					opacity: 1;
 					color: #8dc63f;
 				}
-			}
-		}
-
-		.poplist-box {
-			position: fixed;
-			display: block;
-			bottom: 0;
-			height: 800rpx;
-			width: 100%;
-			background-color: #FFFFFF;
-			z-index: 1001;
-			border-radius: 5% 5% 0 0;
-
-			&.hide {
-				bottom: -800rpx;
-			}
-
-			transition: all .15s linear;
-
-			.title {
-				display: flex;
-				justify-content: space-between;
-				width: 100%;
-				height: 120rpx;
-				line-height: 120rpx;
-				font-size: 34rpx;
-
-				.total {
-					font-size: 40rpx;
-					margin-left: 50rpx;
-				}
-
-				.model {
-					margin-right: 50rpx;
-				}
-			}
-
-			.poplist-close {
-				position: absolute;
-				bottom: 0;
-				width: 100%;
-				height: 100rpx;
-				background: #fff;
-				text-align: center;
-				line-height: 100rpx;
-				font-size: 32rpx;
 			}
 		}
 	}

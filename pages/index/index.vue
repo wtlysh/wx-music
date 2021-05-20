@@ -7,6 +7,7 @@
 			<newsongList :songs="Newsongs" :newId="newId"></newsongList>
 			<playlist :playlist="playlist"></playlist>
 		</view>
+		<playing-box></playing-box>
 	</view>
 </template>
 
@@ -29,11 +30,11 @@
 		},
 		data() {
 			return {
-				hotId: "2250011882",  //热门榜单ID
-				Hotsongs:[],
+				hotId: "2250011882", //热门榜单ID
+				Hotsongs: [],
 				newId: "3779629",
 				Newsongs: [],
-				playlist:[],
+				playlist: [],
 			}
 		},
 		created() {
@@ -43,33 +44,34 @@
 			//获取首页所有数据
 			async getData(id, _id) {
 				await Promise.all([getMuListDetail({
-					id:id
+					id: id
 				}), getMuListDetail({
 					id: _id
-				}),getMuList({
-					limit:6
-				})]).then(res =>{
+				}), getMuList({
+					limit: 6
+				})]).then(res => {
 					// console.log(res);
 					let list = res[0].playlist.tracks;
-					for(let i=0;i<3;i++){
-						this.Hotsongs[i] = list.slice(i*3,(i+1)*3);
+					for (let i = 0; i < 3; i++) {
+						this.Hotsongs[i] = list.slice(i * 3, (i + 1) * 3);
 					}
-					this.Newsongs=res[1].playlist.tracks.slice(0, 6);
-					this.playlist= res[2].playlists;
-				}) 
+					this.Newsongs = res[1].playlist.tracks.slice(0, 6);
+					this.playlist = res[2].playlists;
+				})
 				//数据强制更新
 				this.$forceUpdate();
-			}, 
+			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	.home {
-		.home-con{
+		.home-con {
 			position: relative;
 			top: 110rpx;
 			background: #FFFFFF;
+			margin-bottom: 110rpx;
 		}
 	}
 </style>

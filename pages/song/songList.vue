@@ -13,6 +13,7 @@
 			</block>
 		</swiper>
 		<playlistCon :top="top" :tracks="songList[current].tracks" ></playlistCon>
+		<playing-box></playing-box>
 	</view>
 </template>
 

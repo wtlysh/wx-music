@@ -96,7 +96,7 @@ var components
 try {
   components = {
     uniIcons: function() {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 162))
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 169))
     }
   }
 } catch (e) {
@@ -120,6 +120,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.isOpentList = true
+    }
+
+    _vm.e1 = function($event) {
+      _vm.isOpentList = false
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -211,44 +220,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var _vuex = __webpack_require__(/*! vuex */ 8);
 
 
@@ -259,17 +230,18 @@ var _player = __webpack_require__(/*! ../../api/player.js */ 74);
 
 
 
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var playBottom = function playBottom() {__webpack_require__.e(/*! require.ensure | pages/song/components/playBottom */ "pages/song/components/playBottom").then((function () {return resolve(__webpack_require__(/*! ./components/playBottom.vue */ 170));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var playBottom = function playBottom() {__webpack_require__.e(/*! require.ensure | pages/song/components/playBottom */ "pages/song/components/playBottom").then((function () {return resolve(__webpack_require__(/*! ./components/playBottom.vue */ 177));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var popList = function popList() {Promise.all(/*! require.ensure | components/popList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/popList")]).then((function () {return resolve(__webpack_require__(/*! ../../components/popList.vue */ 184));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var update = true;
 var db = wx.cloud.database();var _default =
 {
   components: {
-    playBottom: playBottom },
+    playBottom: playBottom,
+    popList: popList },
 
   data: function data() {
     return {
       isOpentList: false, //是否打开播放列表
-      playModel: 0, //播放模式
       song: {
         id: '',
         url: '',
@@ -279,18 +251,17 @@ var db = wx.cloud.database();var _default =
         picUrl: '' },
 
       isCanPlay: true, //资源是否有用
+      isPlay: true, //是否播放
       lyric: [], //歌词
       lytop: '',
       lycur: '',
       lybot: '',
-      isPlay: true, //是否播放
       isLyric: false, //是否显示全部歌词
       lyricIndex: 0, //定位当前歌词
       ctrolIndex: 0, //控制高亮歌词
+      curPlayIndex: 0, //当前播放歌曲在list内的索引
       playTime: 0,
       curPlayTime: 0,
-      curPlayIndex: 0,
-      copyAudioList: [],
       windowHeight: 0, //屏幕高度
       likeSong: {}, //收藏歌曲
       isLike: false, //是否收藏
@@ -309,20 +280,17 @@ var db = wx.cloud.database();var _default =
       } });
 
     var id = param.songId;
+    this.curPlayIndex = Number(param.index);
     this.initPlay(id);
     this.judgeLike(id);
-    if (param.index && param.list) {
+    if (param.list) {
       var list = JSON.parse(decodeURIComponent(param.list));
-      this.curPlayIndex = Number(param.index);
       this.setAudiolist(list);
-      //列表延后渲染
-      setTimeout(function () {
-        _this.copyAudioList = list;
-      }, 1000);
     }
+    // console.log(this.playdetail)
   },
   computed: _objectSpread(_objectSpread({},
-  (0, _vuex.mapGetters)(['audiolist'])), {}, {
+  (0, _vuex.mapGetters)(['playdetail', 'audiolist', 'isplayingmusic'])), {}, {
     playTimeNum: function playTimeNum() {
       return this.$util.formatTime(this.playTime);
     },
@@ -332,60 +300,21 @@ var db = wx.cloud.database();var _default =
 
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive'])), {}, {
-    //设置播放模式
-    setPlayModel: function setPlayModel() {
-      this.playModel = this.playModel == 2 ? 0 : this.playModel + 1;
-      uni.showToast({
-        icon: 'none',
-        title: ['列表循环', '随机播放', '单曲循环'][this.playModel] });
-
-    },
-    openList: function openList() {
-      this.isOpentList = !this.isOpentList;
-    },
-    closeList: function closeList() {
-      this.isOpentList = !this.isOpentList;
-    },
-    getIndex: function getIndex(type, isAuto) {
-      //['列表循环', '随机播放', '单曲循环']
-      var next = 0;
-      var prev = 0;
-      var cur = this.curPlayIndex;
-      var last = this.audiolist.length - 1;
-      if (this.playModel === 0 || this.playModel === 2) {
-        next = cur == last ? 0 : cur + 1;
-        prev = cur == 0 ? last : cur - 1;
-      }
-      if (this.playModel === 1) {
-        next = Math.floor(Math.random() * (last + 1));
-        prev = Math.floor(Math.random() * (last + 1));
-      }
-      if (isAuto && this.playModel === 2) {
-        next = cur;
-      }
-      return type == 'next' ? next : prev;
-    },
     prev: function prev() {
-      var index = this.getIndex('prev');
-      this.initPlay(this.audiolist[index].id);
+      var index = this.$refs.child.getIndex('prev');
       this.curPlayIndex = index;
+      this.initPlay(this.audiolist[index].id);
     },
     next: function next(isAuto) {
-      var index = this.getIndex('next', isAuto);
-      // console.log(this.audiolist);
-      this.initPlay(this.audiolist[index].id);
+      var index = this.$refs.child.getIndex('next', isAuto);
       this.curPlayIndex = index;
+      this.initPlay(this.audiolist[index].id);
     },
     //获取歌曲数据并开始播放
-    initPlay: function initPlay(id, index) {var _this2 = this;
-      // console.log(index);
-      if (index || index >= 0) {
-        this.curPlayIndex = index;
-      }
+    initPlay: function initPlay(id) {var _this2 = this;
       _vue.default.prototype.cusPlay = this.onPlayFn;
       _vue.default.prototype.cusTimeUpdate = this.onTimeUpdateFn;
       _vue.default.prototype.cusEnded = this.onEndedFn;
-
       Promise.all([(0, _player.apiSong)({
         id: id }),
       (0, _player.apiSongDetail)({
@@ -422,9 +351,12 @@ var db = wx.cloud.database();var _default =
           title: _this2.song.name });
 
         _this2.setPlaydetail({
+          index: _this2.curPlayIndex,
           id: id,
-          pic: sdetail.al.picUrl });
-
+          picUrl: sdetail.al.picUrl,
+          desc: sdetail.name,
+          time: Math.floor(sdetail.dt / 1000) // 播放时长
+        });
         _this2.$au_player.url = _this2.song.url;
         _this2.$au_player.title = _this2.song.name;
         _this2.$au_player.coverImgUrl = _this2.song.picUrl;
@@ -433,7 +365,6 @@ var db = wx.cloud.database();var _default =
         _this2.$au_player.autoplay = true;
         //app
         _this2.$au_player.src = _this2.song.url;
-
         var OldSong = {
           id: id,
           name: sdetail.name,
@@ -516,12 +447,10 @@ var db = wx.cloud.database();var _default =
         }
       }
       this.$forceUpdate();
-
     },
-    //歌曲播放结束
+    // //歌曲播放结束
     onEndedFn: function onEndedFn() {
       // console.log('ended')
-      this.isPlay = false;
       this.setIsplayingmusic(false);
       this.setIsplayactive(false);
       this.next(true);

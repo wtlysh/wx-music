@@ -26,7 +26,7 @@
 /* 文章场景相关 */
 .me .delete-fab.data-v-373b9194 {
   position: fixed;
-  bottom: 100rpx;
+  bottom: 120rpx;
   right: 70rpx;
   height: 40px;
   width: 40px;

@@ -5,6 +5,7 @@
 			<image class="songlist-img" :src="bgimg" mode=""></image>
 		</view>
 		<playlistCon :top="top" :tracks="tracks"></playlistCon>
+		<playing-box></playing-box>
 	</view>
 </template>
 

@@ -36,6 +36,8 @@
     ]
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap2.json"
+  "usingComponents": {
+    "playing-box": "/components/playingBox"
+  },
+  "sitemapLocation": "sitemap0.json"
 }

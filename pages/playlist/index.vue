@@ -15,6 +15,7 @@
 				</view>
 			</view>
 		</view>
+		<playing-box></playing-box>
 	</view>
 </template>
 

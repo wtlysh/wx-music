@@ -24,38 +24,6 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.item-con.data-v-108ee09c {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  padding: 0 50rpx;
-  margin-bottom: 30rpx;
-}
-.item-con.active.data-v-108ee09c {
-  color: #8dc63f;
-}
-.item-con.active .num.data-v-108ee09c {
-  color: #8dc63f;
-}
-.item-con .item-name.data-v-108ee09c {
-  width: 450rpx;
-  font-size: 32rpx;
-  padding-bottom: 10rpx;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.item-con .item-img.data-v-108ee09c {
-  width: 50rpx;
-  height: 50rpx;
-  margin: 0 20rpx;
-}
-.item-con .text-color.data-v-108ee09c {
-  color: #6b6b6b;
-}
 .song-player.data-v-108ee09c {
   height: 100%;
 }
@@ -221,50 +189,6 @@
   font-size: 34rpx;
   opacity: 1;
   color: #8dc63f;
-}
-.song-player .poplist-box.data-v-108ee09c {
-  position: fixed;
-  display: block;
-  bottom: 0;
-  height: 800rpx;
-  width: 100%;
-  background-color: #FFFFFF;
-  z-index: 1001;
-  border-radius: 5% 5% 0 0;
-  -webkit-transition: all .15s linear;
-  transition: all .15s linear;
-}
-.song-player .poplist-box.hide.data-v-108ee09c {
-  bottom: -800rpx;
-}
-.song-player .poplist-box .title.data-v-108ee09c {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  width: 100%;
-  height: 120rpx;
-  line-height: 120rpx;
-  font-size: 34rpx;
-}
-.song-player .poplist-box .title .total.data-v-108ee09c {
-  font-size: 40rpx;
-  margin-left: 50rpx;
-}
-.song-player .poplist-box .title .model.data-v-108ee09c {
-  margin-right: 50rpx;
-}
-.song-player .poplist-box .poplist-close.data-v-108ee09c {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100rpx;
-  background: #fff;
-  text-align: center;
-  line-height: 100rpx;
-  font-size: 32rpx;
 }
 @-webkit-keyframes rotate-data-v-108ee09c {
 0% {

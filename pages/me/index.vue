@@ -13,6 +13,7 @@
 		<plylistCon v-if="isActive==1" :top="top" :tracks="likeTracks" :options="options2" :disabled="disabled"
 			@change="cancleLike">
 		</plylistCon>
+		<playing-box></playing-box>
 	</view>
 </template>
 
@@ -135,7 +136,7 @@
 	.me {
 		.delete-fab {
 			position: fixed;
-			bottom: 100rpx;
+			bottom: 120rpx;
 			right: 70rpx;
 			height: 40px;
 			width: 40px;

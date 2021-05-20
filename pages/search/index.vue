@@ -36,6 +36,7 @@
 			<searchsonglist v-show="isActive==0" :songList="songList"></searchsonglist>
 			<searchplaylist v-show="isActive==1" :playlist="playlist"></searchplaylist>
 		</view>
+		<playing-box></playing-box>
 	</view>
 </template>
 
