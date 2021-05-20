@@ -52,7 +52,7 @@
 		apiSong,
 		apiSongDetail
 	} from '../api/player.js'
-	import Vue from 'vue'
+	// import Vue from 'vue'
 	export default{
 		props:{
 			isOpentList:{
@@ -64,14 +64,14 @@
 			return {
 				playModel: 0,//播放模式
 				isPlay: false,//当前是否播放	
-				playTime: 0,
+				// playTime: 0,
 			}
 		},
 		computed:{
 			...mapGetters(['playdetail','audiolist']),
-			playTimeNum() {
-				return this.$util.formatTime(this.playTime)
-			}
+			// playTimeNum() {
+			// 	return this.$util.formatTime(this.playTime)
+			// }
 		},
 		methods:{
 			...mapMutations(['setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
@@ -103,16 +103,14 @@
 				return type == 'next' ? next : prev
 			},
 			//初始化播放
-			initPlay(id,index) {
-				// Vue.prototype.cusPlay = this.onPlayFn
-				// Vue.prototype.cusEnded = this.onEndedFn
+			async initPlay(id,index) {
 				let pages = getCurrentPages();
 				let page =(pages[pages.length - 1]).route;
 				if(page=='pages/song/player'){
 					this.$emit('play',id);
 					return;
-				}
-				Promise.all([apiSong({
+				};
+				await Promise.all([apiSong({
 					id
 				}), apiSongDetail({
 					ids: id
@@ -164,26 +162,6 @@
 					// console.info(e)
 					this.setIsplayactive(false)
 				})
-			},
-			//歌曲正在播放
-			onPlayFn() {
-				this.playTime = this.song.time;
-				this.isPlay = true
-				this.setIsplayingmusic(true)
-				this.setIsplayactive(true)
-				// console.log('onplaying')
-			},
-			//歌曲播放结束
-			onEndedFn() {
-				// console.log('ended')
-				this.isPlay = false;
-				this.setIsplayingmusic(false)
-				this.setIsplayactive(false)
-				this.next(true);
-			},
-			next(isAuto) {
-				const index = this.getIndex('next', isAuto);
-				this.initPlay(this.audiolist[index].id);
 			},
 			//保存歌曲到历史记录
 			saveSong(OldSong) {

@@ -64,6 +64,9 @@
   font-size: 32rpx;
   width: 410rpx;
   margin: 0 20rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .playing-box .playing-icons.data-v-1432e090 {
   display: -webkit-box;

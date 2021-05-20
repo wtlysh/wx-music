@@ -6,8 +6,9 @@
 				<view style="font-size: 36rpx;font-weight: bold;flex: 1;">
 					共{{tracks.length}}首歌曲
 				</view>
-				<view class="play-all">
-					播放全部
+				<view class="play-all" @click="playAll">
+					<image style="height: 50rpx;width: 50rpx;" src="../static/images/topaly.svg" mode=""></image>
+					<text style="margin-left: 10rpx;">播放全部</text>
 				</view>
 			</view>
 		</view>
@@ -42,6 +43,11 @@
 	import {
 		mapGetters
 	} from 'vuex'
+	import {
+		apiSong,
+		apiSongDetail
+	} from '../api/player.js'
+	import Vue from 'vue'
 	import swipeAction from "./swipe-action/index.vue"
 	import swipeActionItem from './swipe-action/swipe-action-item/index.vue'
 	export default {
@@ -67,8 +73,21 @@
 				default: true
 			}
 		},
+		data(){
+			return{
+				time: 0,
+				playTime: 0,
+				curPlayTime: 0,
+			}
+		},
 		computed:{
 			...mapGetters(['playdetail']),
+			playTimeNum() {
+				return this.$util.formatTime(this.playTime)
+			},
+			curPlayTimeNum() {
+				return this.$util.formatTime(this.curPlayTime)
+			}
 		},
 		methods: {
 			//跳转到歌曲播放页面
@@ -85,6 +104,10 @@
 				uni.navigateTo({
 					url: '/pages/song/player?songId='+id+'&index='+index+'&list='+ encodeURIComponent(JSON.stringify(list))
 				})
+			},
+			//播放全部歌曲
+			playAll(){
+				this.toSong(this.tracks[0].id)
 			},
 			//删除或取消收藏
 			change(id) {
@@ -116,10 +139,13 @@
 
 			.top-con {
 				display: flex;
-
+                height: 100%;
+				align-items: center;
 				.play-all {
-					// display: flex;
+					text-align: right;
 					font-size: 32rpx;
+					display: flex;
+					align-items: center;
 				}
 			}
 		}

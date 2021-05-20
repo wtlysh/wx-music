@@ -92,6 +92,9 @@
 				font-size: 32rpx;
 				width: 410rpx;
 				margin: 0 20rpx;
+				white-space: nowrap; //文本强制不换行；
+				text-overflow: ellipsis; //文本溢出显示省略号；
+				overflow: hidden; //溢出的部分隐藏
 			}
 		}
 

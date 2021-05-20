@@ -2061,45 +2061,7 @@ store;exports.default = _default;
 
 /***/ }),
 
-/***/ 13:
-/*!***************************************************!*\
-  !*** F:/workSpace/wx/wx-music/utils/commonFuc.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var commonFuc = {
-  // 格式化时间戳
-  formatDate: function formatDate(value) {
-    var date = new Date(value); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    var Y = date.getFullYear() + '-';
-    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
-    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-    var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-    var s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
-    return Y + M + D + h + m + s;
-  },
-  // 秒格式化 00:00 格式
-  formatTime: function formatTime(second) {
-    var sec = second % 60;
-    var min = Math.floor(second / 60);
-    if (min.toString().length < 2) {
-      min = '0' + min;
-    }
-    if (sec.toString().length < 2) {
-      sec = '0' + sec;
-    }
-    return min + ':' + sec;
-  } };var _default =
-
-
-commonFuc;exports.default = _default;
-
-/***/ }),
-
-/***/ 174:
+/***/ 126:
 /*!************************************************************************************!*\
   !*** F:/workSpace/wx/wx-music/uni_modules/uni-icons/components/uni-icons/icons.js ***!
   \************************************************************************************/
@@ -2238,6 +2200,44 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   "cloud-download-filled": "\uE8E9",
   "headphones": "\uE8BF",
   "shop": "\uE609" };exports.default = _default;
+
+/***/ }),
+
+/***/ 13:
+/*!***************************************************!*\
+  !*** F:/workSpace/wx/wx-music/utils/commonFuc.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var commonFuc = {
+  // 格式化时间戳
+  formatDate: function formatDate(value) {
+    var date = new Date(value); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
+    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+    var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+    var s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+    return Y + M + D + h + m + s;
+  },
+  // 秒格式化 00:00 格式
+  formatTime: function formatTime(second) {
+    var sec = second % 60;
+    var min = Math.floor(second / 60);
+    if (min.toString().length < 2) {
+      min = '0' + min;
+    }
+    if (sec.toString().length < 2) {
+      sec = '0' + sec;
+    }
+    return min + ':' + sec;
+  } };var _default =
+
+
+commonFuc;exports.default = _default;
 
 /***/ }),
 
@@ -8348,7 +8348,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 215:
+/***/ 216:
 /*!***********************************************************************************!*\
   !*** F:/workSpace/wx/wx-music/components/swipe-action/swipe-action-item/mpwxs.js ***!
   \***********************************************************************************/
@@ -9196,6 +9196,31 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 23:
+/*!******************************************************!*\
+  !*** F:/workSpace/wx/wx-music/utils/numberFormat.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.numberFormat = numberFormat;function numberFormat(value) {
+  var unit = '';
+  var k = 10000,
+  sizes = ['', '万', '亿', '万亿'],
+  i;
+  if (value < k) {
+    value = value;
+  } else {
+    i = Math.floor(Math.log(value) / Math.log(k));
+    value = (value / Math.pow(k, i)).toFixed(2);
+    unit = sizes[i];
+  }
+  return value + unit;
+}
+
+/***/ }),
+
+/***/ 24:
 /*!*********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/index.js ***!
   \*********************************************/
@@ -9203,7 +9228,7 @@ if (hadRuntime) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getMuListDetail = getMuListDetail;exports.getMuList = getMuList;exports.getHotMuList = getHotMuList;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.getMuListDetail = getMuListDetail;exports.getMuList = getMuList;exports.getHotMuList = getHotMuList;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //歌单详情
 function getMuListDetail(data) {
@@ -9232,7 +9257,7 @@ function getHotMuList(data) {
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /*!***********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/request.js ***!
   \***********************************************/
@@ -9333,31 +9358,6 @@ var tRequest = function tRequest(opts) {
 
 /***/ }),
 
-/***/ 247:
-/*!******************************************************!*\
-  !*** F:/workSpace/wx/wx-music/utils/numberFormat.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.numberFormat = numberFormat;function numberFormat(value) {
-  var unit = '';
-  var k = 10000,
-  sizes = ['', '万', '亿', '万亿'],
-  i;
-  if (value < k) {
-    value = value;
-  } else {
-    i = Math.floor(Math.log(value) / Math.log(k));
-    value = (value / Math.pow(k, i)).toFixed(2);
-    unit = sizes[i];
-  }
-  return value + unit;
-}
-
-/***/ }),
-
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -9400,7 +9400,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 41:
+/***/ 42:
 /*!**********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/search.js ***!
   \**********************************************/
@@ -9408,7 +9408,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.apiSearchDefault = apiSearchDefault;exports.apiSearchHot = apiSearchHot;exports.apiSerchSuggest = apiSerchSuggest;exports.apiSearch = apiSearch;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.apiSearchDefault = apiSearchDefault;exports.apiSearchHot = apiSearchHot;exports.apiSerchSuggest = apiSerchSuggest;exports.apiSearch = apiSearch;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //搜索关键字
 function apiSearchDefault(data) {
@@ -9445,7 +9445,7 @@ function apiSearch(data) {
 
 /***/ }),
 
-/***/ 74:
+/***/ 75:
 /*!**********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/player.js ***!
   \**********************************************/
@@ -9453,7 +9453,7 @@ function apiSearch(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.apiSong = apiSong;exports.apiSongDetail = apiSongDetail;exports.apiLyic = apiLyic;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 24));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.apiSong = apiSong;exports.apiSongDetail = apiSongDetail;exports.apiLyic = apiLyic;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 //单曲
 function apiSong(data) {
   return _request.default.request({
