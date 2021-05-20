@@ -30,7 +30,6 @@
   z-index: 100;
   width: 100%;
   top: 0;
-  border: 1px solid #f2f2f2;
 }
 .home-search .home-search-box.data-v-8b3e5b4a {
   margin: 20rpx 50rpx;

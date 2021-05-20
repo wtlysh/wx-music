@@ -168,10 +168,6 @@ var _default =
       type: String,
       default: "搜索你想听的歌曲" },
 
-    clearButton: {
-      type: Boolean,
-      default: false },
-
     cancelButton: {
       type: Boolean,
       default: false },
@@ -221,10 +217,6 @@ var _default =
       this.$nextTick(function () {
         _this2.showSync = true;
       });
-    },
-    clear: function clear() {
-      this.searchVal = "";
-      this.$emit("clear");
     },
     cancel: function cancel() {
       this.searchVal = "";

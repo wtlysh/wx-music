@@ -10,8 +10,8 @@
 			class="search__box-search-input"
 			confirm-type="search" type="text" v-model="searchVal" 
 			@confirm="confirm" @blur="blur" @focus="emitFocus" />
-			<view v-show="clearButton" class="searchbar__box-icon-clear"
-			 @click="clear">
+			<view v-show="cancelButton" class="searchbar__box-icon-clear"
+			 @click="cancel">
 				<slot name="clearIcon">
 					<uni-icons color="#c0c4cc" size="18" type="clear" />
 				</slot>
@@ -28,10 +28,6 @@
 			placeholder: {
 				type: String,
 				default: "搜索你想听的歌曲"
-			},
-			clearButton: {
-				type: Boolean,
-				default: false
 			},
 			cancelButton: {
 				type: Boolean,
@@ -82,10 +78,6 @@
 				this.$nextTick(() => {
 					this.showSync = true
 				})
-			},
-			clear() {
-				this.searchVal = "";
-				this.$emit("clear");
 			},
 			cancel() {
 				this.searchVal = "";

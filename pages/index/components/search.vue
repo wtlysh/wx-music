@@ -31,7 +31,6 @@
 		z-index: 100;
 		width: 100%;
 		top: 0;
-		border: 1px solid #f2f2f2;
 		.home-search-box{
 			margin: 20rpx 50rpx;
 			background: #f2f2f2;

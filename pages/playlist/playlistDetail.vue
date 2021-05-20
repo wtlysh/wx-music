@@ -14,6 +14,7 @@
 	import {
 		getMuListDetail
 	} from '../../api/index.js'
+	import {numberFormat} from '../../utils/numberFormat.js'
 	import playlistTop from './components/playlistTop.vue'
 	import playlistCon from '../../components/playlistCon.vue'
 	export default {
@@ -28,6 +29,7 @@
 						avatarUrl:'',
 						nickname:'',
 					},
+					desc:'',
 					description:''	
 				},
 				tracks:[],
@@ -50,8 +52,8 @@
 				}).then(res => {
 					// console.log(res)
 					let album = res.playlist;
-					// console.log(album)
-					this.bgimg = album.backgroundCoverUrl || album.coverImgUrl
+					this.bgimg = album.backgroundCoverUrl || album.coverImgUrl;
+					let desc = numberFormat(album.playCount);
 					this.album = {
 						id:album.id,
 						name:album.name,
@@ -59,6 +61,7 @@
 							avatarUrl:album.creator.avatarUrl,
 							nickname:album.creator.nickname
 						},
+						desc: desc,
 						description:album.description
 					};
 					this.tracks=album.tracks;

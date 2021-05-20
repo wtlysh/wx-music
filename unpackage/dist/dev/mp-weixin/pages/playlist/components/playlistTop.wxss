@@ -51,6 +51,12 @@
   display: flex;
   color: #FFFFFF;
   width: 680rpx;
+  position: relative;
+}
+.playlist-top .playlist-con .playlist-detail-con .play-count.data-v-a2131ec4 {
+  position: absolute;
+  top: 170rpx;
+  left: 60rpx;
 }
 .playlist-top .playlist-con .playlist-detail-con .playlist-creator.data-v-a2131ec4 {
   display: -webkit-box;

@@ -181,12 +181,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-var _search = __webpack_require__(/*! ../../api/search.js */ 41);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var searchBox = function searchBox() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchBox */ "pages/search/components/searchBox").then((function () {return resolve(__webpack_require__(/*! ./components/searchBox.vue */ 120));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchKeyword = function searchKeyword() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchKeyword */ "pages/search/components/searchKeyword").then((function () {return resolve(__webpack_require__(/*! ./components/searchKeyword.vue */ 127));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 134));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchsonglist = function searchsonglist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchsonglist */ "pages/search/components/searchsonglist").then((function () {return resolve(__webpack_require__(/*! ./components/searchsonglist.vue */ 141));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchplaylist = function searchplaylist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchplaylist */ "pages/search/components/searchplaylist").then((function () {return resolve(__webpack_require__(/*! ./components/searchplaylist.vue */ 148));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
-
+var _search = __webpack_require__(/*! ../../api/search.js */ 41);
 
 
 
+
+var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 247);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var searchBox = function searchBox() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchBox */ "pages/search/components/searchBox").then((function () {return resolve(__webpack_require__(/*! ./components/searchBox.vue */ 120));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchKeyword = function searchKeyword() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchKeyword */ "pages/search/components/searchKeyword").then((function () {return resolve(__webpack_require__(/*! ./components/searchKeyword.vue */ 127));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 134));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchsonglist = function searchsonglist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchsonglist */ "pages/search/components/searchsonglist").then((function () {return resolve(__webpack_require__(/*! ./components/searchsonglist.vue */ 141));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchplaylist = function searchplaylist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchplaylist */ "pages/search/components/searchplaylist").then((function () {return resolve(__webpack_require__(/*! ./components/searchplaylist.vue */ 148));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -243,6 +243,7 @@ var _search = __webpack_require__(/*! ../../api/search.js */ 41);function _inter
     focus: function focus() {
       // console.log('获取焦点')
       this.isFocus = true;
+      // this.showClose = true;
       this.isShowSongList = false;
       this.songList = [];
       this.playlist = [];
@@ -257,12 +258,13 @@ var _search = __webpack_require__(/*! ../../api/search.js */ 41);function _inter
       this.keywordList = [];
     },
     // clear(){
-    // 	// this.isFocus = true;
-    // 	console.log('this.keyword')
-    // 	this.keyword = '';
+    // 	this.isFocus = false;
+    // 	// console.log('this.keyword')
+    // 	// this.keyword = '';
     // 	this.showClose = false;
-    // 	// this.isShowContent = false;
-    // 	// this.isShowKeywordList = true;
+    // 	this.isShowContent = true;
+    // 	this.isShowKeywordList = false;
+    // 	this.searchTip = "";
     // },
     //取消搜索
     cancel: function cancel() {
@@ -292,10 +294,8 @@ var _search = __webpack_require__(/*! ../../api/search.js */ 41);function _inter
     inputChange: function inputChange(value) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var keyword;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 //兼容引入组件时传入参数情况
                 keyword = value;
-                _this2.keyword = keyword;
-                // console.log('this:' + this.keyword)
-                // this.showClose = !!(keyword);
-                if (
+                _this2.keyword = keyword;if (
+
                 keyword) {_context2.next = 6;break;}
                 _this2.keywordList = [];
                 _this2.isShowKeywordList = false;return _context2.abrupt("return");case 6:_context2.next = 8;return (
@@ -365,7 +365,7 @@ var _search = __webpack_require__(/*! ../../api/search.js */ 41);function _inter
 
                     });
                     _this3.playlist = res[1].result.playlists.map(function (item) {
-                      var desc = item.trackCount + '首歌曲 ' + item.creator.nickname + ' ' + item.playCount + '播放';
+                      var desc = item.trackCount + '首歌曲 ' + item.creator.nickname + ' ' + (0, _numberFormat.numberFormat)(item.playCount) + '播放';
                       return _defineProperty({
                         id: item.id,
                         name: item.name,

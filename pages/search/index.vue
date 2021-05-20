@@ -13,7 +13,6 @@
 		@focus="focus" 
 		@blur="blur"
 		@cancel="cancel"
-		@clear = "clear"
 		></searchBox>
 		<searchKeyword
 		v-show="!isShowSongList"
@@ -46,6 +45,7 @@
 		apiSearchDefault,
 		apiSearch
 	} from '../../api/search.js'
+	import {numberFormat} from '../../utils/numberFormat.js'
 	import searchBox from './components/searchBox.vue'
 	import searchKeyword from './components/searchKeyword.vue'
 	import typeTab from '../../components/typeTab.vue'
@@ -102,6 +102,7 @@
 			focus() {
 				// console.log('获取焦点')
 				this.isFocus = true;
+				// this.showClose = true;
 				this.isShowSongList = false;
 				this.songList=[];
 				this.playlist=[];
@@ -116,12 +117,13 @@
 				this.keywordList = [];
 			},
 			// clear(){
-			// 	// this.isFocus = true;
-			// 	console.log('this.keyword')
-			// 	this.keyword = '';
+			// 	this.isFocus = false;
+			// 	// console.log('this.keyword')
+			// 	// this.keyword = '';
 			// 	this.showClose = false;
-			// 	// this.isShowContent = false;
-			// 	// this.isShowKeywordList = true;
+			// 	this.isShowContent = true;
+			// 	this.isShowKeywordList = false;
+			// 	this.searchTip = "";
 			// },
 			//取消搜索
 			cancel() {
@@ -152,8 +154,6 @@
 				//兼容引入组件时传入参数情况
 				const keyword = value;
 				this.keyword = keyword;
-				// console.log('this:' + this.keyword)
-				// this.showClose = !!(keyword);
 
 				if (!keyword) {
 					this.keywordList = [];
@@ -224,7 +224,7 @@
 						}
 					});
 					this.playlist = res[1].result.playlists.map(item => {
-						let desc =  item.trackCount+'首歌曲 ' +item.creator.nickname +' ' + item.playCount+'播放';
+						let desc =  item.trackCount+'首歌曲 ' +item.creator.nickname +' ' + numberFormat(item.playCount)+'播放';
 						return {
 							id:item.id,
 							name:item.name,

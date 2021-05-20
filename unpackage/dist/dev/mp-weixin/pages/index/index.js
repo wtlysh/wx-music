@@ -152,6 +152,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 247);
 
 
 
@@ -196,7 +197,15 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 23);function _interop
                       _this.Hotsongs[i] = list.slice(i * 3, (i + 1) * 3);
                     }
                     _this.Newsongs = res[1].playlist.tracks.slice(0, 6);
-                    _this.playlist = res[2].playlists;
+                    _this.playlist = res[2].playlists.map(function (item) {
+                      var desc = (0, _numberFormat.numberFormat)(item.playCount);
+                      return {
+                        id: item.id,
+                        name: item.name,
+                        picUrl: item.coverImgUrl,
+                        desc: desc };
+
+                    });
                   }));case 2:
                 //数据强制更新
                 _this.$forceUpdate();case 3:case "end":return _context.stop();}}}, _callee);}))();

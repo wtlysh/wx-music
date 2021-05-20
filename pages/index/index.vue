@@ -12,6 +12,7 @@
 </template>
 
 <script>
+	import {numberFormat} from '../../utils/numberFormat.js'
 	import Search from './components/search.vue'
 	import hotsongList from './components/hotsongList.vue'
 	import newsongList from './components/newsongList.vue'
@@ -56,7 +57,15 @@
 						this.Hotsongs[i] = list.slice(i * 3, (i + 1) * 3);
 					}
 					this.Newsongs = res[1].playlist.tracks.slice(0, 6);
-					this.playlist = res[2].playlists;
+					this.playlist = res[2].playlists.map(item => {
+						let desc =  numberFormat(item.playCount);
+						return {
+							id:item.id,
+							name:item.name,
+							picUrl:item.coverImgUrl,
+							desc:desc,
+						}
+					});
 				})
 				//数据强制更新
 				this.$forceUpdate();

@@ -49,9 +49,15 @@
 .playlists .playlists-list .playlists-con .playlists-item.data-v-4a0fcee4 {
   width: 48%;
   margin-bottom: 30rpx;
+  position: relative;
 }
 .playlists .playlists-list .playlists-con .playlists-item.playlists-firstitem.data-v-4a0fcee4 {
   margin-top: 30rpx;
+}
+.playlists .playlists-list .playlists-con .playlists-item .play-count.data-v-4a0fcee4 {
+  position: absolute;
+  top: 270rpx;
+  right: 15rpx;
 }
 .playlists .playlists-list .playlists-con .playlists-item .playlists-item-name.data-v-4a0fcee4 {
   font-size: 32rpx;

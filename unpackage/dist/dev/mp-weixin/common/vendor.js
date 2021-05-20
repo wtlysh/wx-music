@@ -9333,6 +9333,31 @@ var tRequest = function tRequest(opts) {
 
 /***/ }),
 
+/***/ 247:
+/*!******************************************************!*\
+  !*** F:/workSpace/wx/wx-music/utils/numberFormat.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.numberFormat = numberFormat;function numberFormat(value) {
+  var unit = '';
+  var k = 10000,
+  sizes = ['', '万', '亿', '万亿'],
+  i;
+  if (value < k) {
+    value = value;
+  } else {
+    i = Math.floor(Math.log(value) / Math.log(k));
+    value = (value / Math.pow(k, i)).toFixed(2);
+    unit = sizes[i];
+  }
+  return value + unit;
+}
+
+/***/ }),
+
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!

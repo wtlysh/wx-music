@@ -7,7 +7,11 @@
 				<view class="home-playlist-list">
 					<view @click="toPlaylist(item.id)"
 					class="home-playlist-item" v-for="(item,index) in playlist" :key="index">
-						<image class="home-playlist-img" :src="item.coverImgUrl" mode=""></image>
+						<image class="home-playlist-img" :src="item.picUrl" mode=""></image>
+						<view class="play-count">
+							<uni-icons type="headphones" color="#fff" size="15"></uni-icons>
+							<text style="color: #fff;font-size: 22rpx;padding-left: 8rpx;">{{item.desc}}</text>
+						</view>
 						<view class="home-playlist-name">
 							{{item.name}}
 						</view>
@@ -65,11 +69,17 @@
 				.home-playlist-item {
 					width: 200rpx;
 					margin-bottom: 20rpx;
+					position: relative;
 				
 					.home-playlist-img {
 						width: 200rpx;
 						height: 200rpx;
 						border-radius: 20rpx;
+					}
+					.play-count{
+						position: absolute;
+						top: 150rpx;
+						right: 15rpx;
 					}
 					.home-playlist-name{
 						width: 200rpx;

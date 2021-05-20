@@ -143,9 +143,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _index = __webpack_require__(/*! ../../api/index.js */ 23);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var playlistTop = function playlistTop() {__webpack_require__.e(/*! require.ensure | pages/playlist/components/playlistTop */ "pages/playlist/components/playlistTop").then((function () {return resolve(__webpack_require__(/*! ./components/playlistTop.vue */ 155));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var playlistCon = function playlistCon() {Promise.all(/*! require.ensure | components/playlistCon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/playlistCon")]).then((function () {return resolve(__webpack_require__(/*! ../../components/playlistCon.vue */ 162));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _index = __webpack_require__(/*! ../../api/index.js */ 23);
 
 
+var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 247);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var playlistTop = function playlistTop() {__webpack_require__.e(/*! require.ensure | pages/playlist/components/playlistTop */ "pages/playlist/components/playlistTop").then((function () {return resolve(__webpack_require__(/*! ./components/playlistTop.vue */ 155));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var playlistCon = function playlistCon() {Promise.all(/*! require.ensure | components/playlistCon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/playlistCon")]).then((function () {return resolve(__webpack_require__(/*! ../../components/playlistCon.vue */ 162));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 {
@@ -160,6 +161,7 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 23);function _interop
           avatarUrl: '',
           nickname: '' },
 
+        desc: '',
         description: '' },
 
       tracks: [],
@@ -182,8 +184,8 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 23);function _interop
                   then(function (res) {
                     // console.log(res)
                     var album = res.playlist;
-                    // console.log(album)
                     _this.bgimg = album.backgroundCoverUrl || album.coverImgUrl;
+                    var desc = (0, _numberFormat.numberFormat)(album.playCount);
                     _this.album = {
                       id: album.id,
                       name: album.name,
@@ -191,6 +193,7 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 23);function _interop
                         avatarUrl: album.creator.avatarUrl,
                         nickname: album.creator.nickname },
 
+                      desc: desc,
                       description: album.description };
 
                     _this.tracks = album.tracks;

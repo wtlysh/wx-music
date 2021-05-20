@@ -7,8 +7,12 @@
 			</view>
 			<view class="playlists-con">
 				<view class="playlists-item" v-for="li in item" :key="li.id" @click="toPlaylist(li.id)">
-					<image style="width: 324rpx;height: 324rpx;border-radius: 20rpx;" :src="li.coverImgUrl" mode="">
+					<image style="width: 324rpx;height: 324rpx;border-radius: 20rpx;" :src="li.picUrl" mode="">
 					</image>
+					<view class="play-count">
+						<uni-icons type="headphones" color="#fff" size="15"></uni-icons>
+						<text style="color: #fff;font-size: 22rpx;padding-left: 8rpx;">{{li.desc}}</text>
+					</view>
 					<view class="playlists-item-name">
 						{{li.name}}
 					</view>
@@ -23,6 +27,7 @@
 	import {
 		getMuList
 	} from '../../api/index.js'
+	import {numberFormat} from '../../utils/numberFormat.js'
 	export default {
 		data() {
 			return {
@@ -46,8 +51,17 @@
 					cat: cat[2],
 					limit: 4
 				})]).then(res => {
+					// console.log(res[0].playlists)
 					for (let i = 0; i < cat.length; i++) {
-						this.playLists[i] = res[i].playlists;
+						this.playLists[i] = res[i].playlists.map(item => {
+						    let desc =  numberFormat(item.playCount);
+						    return {
+							   id:item.id,
+							   name:item.name,
+							   picUrl:item.coverImgUrl,
+							   desc:desc,
+						   }
+					    });
 					}
 				})
 				// console.log(this.playLists)
@@ -85,11 +99,16 @@
 				.playlists-item {
 					width: 48%;
 					margin-bottom: 30rpx;
+					position: relative;
 
 					&.playlists-firstitem {
 						margin-top: 30rpx;
 					}
-
+                    .play-count{
+                    	position: absolute;
+                    	top: 270rpx;
+                    	right: 15rpx;
+                    }
 					.playlists-item-name {
 						font-size: 32rpx;
 						padding-top: 10rpx;
