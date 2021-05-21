@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "search-box": "/pages/search/components/searchBox",
+    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons",
     "search-keyword": "/pages/search/components/searchKeyword",
     "type-tab": "/components/typeTab",
     "searchsonglist": "/pages/search/components/searchsonglist",

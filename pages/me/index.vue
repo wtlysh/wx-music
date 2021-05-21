@@ -77,7 +77,7 @@
 						if (res.confirm) {
 							// console.log('用户点击确定');
 							uni.removeStorage({
-								key: 'OldKeys',
+								key: 'OldSongs',
 								success: () => {
 									this.hisTracks = [];
 								}

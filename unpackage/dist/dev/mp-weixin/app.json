@@ -2,8 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/playlist/index",
-    "pages/search/index",
     "pages/playlist/playlistDetail",
+    "pages/search/index",
     "pages/song/index",
     "pages/song/songList",
     "pages/song/player",
@@ -39,5 +39,5 @@
   "usingComponents": {
     "playing-box": "/components/playingBox"
   },
-  "sitemapLocation": "sitemap43.json"
+  "sitemapLocation": "sitemap17.json"
 }

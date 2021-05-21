@@ -11,8 +11,6 @@
 		    }
 		    
 		},{
-		    "path" : "pages/search/index"
-		},{
 		    "path" : "pages/playlist/playlistDetail",
 		    "style" :                                                                                    
 		    {
@@ -20,6 +18,8 @@
 		        "enablePullDownRefresh": false
 		    }
 		    
+		},{
+		    "path" : "pages/search/index"
 		},{
 		    "path" : "pages/song/index",
 			"style" :
