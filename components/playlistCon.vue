@@ -2,11 +2,11 @@
 <template>
 	<view class="playlist-list-con">
 		<view class="playlist-list-top" :style="{top:top + 'rpx'}">
-			<view class="top-con">
-				<view style="font-size: 36rpx;font-weight: bold;flex: 1;">
+			<view class="top-con flex-align">
+				<view class="title" style="flex: 1;">
 					共{{tracks.length}}首歌曲
 				</view>
-				<view class="play-all" @click="playAll">
+				<view class="play-all flex-align" @click="playAll">
 					<image style="height: 50rpx;width: 50rpx;" src="../static/images/topaly.svg" mode=""></image>
 					<text style="margin-left: 10rpx;">播放全部</text>
 				</view>
@@ -14,14 +14,14 @@
 		</view>
 		<view class="playlist-list" :style="{top:(top+170)+'rpx'}">
 			<swipeAction>
-				<swipeActionItem class="playlist-list-item" :threshold="0" :right-options="options"
+				<swipeActionItem class="flex-align" :threshold="0" :right-options="options"
 					v-for="(item,index) in tracks" :key="index" @click="change(item.id)">
 					<view :class="['item-con',playdetail.id==item.id?'active':'']" @click="toSong(item.id)">
 						<view style="font-size: 36rpx;width: 60rpx;" class="num text-color">
 							{{index+1}}
 						</view>
 						<view style="padding-left: 30rpx;width: 470rpx;">
-							<view class="item-name">
+							<view class="item-name ellipsis">
 								{{item.name}}
 							</view>
 							<view class="num song-text text-color">
@@ -138,28 +138,15 @@
 			border-bottom: 1px solid #f2f2f2;
 
 			.top-con {
-				display: flex;
                 height: 100%;
-				align-items: center;
 				.play-all {
 					text-align: right;
 					font-size: 32rpx;
-					display: flex;
-					align-items: center;
 				}
 			}
 		}
-
-		.playlist-list {
+		.playlist-list{
 			position: relative;
-			// top: 550rpx;
-			// padding: 0 50rpx;
-
-			.playlist-list-item {
-				display: flex;
-				align-items: center;
-				// margin-bottom: 30rpx;
-			}
 		}
 	}
 </style>

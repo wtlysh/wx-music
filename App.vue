@@ -71,29 +71,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	/*每个页面公共css */
-	page {
-		height: 100%;
-	}
-	.song-text {
-		font-size: 28rpx;
-		color: #6b6b6b;
-	}
-	.bg{
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
-		filter: blur(35px);
-		background-position: 0 0px;
-		background-repeat: no-repeat;
-		// background-size: cover;
-		background-size: 100%;
-	}
-	.playing{
-		margin-bottom: 110rpx;
-	}
-	
+	@import "./static/scss/reset.scss";
 </style>

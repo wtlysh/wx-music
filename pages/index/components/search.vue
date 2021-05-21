@@ -1,9 +1,9 @@
 <!-- 首页搜索框组件 -->
 <template>
 	<view class="home-search">
-		<view class="home-search-box" @click="toSearch">
+		<view class="home-search-box flex-center" @click="toSearch">
 			<icon class="home-search-icon" type="search" size="16" />
-			<text class="home-search-text">搜索歌曲</text>
+			<text class="song-text">搜索歌曲</text>
 		</view>
 	</view>
 </template>
@@ -36,13 +36,6 @@
 			background: #f2f2f2;
 			height: 70rpx;
 			border-radius: 35rpx;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			.home-search-text {
-				font-size: 28rpx;
-				color: #6b6b6b;
-			}
 			
 			.home-search-icon {
 				margin-right: 15rpx;

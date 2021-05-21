@@ -80,7 +80,6 @@
 			position: relative;
 			top: 110rpx;
 			background: #FFFFFF;
-			margin-bottom: 110rpx;
 		}
 	}
 </style>

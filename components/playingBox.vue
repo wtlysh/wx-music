@@ -1,11 +1,11 @@
 <template>
 	<view v-if="playdetail">
-		<view class="playing-box">
-			<view class="playing-to" @click="toPlayer">
+		<view class="playing-box flex-align">
+			<view class="playing-to flex-align" @click="toPlayer">
 				<image :class="['playing-img',isplayingmusic?'':'stoped']" :src="playdetail.picUrl" mode=""></image>
-				<text class="playing-desc">{{playdetail.desc}}</text>
+				<text class="playing-desc ellipsis">{{playdetail.desc}}</text>
 			</view>
-			<view class="playing-icons">
+			<view class="flex-align">
 				<view @click="playCtrol" style="margin-right: 10rpx;">
 					<image class="isplay-img" v-if="isplayingmusic" src="../static/images/playing.svg" mode="">
 					</image>
@@ -64,22 +64,18 @@
 		position: fixed;
 		bottom: 0;
 		background: #fff;
-		display: flex;
 		padding: 0 50rpx;
-		align-items: center;
 		height: 90rpx;
 		border-top: 1px solid #ccc;
 
 		.playing-to {
 			width: 540rpx;
-			display: flex;
-			align-items: center;
 
 			.playing-img {
 				&.stoped {
 					animation-play-state: paused;
 				}
-				
+
 				animation: rotate 25s linear infinite;
 				width: 100rpx;
 				height: 100rpx;
@@ -92,28 +88,22 @@
 				font-size: 32rpx;
 				width: 410rpx;
 				margin: 0 20rpx;
-				white-space: nowrap; //文本强制不换行；
-				text-overflow: ellipsis; //文本溢出显示省略号；
-				overflow: hidden; //溢出的部分隐藏
 			}
 		}
 
-		.playing-icons {
-			display: flex;
-			align-items: center;
 
-			.isplay-img {
-				width: 50rpx;
-				height: 50rpx;
-			}
+		.isplay-img {
+			width: 50rpx;
+			height: 50rpx;
 		}
 	}
+
 	@keyframes rotate {
 		0% {
 			transform: rotateZ(0deg);
 			/*从0度开始*/
 		}
-	
+
 		100% {
 			transform: rotateZ(360deg);
 			/*360度结束*/

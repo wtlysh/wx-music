@@ -4,12 +4,11 @@
 			"path": "pages/index/index"
 		},{
 		    "path" : "pages/playlist/index",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "推荐歌单",
-		        "enablePullDownRefresh": false
-		    }
-		    
+		   "style" :
+		   {
+		       "navigationBarTitleText": "推荐歌单",
+		       "enablePullDownRefresh": false
+		   }  
 		},{
 		    "path" : "pages/playlist/playlistDetail",
 		    "style" :                                                                                    

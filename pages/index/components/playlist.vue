@@ -4,7 +4,7 @@
 		<songTop :title="title" @child="toPlaylists"></songTop>
 		<view class="playlist-container">
 			<scroll-view scroll-x="true">
-				<view class="home-playlist-list">
+				<view class="home-playlist-list flex-between">
 					<view @click="toPlaylist(item.id)"
 					class="home-playlist-item" v-for="(item,index) in playlist" :key="index">
 						<image class="home-playlist-img" :src="item.picUrl" mode=""></image>
@@ -12,7 +12,7 @@
 							<uni-icons type="headphones" color="#fff" size="15"></uni-icons>
 							<text style="color: #fff;font-size: 22rpx;padding-left: 8rpx;">{{item.desc}}</text>
 						</view>
-						<view class="home-playlist-name">
+						<view class="home-playlist-name ellipsis_2">
 							{{item.name}}
 						</view>
 					</view>
@@ -62,8 +62,6 @@
 	    .playlist-container {
 			
 			.home-playlist-list{
-				display: flex;
-				justify-content: space-between;
 				width: 1325rpx;
 				padding:0 50rpx;
 				.home-playlist-item {
@@ -85,12 +83,6 @@
 						width: 200rpx;
 						font-size: 32rpx;
 						padding-top: 10rpx;
-						display: -webkit-box; // 将对象作为弹性伸缩盒子模型显示
-						word-break: break-all;
-						-webkit-box-orient: vertical; // 设置或检索伸缩盒对象的子元素的排列方式
-						-webkit-line-clamp: 2; // 需要显示的行数
-						overflow: hidden;
-						text-overflow: ellipsis;
 					}
 				}
 			}

@@ -2,7 +2,7 @@
 <template>
 	<view class="newsong">
 		<songTop :title="title" @child="toSongList"></songTop>
-		<view class="newsong-container">
+		<view class="newsong-container flex-between">
 			<view class="newsong-list" 
 			v-for="(item,index) in songs" 
 			:key="item.id"
@@ -12,10 +12,10 @@
 					<image class="newsong-img" :src="item.al.picUrl" mode=""></image>
 				</view>
 				<view class="newsong-content">
-					<view class="newsong-name">
+					<view class="name ellipsis">
 						{{item.name}}
 					</view>
-					<view class="newsong-artist">
+					<view class="ellipsis">
 						<text v-for="(list,index) in item.ar" :key="list.id">
 							<text class="song-text" v-if="index==0" >
 								{{list.name}}
@@ -76,9 +76,6 @@
 		margin-bottom: 40rpx;
 		
 		.newsong-container {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: space-between;
 			padding: 0 50rpx;
 
 			.newsong-list {
@@ -94,20 +91,6 @@
 				.newsong-content {
 					padding-left: 20rpx;
 					margin: auto 0;
-
-					.newsong-name {
-						font-size: 32rpx;
-						font-weight: bold;
-						white-space: nowrap; //文本强制不换行；
-						text-overflow: ellipsis; //文本溢出显示省略号；
-						overflow: hidden; //溢出的部分隐藏
-					}
-
-					.newsong-artist {
-						white-space: nowrap; //文本强制不换行；
-						text-overflow: ellipsis; //文本溢出显示省略号；
-						overflow: hidden; //溢出的部分隐藏
-					}
 				}
 			}
 

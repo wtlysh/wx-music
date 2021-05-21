@@ -30,16 +30,6 @@
   margin: 0 auto;
 }
 .playlist .playlist-item.data-v-34f1cb36 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
   height: 120rpx;
   padding-bottom: 30rpx;
 }
@@ -54,19 +44,6 @@
 .playlist .playlist-item .playlist-content.data-v-34f1cb36 {
   padding-left: 30rpx;
   width: 470rpx;
-}
-.playlist .playlist-item .playlist-content .playlist-name.data-v-34f1cb36 {
-  font-size: 36rpx;
-  font-weight: bold;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.playlist .playlist-item .playlist-content .playlist-desc.data-v-34f1cb36 {
-  padding-top: 10rpx;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 .playlist .playlist-item .playlist-more.data-v-34f1cb36 {
   width: 50rpx;

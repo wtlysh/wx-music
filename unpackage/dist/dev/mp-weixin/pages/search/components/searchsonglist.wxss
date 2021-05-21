@@ -30,39 +30,19 @@
   margin: 0 auto;
 }
 .song-list .song-list-item.data-v-9395d974 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
   position: relative;
   height: 120rpx;
 }
 .song-list .con.data-v-9395d974 {
-  max-width: 580rpx;
+  width: 580rpx;
 }
 .song-list .con .song-list-name.data-v-9395d974 {
   margin-top: 12rpx;
   margin-right: 20rpx;
   line-height: 58rpx;
-  font-size: 32rpx;
-  font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.song-list .con .desc.data-v-9395d974 {
-  line-height: 40rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 

@@ -3,14 +3,14 @@
 	<view class="search">
 		<!-- 顶部搜索框 -->
 		<view class="search-box">
-			<view class="search__box">
-				<view class="search__box-icon-search">
+			<view class="search__box flex-center">
+				<view class="search__box-icon-search flex-center">
 					<slot name="searchIcon">
 						<uni-icons color="#6b6b6b" size="18" type="search" />
 					</slot>
 				</view>
 				<input :focus="isFocus" :placeholder="defaultKeyword ? defaultKeyword:placeholder" 
-				    class="search__box-search-input"
+				    class="search__box-search-input song-text"
 					confirm-type="search" type="text" v-model="keyword" 
 					@input="inputChange"
 					@confirm="triggerConfirm" 
@@ -121,6 +121,7 @@
 				this.keyword = '';
 				this.searchTip = "";
 				this.showClear = false;
+				this.isShowContent = false;
 				this.isShowKeywordList = false;
 			},
 			//取消搜索
@@ -257,46 +258,38 @@
 			.search__box {
 				margin-top: 20rpx;
 				background: #f2f2f2;
-				display: flex;
 				box-sizing: border-box;
 				overflow: hidden;
 				position: relative;
 				flex: 1;
-				justify-content: center;
 				flex-direction: row;
-				align-items: center;
 				height: $uni-searchbar-height;
-				padding: 5px 8px 5px 0px;
+				padding: 10rpx 16rpx 10rpx 0;
 				// border: 0.5px solid #6b6b6b;
 				border-radius: $uni-searchbar-height/2;
 
 				.search__box-icon-search {
-					display: flex;
 					flex-direction: row;
 					// width: 32px;
-					padding: 0 8px;
-					justify-content: center;
-					align-items: center;
-					color: $uni-text-color-placeholder;
+					padding: 0 16rpx;
+					color: $uni-text-color;
 				}
 
 				.search__box-search-input {
 					flex: 1;
-					color: $uni-text-color;
-					font-size: $uni-font-size-base;
 				}
 
 				.search__box-icon-clear {
 					align-items: center;
-					line-height: 24px;
-					padding-left: 8px;
+					line-height: 48rpx;
+					padding-left: 16rpx;
 				}
 			}
 
 			.searchbox__cancel {
-				padding-left: 10px;
+				padding-left: 20rpx;
 				line-height: 110rpx;
-				font-size: 14px;
+				font-size: $uni-font-size-sm;
 				// color: $uni-text-color;
 			}
 		}

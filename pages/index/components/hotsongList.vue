@@ -2,16 +2,16 @@
 <template>
 	<view class="hotsong">
 		<songTop :title="title" @child="toSongList"></songTop>
-		<view class="hotsong-container">
+		<view class="hotsong-container flex-between">
 			<scroll-view scroll-x="true" scroll-with-animation="true">
 				<view class="hotsong-list">
 					<view class="hotsong-li" v-for="(list,index) in songs" :key="index">
-						<view class="hotsong-item" 
+						<view class="hotsong-item flex-align" 
 						@click="toSong(item)"
 						v-for="item in list" :key="item.id">
 							<image class="hotsong-img" :src="item.al.picUrl" mode=""></image>
 						    <view style="padding-left: 20rpx;">
-						    	<view style="font-size: 32rpx;font-weight: bold;padding-bottom:10rpx;">
+						    	<view class="name" style="padding-bottom:10rpx;">
 						    		{{item.name}}
 						    	</view>
 								<view class="song-text">
@@ -66,10 +66,6 @@
 	.hotsong {
 		margin-bottom: 40rpx;
 		.hotsong-container {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: space-between;
-
 			.hotsong-list {
 				width: 1950rpx;
 				height: 450rpx;
@@ -78,9 +74,7 @@
 				.hotsong-li{
 					width: 650rpx;
 					.hotsong-item{
-						display: flex;
 						margin-bottom: 20rpx;
-						align-items: center;
 						.hotsong-img{
 							width: 130rpx;
 							height: 130rpx;

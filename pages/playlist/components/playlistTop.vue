@@ -19,7 +19,7 @@
 						<text style="font-size: 28rpx;padding-left: 20rpx;">{{album.creator.nickname}}</text>
 					</view>
 					<view class="playlist-description">
-						<text class="playlist-desc-txt">简介:{{album.description}}</text>
+						<text class="playlist-desc-txt ellipsis">简介:{{album.description}}</text>
 						<image style="width: 35rpx;height: 35rpx;" src="../../../static/images/more-white.svg" mode="">
 						</image>
 					</view>
@@ -86,9 +86,6 @@
 					height: 35rpx;
 
 					.playlist-desc-txt {
-						white-space: nowrap; //文本强制不换行；
-						text-overflow: ellipsis; //文本溢出显示省略号；
-						overflow: hidden; //溢出的部分隐藏
 						font-size: 28rpx;
 						width: 400rpx;
 					}

@@ -28,14 +28,6 @@
   margin-bottom: 40rpx;
 }
 .newsong .newsong-container.data-v-66d54660 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
   padding: 0 50rpx;
 }
 .newsong .newsong-container .newsong-list.data-v-66d54660 {
@@ -50,17 +42,5 @@
 .newsong .newsong-container .newsong-list .newsong-content.data-v-66d54660 {
   padding-left: 20rpx;
   margin: auto 0;
-}
-.newsong .newsong-container .newsong-list .newsong-content .newsong-name.data-v-66d54660 {
-  font-size: 32rpx;
-  font-weight: bold;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.newsong .newsong-container .newsong-list .newsong-content .newsong-artist.data-v-66d54660 {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 

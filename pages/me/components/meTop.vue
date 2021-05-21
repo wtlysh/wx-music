@@ -29,7 +29,7 @@
 		overflow: hidden;
 		background: #fff;
 		display: flex;
-		justify-content: space-around;
+		justify-content: center;
 		padding-top: 20rpx;
 		.me-top-con{
 			z-index: 500;

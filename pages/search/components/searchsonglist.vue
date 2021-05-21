@@ -1,13 +1,15 @@
 <!-- 搜索结果歌曲列表组件 -->
 <template>
 	<view class="song-list">
-		<view class="song-list-item" v-for="(item, index) in songList" :key="index"
+		<view class="song-list-item flex-align" v-for="(item, index) in songList" :key="index"
 			@click="toPlay(item)">
 			<view class="con">
-				<view class="song-list-name">{{item.name}}</view>
-				<view class="desc song-text">{{item.desc}}</view>
+				<view class="song-list-name name ellipsis">{{item.name}}</view>
+				<view style="line-height: 40rpx;" class="song-text ellipsis">{{item.desc}}</view>
 			</view>
-			<image style="width: 50rpx;height: 50rpx;" src="../../../static/images/topaly.svg" mode=""></image>
+			<view style="flex: 1;text-align: right;">
+				<image style="width: 50rpx;height: 50rpx;" src="../../../static/images/topaly.svg" mode=""></image>
+			</view>
 		</view>
 	</view>
 </template>
@@ -43,33 +45,18 @@
 		margin: 0 auto;
 
 		.song-list-item {
-			display: flex;
 			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
 			position: relative;
 			height: 120rpx;
 		}
 
 		.con {
-			max-width: 580rpx;
+			width: 580rpx;
 
 			.song-list-name {
 				margin-top: 12rpx;
 				margin-right: 20rpx;
 				line-height: 58rpx;
-				font-size: 32rpx;
-				font-weight: bold;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
-
-			.desc {
-				line-height: 40rpx;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
 			}
 		}
 	}

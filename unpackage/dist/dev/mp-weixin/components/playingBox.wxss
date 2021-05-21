@@ -28,24 +28,12 @@
   position: fixed;
   bottom: 0;
   background: #fff;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
   padding: 0 50rpx;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
   height: 90rpx;
   border-top: 1px solid #ccc;
 }
 .playing-box .playing-to.data-v-1432e090 {
   width: 540rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
 }
 .playing-box .playing-to .playing-img.data-v-1432e090 {
   -webkit-animation: rotate-data-v-1432e090 25s linear infinite;
@@ -64,19 +52,8 @@
   font-size: 32rpx;
   width: 410rpx;
   margin: 0 20rpx;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
-.playing-box .playing-icons.data-v-1432e090 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-}
-.playing-box .playing-icons .isplay-img.data-v-1432e090 {
+.playing-box .isplay-img.data-v-1432e090 {
   width: 50rpx;
   height: 50rpx;
 }

@@ -1,10 +1,10 @@
 <!-- 歌单，歌曲顶部组件 -->
 <template>
 	<view class="song-top">
-		<view class="song-title">
+		<view class="title" style="flex: 1;">
 			{{title}}
 		</view>
-		<view class="song-all" @click="toSongList">
+		<view class="song-all flex-align" @click="toSongList">
 			<text class="song-text">更多</text>
 			<image style="width: 35rpx;height: 35rpx;" src="../../../static/images/more.svg"></image>
 		</view>
@@ -34,16 +34,8 @@
 		margin: 20rpx 0;
 		padding: 0 50rpx;
 
-		.song-title {
-			flex: 1;
-			font-size: 36rpx;
-			font-weight: bold
-		}
-
 		.song-all {
-			display: flex;
 			justify-content: flex-end;
-			align-items: center;
 		}
 	}
 </style>

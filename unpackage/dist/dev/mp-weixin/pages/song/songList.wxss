@@ -33,12 +33,13 @@
   background: #fff;
 }
 .hotsong-li .hotsong-swiper .swiper-item.data-v-30ee28e4 {
+  padding-top: 20rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-justify-content: space-around;
-          justify-content: space-around;
-  padding-top: 20rpx;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
 }
 .hotsong-li .hotsong-swiper .swiper-item .li-con.data-v-30ee28e4 {
   z-index: 500;

@@ -28,12 +28,6 @@
   margin-bottom: 40rpx;
 }
 .home-playlist .playlist-container .home-playlist-list.data-v-0058a276 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
   width: 1325rpx;
   padding: 0 50rpx;
 }
@@ -56,11 +50,5 @@
   width: 200rpx;
   font-size: 32rpx;
   padding-top: 10rpx;
-  display: -webkit-box;
-  word-break: break-all;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 

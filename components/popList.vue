@@ -1,6 +1,6 @@
 <template>
 	<view class="poplist-box" :class="[isOpentList?'':'hide']">
-		<view class="title">
+		<view class="poplist-title">
 			<text class="total">当前播放({{audiolist.length}})</text>
 			<text class="model" v-if="playModel==0" @click="setPlayModel">
 				<text class="iconfont">&#xe66c;</text>
@@ -24,7 +24,7 @@
 					{{index+1}}
 				</view>
 				<view style="padding-left: 30rpx;width: 470rpx;">
-					<view class="item-name">
+					<view class="item-name ellipsis">
 						{{item.name}}
 					</view>
 					<view class="num song-text text-color">
@@ -215,7 +215,7 @@
 	
 		transition: all .15s linear;
 	
-		.title {
+		.poplist-title {
 			display: flex;
 			justify-content: space-between;
 			width: 100%;

@@ -1,7 +1,7 @@
 <template>
 	<view class="play-bottom">
 		<view class="play-opration">
-			<view class="play-text" @click="toLike">
+			<view class="play-text flex-center" @click="toLike">
 				<view class="img-box">
 					<image class="bottom-img" v-if="!isLike" src="../../../static/images/notlike.svg" mode=""></image>
 					<image class="bottom-img" v-if="isLike" src="../../../static/images/like.svg" mode=""></image>
@@ -10,7 +10,7 @@
 			</view>
 		</view>
 		<view class="play-opration">
-			<view class="play-text">
+			<view class="play-text flex-center">
 				<view class="img-box">
 					<image class="bottom-img" src="../../../static/images/share.svg" mode=""></image>
 				</view>
@@ -62,9 +62,6 @@
 				border: 1px solid #FFFFFF;
 				line-height: 80rpx;
 				font-size: 30rpx;
-				display: flex;
-				justify-content: center;
-				align-items: center;
 				.img-box{
 					display: flex;
 					padding-right: 30rpx;

@@ -8,9 +8,9 @@
 					{{searchTip}}
 				</view>
 				<block v-for="(row,index) in keywordList" :key="index">
-					<view class="keyword-entry" hover-class="keyword-entry-tap">
+					<view class="keyword-entry flex-align" hover-class="keyword-entry-tap">
 						<icon type="search" size="16"></icon>
-						<view class="keyword-text" @tap.stop="doSearch(keywordList[index].keyword)">
+						<view class="keyword-text flex-align" @tap.stop="doSearch(keywordList[index].keyword)">
 							<rich-text :nodes="row.htmlStr"></rich-text>
 						</view>
 					</view>
@@ -20,29 +20,29 @@
 				<!-- 历史搜索 -->
 				<view class="keyword-block" v-if="oldKeywordList.length>0">
 					<view class="keyword-list-header">
-						<view class="keyword-title">历史搜索</view>
+						<view class="title">历史搜索</view>
 						<view>
 							<image class="keyword-image" @tap="oldDelete" src="../../../static/images/delete.png"></image>
 						</view>
 					</view>
 					<view class="keyword">
-						<view class="keyword-hisview view" v-for="(keyword,index) in oldKeywordList" @tap="doSearch(keyword)" :key="index">{{keyword}}</view>
+						<view class="keyword-hisview song-text view flex-align" v-for="(keyword,index) in oldKeywordList" @tap="doSearch(keyword)" :key="index">{{keyword}}</view>
 					</view>
 				</view>
 				<!-- 热门搜索 -->
 				<view style="padding-bottom: 40rpx;" class="keyword-block">
 					<view class="keyword-list-header">
-						<view class="keyword-title">热门搜索</view>
+						<view class="title">热门搜索</view>
 						<view>
 							<image class="keyword-image" @tap="hotToggle" :src="'../../../static/images/attention'+forbid+'.png'"></image>
 						</view>
 					</view>
 					<view class="keyword" v-if="forbid==''">
-						<view class="keyword-hotview view" v-for="(keyword,index) in hotKeywordList" @tap="doSearch(keyword)" :key="index">
+						<view class="keyword-hotview name view flex-align" v-for="(keyword,index) in hotKeywordList" @tap="doSearch(keyword)" :key="index">
 						<view :class="['keyword-index',index < 3 ?'hot-active':'']">
 							{{index+1}}
 						</view>
-						<view class="keyword-txt">
+						<view class="name">
 							{{keyword}}
 						</view>
 						</view>
@@ -206,13 +206,9 @@
 				height: 80rpx;
 				margin: 10rpx 0;
 				font-size: 32rpx;
-				display: flex;
 				justify-content: space-between;
-				align-items: center;
 				.keyword-text{
 					height: 80rpx;
-					display: flex;
-					align-items: center;
 					padding-left: 20rpx;
 					flex: 1;
 				}
@@ -230,10 +226,6 @@
 	    			font-size: 27rpx;
 	    			display: flex;
 	    			justify-content: space-between;
-					.keyword-title{
-						font-size: 36rpx;
-						font-weight: bold;
-					}
 	    			.keyword-image {
 	    				width: 40rpx;
 	    				height: 40rpx;
@@ -246,24 +238,17 @@
 	    			flex-flow: wrap;
 	    			justify-content: flex-start;
 					.view{
-						display: flex;
 						padding: 0 20rpx;
 					}
 					.keyword-hisview{
 						margin: 10rpx 20rpx 10rpx 0;
-						justify-content: center;
-						align-items: center;
 						border-radius: 60rpx;
 						height: 60rpx;
-						font-size: 28rpx;
 						background-color: #f2f2f2;
-						color: #6b6b6b;
 					}
 	    			.keyword-hotview {
 						margin: 15rpx 0;
 						width: 100%;
-	    				font-size: 32rpx;
-						font-weight: bold;
 						.keyword-index{
 							width: 60rpx;
 							color: #6b6b6b;

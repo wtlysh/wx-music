@@ -40,12 +40,6 @@
   width: 30px;
   background: #FFFFFF;
   border-radius: 15px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
 }
 .song-player .player-content .player-bgimg.data-v-108ee09c {
   width: 100%;
@@ -69,15 +63,6 @@
   height: 450rpx;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.1);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
 }
 .song-player .player-content .player-img.stoped.data-v-108ee09c {
   -webkit-animation-play-state: paused;
@@ -88,15 +73,6 @@
   height: 92%;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.3);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
 }
 .song-player .player-content .player-img .circle .img.data-v-108ee09c {
   width: 80%;
@@ -106,12 +82,6 @@
 .song-player .player-content .play-ctrol.data-v-108ee09c {
   position: relative;
   top: 250rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
   height: 100rpx;
 }
 .song-player .player-content .play-ctrol .flex-item.data-v-108ee09c {
@@ -121,15 +91,6 @@
 }
 .song-player .player-content .play-ctrol .isplay.data-v-108ee09c {
   width: 450rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
   height: 100%;
   margin: 0 auto;
 }
@@ -163,15 +124,6 @@
 .song-player .player-content .all-lyric .nolyric.data-v-108ee09c {
   height: 100%;
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
 }
 .song-player .player-content .ric.data-v-108ee09c {
   text-align: center;
@@ -179,9 +131,6 @@
   font-size: 32rpx;
   opacity: 0.8;
   height: 60rpx;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
   width: 90%;
   margin: 0 auto;
 }

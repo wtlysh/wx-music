@@ -285,6 +285,7 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
       this.keyword = '';
       this.searchTip = "";
       this.showClear = false;
+      this.isShowContent = false;
       this.isShowKeywordList = false;
     },
     //取消搜索

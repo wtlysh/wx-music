@@ -44,9 +44,6 @@
   width: 450rpx;
   font-size: 32rpx;
   padding-bottom: 10rpx;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 .item-con .item-img.data-v-593ad0b8 {
   width: 50rpx;
@@ -71,7 +68,7 @@
 .poplist-box.hide.data-v-593ad0b8 {
   bottom: -800rpx;
 }
-.poplist-box .title.data-v-593ad0b8 {
+.poplist-box .poplist-title.data-v-593ad0b8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -83,11 +80,11 @@
   line-height: 120rpx;
   font-size: 34rpx;
 }
-.poplist-box .title .total.data-v-593ad0b8 {
+.poplist-box .poplist-title .total.data-v-593ad0b8 {
   font-size: 40rpx;
   margin-left: 50rpx;
 }
-.poplist-box .title .model.data-v-593ad0b8 {
+.poplist-box .poplist-title .model.data-v-593ad0b8 {
   margin-right: 50rpx;
 }
 .poplist-box .poplist-close.data-v-593ad0b8 {

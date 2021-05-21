@@ -27,16 +27,6 @@
 .hotsong.data-v-8edca806 {
   margin-bottom: 40rpx;
 }
-.hotsong .hotsong-container.data-v-8edca806 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-}
 .hotsong .hotsong-container .hotsong-list.data-v-8edca806 {
   width: 1950rpx;
   height: 450rpx;
@@ -49,13 +39,7 @@
   width: 650rpx;
 }
 .hotsong .hotsong-container .hotsong-list .hotsong-li .hotsong-item.data-v-8edca806 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
   margin-bottom: 20rpx;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
 }
 .hotsong .hotsong-container .hotsong-list .hotsong-li .hotsong-item .hotsong-img.data-v-8edca806 {
   width: 130rpx;

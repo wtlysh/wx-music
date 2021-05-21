@@ -98,9 +98,9 @@
 			background: #fff;
 
 			.swiper-item {
-				display: flex;
-				justify-content: space-around;
 				padding-top: 20rpx;
+				display: flex;
+				justify-content: center;
 
 				.li-con {
 					z-index: 500;
@@ -113,7 +113,6 @@
 						width: 270rpx;
 						height: 270rpx;
 						border-radius: 30rpx;
-						// z-index: 999;
 					}
 
 					.li-name {

@@ -4,16 +4,16 @@
 		<view class="player-content" v-if="isCanPlay">
 			<view class="player-bgimg" :style="'background-image:url('+song.picUrl+')'"></view>
 			<view v-show="!isLyric">
-				<view class="player-img" :class="[isPlay ? '' : 'stoped']">
-					<view class="circle">
+				<view class="player-img flex-center" :class="[isPlay ? '' : 'stoped']">
+					<view class="circle flex-center">
 						<image class="img" :src="song.picUrl" mode=""></image>
 					</view>
 				</view>
-				<view class="play-ctrol">
+				<view class="play-ctrol flex-align">
 					<view v-if="audiolist.length>1" class="flex-item" @click="prev">
 						<uni-icons type="arrowleft" color="#fff" size="25"></uni-icons>
 					</view>
-					<view class="isplay" @click="playCtrol">
+					<view class="isplay flex-center" @click="playCtrol">
 						<view class="isplay-bg"></view>
 						<image class="isplay-img" v-if="isPlay" src="../../static/images/play.svg" mode=""></image>
 						<image class="isplay-img" v-if="!isPlay" src="../../static/images/notplay.svg" mode=""></image>
@@ -23,26 +23,26 @@
 					</view>
 				</view>
 				<view class="lyric-opcity player-lyric" @click="toLyric">
-					<view class="ric">{{lytop}}</view>
-					<view class="ric cur">{{lycur}}</view>
-					<view class="ric">{{lybot}}</view>
+					<view class="ric ellipsis">{{lytop}}</view>
+					<view class="ric cur ellipsis">{{lycur}}</view>
+					<view class="ric ellipsis">{{lybot}}</view>
 				</view>
 			</view>
 			<view v-show="isLyric" class="lyric-opcity all-lyric" :style="{height:(windowHeight-300) + 'rpx'}"
 				@click="toLyric">
 				<scroll-view v-if="lyric.length>0" scroll-y="true" :scroll-into-view="'view-' + ctrolIndex"
 					style="height: 100%;width: 100%;">
-					<view :class="['ric',index==lyricIndex?'cur':'']" :id="'view-'+index"
+					<view :class="['ric','ellipsis',index==lyricIndex?'cur':'']" :id="'view-'+index"
 						:style="{height:((windowHeight-300)/13) + 'rpx'}" v-for="(item,index) in lyric" :key="index">
 						{{item.text}}
 					</view>
 				</scroll-view>
-				<view v-if="lyric.length<=0" class="nolyric ric cur">
+				<view v-if="lyric.length<=0" class="nolyric ric cur flex-center">
 					{{lycur}}
 				</view>
 			</view>
 			<playBottom :isLike="isLike" @cancle="cancleLike" @confirm="addLike"></playBottom>
-			<view class="poplist-icon" @click="isOpentList=true">
+			<view class="poplist-icon flex-align" @click="isOpentList=true">
 				<view style="display: flex;flex-wrap: wrap;justify-content: center;">
 					<uni-icons type="list" color="#6b6b6b" size="25"></uni-icons>
 					<text style="font-size: 28rpx;">列表</text>
@@ -441,8 +441,6 @@
 				width: 30px;
 				background: #FFFFFF;
 				border-radius: 15px;
-				display: flex;
-				align-items: center;
 			}
 
 			.player-bgimg {
@@ -469,18 +467,12 @@
 				height: 450rpx;
 				border-radius: 50%;
 				background-color: rgba(255, 255, 255, 0.1);
-				display: flex;
-				align-items: center;
-				justify-content: center;
 
 				.circle {
 					width: 92%;
 					height: 92%;
 					border-radius: 50%;
 					background-color: rgba(255, 255, 255, 0.3);
-					display: flex;
-					align-items: center;
-					justify-content: center;
 
 					.img {
 						width: 80%;
@@ -493,8 +485,6 @@
 			.play-ctrol{
 				position: relative;
 				top: 250rpx;
-				display: flex;
-				align-items: center;
 				height: 100rpx;
 				
 				.flex-item{
@@ -504,9 +494,6 @@
 				}
 				.isplay {
 					width: 450rpx;
-					display: flex;
-					justify-content: center;
-					align-items: center;
 					height: 100%;
 					margin: 0 auto;
 					.isplay-bg {
@@ -552,9 +539,6 @@
 				.nolyric {
 					height: 100%;
 					width: 100%;
-					display: flex;
-					justify-content: center;
-					align-items: center;
 				}
 			}
 
@@ -564,9 +548,6 @@
 				font-size: 32rpx;
 				opacity: 0.8;
 				height: 60rpx;
-				white-space: nowrap; //文本强制不换行；
-				text-overflow: ellipsis; //文本溢出显示省略号；
-				overflow: hidden; //溢出的部分隐藏
 				width: 90%;
 				margin: 0 auto;
 

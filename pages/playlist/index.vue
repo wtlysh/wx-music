@@ -5,7 +5,7 @@
 			<view class="playlists-name">
 				网友精选 · {{cat[index]}}歌单
 			</view>
-			<view class="playlists-con">
+			<view class="playlists-con flex-between">
 				<view class="playlists-item" v-for="li in item" :key="li.id" @click="toPlaylist(li.id)">
 					<image style="width: 324rpx;height: 324rpx;border-radius: 20rpx;" :src="li.picUrl" mode="">
 					</image>
@@ -13,7 +13,7 @@
 						<uni-icons type="headphones" color="#fff" size="15"></uni-icons>
 						<text style="color: #fff;font-size: 22rpx;padding-left: 8rpx;">{{li.desc}}</text>
 					</view>
-					<view class="playlists-item-name">
+					<view class="playlists-item-name ellipsis_2">
 						{{li.name}}
 					</view>
 				</view>
@@ -92,9 +92,6 @@
 			}
 
 			.playlists-con {
-				display: flex;
-				justify-content: space-between;
-				flex-wrap: wrap;
 
 				.playlists-item {
 					width: 48%;
@@ -113,12 +110,6 @@
 						font-size: 32rpx;
 						padding-top: 10rpx;
 						color: #6b6b6b;
-						display: -webkit-box; // 将对象作为弹性伸缩盒子模型显示
-						word-break: break-all;
-						-webkit-box-orient: vertical; // 设置或检索伸缩盒对象的子元素的排列方式
-						-webkit-line-clamp: 2; // 需要显示的行数
-						overflow: hidden;
-						text-overflow: ellipsis;
 					}
 				}
 			}

@@ -1,14 +1,14 @@
 <!-- 搜索结构歌单列表 -->
 <template>
 	<view class="playlist">
-		<view :class="index==0 ? 'playlist-firstitem':''" class="playlist-item" v-for="(item, index) in playlist"
+		<view :class="['playlist-item','flex-align',index==0 ? 'playlist-firstitem':'']" v-for="(item, index) in playlist"
 			:key="index" @click="toPlaylist(item.id)">
 			<view class="playlist-item-img">
 				<image class="playlist-img" :src="item.picUrl" mode=""></image>
 			</view>
 			<view class="playlist-content">
-				<view class="playlist-name">{{item.name}}</view>
-				<view class="playlist-desc song-text">{{item.desc}}</view>
+				<view class="name ellipsis">{{item.name}}</view>
+				<view style="padding-top: 10rpx;" class="ellipsis song-text">{{item.desc}}</view>
 			</view>
 			<image class="playlist-more" src="../../../static/images/more.svg" mode=""></image>
 		</view>
@@ -41,9 +41,6 @@
 		margin: 0 auto;
 
 		.playlist-item {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
 			height: 120rpx;
 			padding-bottom: 30rpx;
 
@@ -62,21 +59,6 @@
 			.playlist-content {
 				padding-left: 30rpx;
 				width: 470rpx;
-
-				.playlist-name {
-					font-size: 36rpx;
-					font-weight: bold;
-					white-space: nowrap; //文本强制不换行；
-					text-overflow: ellipsis; //文本溢出显示省略号；
-					overflow: hidden; //溢出的部分隐藏
-				}
-
-				.playlist-desc {
-					padding-top: 10rpx;
-					white-space: nowrap; //文本强制不换行；
-					text-overflow: ellipsis; //文本溢出显示省略号；
-					overflow: hidden; //溢出的部分隐藏
-				}
 			}
 
 			.playlist-more {

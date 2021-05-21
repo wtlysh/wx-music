@@ -50,24 +50,12 @@
   height: 80rpx;
   margin: 10rpx 0;
   font-size: 32rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
 }
 .list-box .keyword-list-box .keyword-entry .keyword-text.data-v-9e3c1cf4 {
   height: 80rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
   padding-left: 20rpx;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -92,10 +80,6 @@
   -webkit-justify-content: space-between;
           justify-content: space-between;
 }
-.list-box .keyword-box .keyword-block .keyword-list-header .keyword-title.data-v-9e3c1cf4 {
-  font-size: 36rpx;
-  font-weight: bold;
-}
 .list-box .keyword-box .keyword-block .keyword-list-header .keyword-image.data-v-9e3c1cf4 {
   width: 40rpx;
   height: 40rpx;
@@ -113,30 +97,17 @@
           justify-content: flex-start;
 }
 .list-box .keyword-box .keyword-block .keyword .view.data-v-9e3c1cf4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
   padding: 0 20rpx;
 }
 .list-box .keyword-box .keyword-block .keyword .keyword-hisview.data-v-9e3c1cf4 {
   margin: 10rpx 20rpx 10rpx 0;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
   border-radius: 60rpx;
   height: 60rpx;
-  font-size: 28rpx;
   background-color: #f2f2f2;
-  color: #6b6b6b;
 }
 .list-box .keyword-box .keyword-block .keyword .keyword-hotview.data-v-9e3c1cf4 {
   margin: 15rpx 0;
   width: 100%;
-  font-size: 32rpx;
-  font-weight: bold;
 }
 .list-box .keyword-box .keyword-block .keyword .keyword-hotview .keyword-index.data-v-9e3c1cf4 {
   width: 60rpx;
