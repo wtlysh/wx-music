@@ -28,8 +28,7 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  margin: 20rpx 0;
-  padding: 0 50rpx;
+  padding-bottom: 20rpx;
 }
 .song-top .song-all.data-v-235a67dd {
   -webkit-box-pack: end;

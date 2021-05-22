@@ -28,12 +28,12 @@
   position: fixed;
   bottom: 0;
   background: #fff;
-  padding: 0 50rpx;
+  padding: 0 37.5rpx;
   height: 90rpx;
   border-top: 1px solid #ccc;
 }
 .playing-box .playing-to.data-v-1432e090 {
-  width: 540rpx;
+  width: 565rpx;
 }
 .playing-box .playing-to .playing-img.data-v-1432e090 {
   -webkit-animation: rotate-data-v-1432e090 25s linear infinite;

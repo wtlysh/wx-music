@@ -1,9 +1,9 @@
 <!-- 显示历史搜索，热门搜索，搜索建议内容组件 -->
 <template>
-	<view class="list-box"  v-if="isShowContent">
+	<view class="list-box box-width"  v-if="isShowContent">
 		<view class="search-keyword">
 			<!-- 搜索建议 -->
-			<scroll-view class="keyword-list-box" v-if="isShowKeywordList" scroll-y>
+			<scroll-view class="keyword-list-box box-width" v-if="isShowKeywordList" scroll-y>
 				<view class="keyword-search">
 					{{searchTip}}
 				</view>
@@ -21,8 +21,8 @@
 				<view class="keyword-block" v-if="oldKeywordList.length>0">
 					<view class="keyword-list-header">
 						<view class="title">历史搜索</view>
-						<view>
-							<image class="keyword-image" @tap="oldDelete" src="../../../static/images/delete.png"></image>
+						<view  @tap="oldDelete">
+							<uni-icons type="trash" color="#6b6b6b" size="40"></uni-icons>
 						</view>
 					</view>
 					<view class="keyword">
@@ -33,11 +33,11 @@
 				<view style="padding-bottom: 40rpx;" class="keyword-block">
 					<view class="keyword-list-header">
 						<view class="title">热门搜索</view>
-						<view>
-							<image class="keyword-image" @tap="hotToggle" :src="'../../../static/images/attention'+forbid+'.png'"></image>
+						<view @tap="hotToggle">
+							<uni-icons :type="isforbid?'eye-slash':'eye'" color="#6b6b6b" size="40"></uni-icons>
 						</view>
 					</view>
-					<view class="keyword" v-if="forbid==''">
+					<view class="keyword" v-if="!isforbid">
 						<view class="keyword-hotview name view flex-align" v-for="(keyword,index) in hotKeywordList" @tap="doSearch(keyword)" :key="index">
 						<view :class="['keyword-index',index < 3 ?'hot-active':'']">
 							{{index+1}}
@@ -48,7 +48,7 @@
 						</view>
 					</view>
 					<view class="hide-hot-tis" v-else>
-						<view style="font-size: 28rpx;color: #6b6b6b;">当前搜热门搜索已隐藏</view>
+						<view class="song-text">当前搜热门搜索已隐藏</view>
 					</view>
 				</view>
 			</scroll-view>
@@ -87,7 +87,7 @@
 			return{
 				hotKeywordList:[],
 				oldKeywordList:[],
-				forbid: '',
+				isforbid: false,
 			}
 		},
 		mounted() {
@@ -143,7 +143,7 @@
 			},
 			//热门搜索开关
 			hotToggle() {
-				this.forbid = this.forbid ? '' : '_forbid';
+				this.isforbid = !this.isforbid;
 			},
 			//保存关键字到历史记录
 			saveKeyword(keyword) {
@@ -183,75 +183,61 @@
 <style lang="scss" scoped>
 	.list-box {
 		padding-top: 100rpx;
-		height: 100%;
-		width: 100%;
-		background-color: #FFFFFF;
 		.keyword-list-box {
 			height: calc(100vh - 110rpx);
-			padding-top: 10rpx;
-			border-radius: 20rpx 20rpx 0 0;
-			background-color: #fff;
-			width: 90%;
-			margin: 0 auto;
+			padding-top: $uni-spacing-col-sm;
+			border-radius: $uni-border-radius-lg $uni-border-radius-lg 0 0;
 			.keyword-search{
-				font-size: 36rpx;
+				font-size: $uni-font-size-lg;
 				padding: 20rpx 0;
-				color: #8dc63f;
+				color: $uni-color-success;
 			}
 			.keyword-entry-tap {
-				background-color: #eee;
+				background-color: $uni-bg-color-hover;
 			}
 			
 			.keyword-entry {
 				height: 80rpx;
-				margin: 10rpx 0;
-				font-size: 32rpx;
+				margin: $uni-spacing-col-sm 0;
+				font-size: $uni-font-size-base;
 				justify-content: space-between;
 				.keyword-text{
 					height: 80rpx;
-					padding-left: 20rpx;
+					padding-left: $uni-spacing-row-base;
 					flex: 1;
 				}
 			}
 		}
 	    .keyword-box {
 	    	height: calc(100vh - 110rpx);
-	    	border-radius: 20rpx 20rpx 0 0;
-	    	background-color: #fff;
+	    	border-radius: $uni-border-radius-lg $uni-border-radius-lg 0 0;
 	    	.keyword-block {
-	    		padding: 10rpx 0;
+	    		padding: $uni-spacing-col-sm 0;
 	    		.keyword-list-header {
-	    			width: 94%;
-	    			padding: 10rpx 3%;
-	    			font-size: 27rpx;
+	    			font-size: $uni-font-size-sm;
 	    			display: flex;
 	    			justify-content: space-between;
-	    			.keyword-image {
-	    				width: 40rpx;
-	    				height: 40rpx;
-	    			}
+					margin-bottom: $uni-spacing-col-sm;
 	    		}
 	    		.keyword {
-	    			width: 94%;
-	    			padding: 3px 3%;
 	    			display: flex;
 	    			flex-flow: wrap;
 	    			justify-content: flex-start;
 					.view{
-						padding: 0 20rpx;
+						padding: 0 $uni-spacing-row-base;
 					}
 					.keyword-hisview{
-						margin: 10rpx 20rpx 10rpx 0;
+						margin: $uni-spacing-col-sm $uni-spacing-row-base $uni-spacing-col-sm 0;
 						border-radius: 60rpx;
 						height: 60rpx;
-						background-color: #f2f2f2;
+						background-color: $uni-bg-color;
 					}
 	    			.keyword-hotview {
-						margin: 15rpx 0;
+						margin: $uni-spacing-col-base 0;
 						width: 100%;
 						.keyword-index{
 							width: 60rpx;
-							color: #6b6b6b;
+							color: $uni-text-color;
 							&.hot-active{
 								color: red;
 							}
@@ -262,8 +248,6 @@
 	    		.hide-hot-tis {
 	    			display: flex;
 	    			justify-content: center;
-	    			font-size: 28rpx;
-	    			color: #6b6b6b;
 	    		}
 	    	}
 		}

@@ -3,8 +3,7 @@
 		<view class="play-opration">
 			<view class="play-text flex-center" @click="toLike">
 				<view class="img-box">
-					<image class="bottom-img" v-if="!isLike" src="../../../static/images/notlike.svg" mode=""></image>
-					<image class="bottom-img" v-if="isLike" src="../../../static/images/like.svg" mode=""></image>
+					<uni-icons size="50" :type="isLike?'heart-filled':'heart'" :color="isLike?'#dd524d':'#fff'"></uni-icons>
 				</view>
 				<text>收藏</text>
 			</view>
@@ -12,7 +11,7 @@
 		<view class="play-opration">
 			<view class="play-text flex-center">
 				<view class="img-box">
-					<image class="bottom-img" src="../../../static/images/share.svg" mode=""></image>
+					<uni-icons size="50" type="redo" color="#fff"></uni-icons>
 				</view>
 				<text>分享</text>
 			</view>
@@ -64,11 +63,7 @@
 				font-size: 30rpx;
 				.img-box{
 					display: flex;
-					padding-right: 30rpx;
-					.bottom-img{
-						width: 50rpx;
-						height: 50rpx;
-					}
+					padding-right: $uni-spacing-row-lg;
 				}
 			}
 		}

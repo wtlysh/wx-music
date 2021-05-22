@@ -1,7 +1,8 @@
 <!-- 歌曲播放页面 -->
 <template>
 	<view class="song-player">
-		<view class="player-content" v-if="isCanPlay">
+		<nav-bar :title="song.name" :leftIcon="leftIcon" :fixed="true" :statusBar="true"></nav-bar>
+		<view class="player-content" v-if="isCanPlay" :style="{height:height+'rpx'}">
 			<view class="player-bgimg" :style="'background-image:url('+song.picUrl+')'"></view>
 			<view v-show="!isLyric">
 				<view class="player-img flex-center" :class="[isPlay ? '' : 'stoped']">
@@ -11,7 +12,7 @@
 				</view>
 				<view class="play-ctrol flex-align">
 					<view v-if="audiolist.length>1" class="flex-item" @click="prev">
-						<uni-icons type="arrowleft" color="#fff" size="25"></uni-icons>
+						<uni-icons type="arrowleft" color="#fff" size="50"></uni-icons>
 					</view>
 					<view class="isplay flex-center" @click="playCtrol">
 						<view class="isplay-bg"></view>
@@ -19,7 +20,7 @@
 						<image class="isplay-img" v-if="!isPlay" src="../../static/images/notplay.svg" mode=""></image>
 					</view>
 					<view v-if="audiolist.length>1" class="flex-item" @click="next(false)">
-						<uni-icons type="arrowright" color="#fff" size="25"></uni-icons>
+						<uni-icons type="arrowright" color="#fff" size="50"></uni-icons>
 					</view>
 				</view>
 				<view class="lyric-opcity player-lyric" @click="toLyric">
@@ -28,12 +29,12 @@
 					<view class="ric ellipsis">{{lybot}}</view>
 				</view>
 			</view>
-			<view v-show="isLyric" class="lyric-opcity all-lyric" :style="{height:(windowHeight-300) + 'rpx'}"
+			<view v-show="isLyric" class="lyric-opcity all-lyric" :style="{height:(height-300) + 'rpx'}"
 				@click="toLyric">
 				<scroll-view v-if="lyric.length>0" scroll-y="true" :scroll-into-view="'view-' + ctrolIndex"
-					style="height: 100%;width: 100%;">
+				style="height: 100%;">
 					<view :class="['ric','ellipsis',index==lyricIndex?'cur':'']" :id="'view-'+index"
-						:style="{height:((windowHeight-300)/13) + 'rpx'}" v-for="(item,index) in lyric" :key="index">
+						:style="{height:((height-300)/13) + 'rpx'}" v-for="(item,index) in lyric" :key="index">
 						{{item.text}}
 					</view>
 				</scroll-view>
@@ -44,7 +45,7 @@
 			<playBottom :isLike="isLike" @cancle="cancleLike" @confirm="addLike"></playBottom>
 			<view class="poplist-icon flex-align" @click="isOpentList=true">
 				<view style="display: flex;flex-wrap: wrap;justify-content: center;">
-					<uni-icons type="list" color="#6b6b6b" size="25"></uni-icons>
+					<uni-icons type="list" color="#6b6b6b" size="50"></uni-icons>
 					<text style="font-size: 28rpx;">列表</text>
 				</view>
 			</view>
@@ -98,7 +99,8 @@
 				curPlayIndex: 0, //当前播放歌曲在list内的索引
 				playTime: 0,
 				curPlayTime: 0 ,
-				windowHeight: 0, //屏幕高度
+				height: 0, //内容高度
+				leftIcon:'back',
 				likeSong: {}, //收藏歌曲
 				isLike: false, //是否收藏
 				userId: "", //用户收藏id
@@ -110,9 +112,8 @@
 			}
 			uni.getSystemInfo({
 				success: (res) => {
-					// 　　console.log(res.windowHeight) // 获取可使用窗口高度
-					this.windowHeight = (res.windowHeight * (750 / res.windowWidth)); //将高度乘以换算后的该设备的rpx与px的比例
-					// 　　console.log(this.windowHeight) //最后获得转化后得rpx单位的窗口高度
+					this.height = res.windowHeight- res.statusBarHeight - 40;
+					this.height = (this.height * (750 / res.windowWidth)); //将高度乘以换算后的该设备的rpx与px的比例
 				}
 			});
 			let id = param.songId;
@@ -427,9 +428,19 @@
 <style lang='scss' scoped>
 	.song-player {
 		height: 100%;
+		
+		.player-bgimg {
+			width: 100%;
+			height: 100%;
+			filter: blur(25px);
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			position: absolute;
+			transform: scale(1.5);
+		}
 
 		.player-content {
-			height: 100%;
 			position: relative;
 			overflow: hidden;
 
@@ -443,17 +454,6 @@
 				border-radius: 15px;
 			}
 
-			.player-bgimg {
-				width: 100%;
-				height: 100%;
-				filter: blur(25px);
-				background-position: center center;
-				background-repeat: no-repeat;
-				background-size: cover;
-				position: absolute;
-				transform: scale(1.5);
-			}
-
 			.player-img {
 				&.stoped {
 					animation-play-state: paused;
@@ -465,19 +465,19 @@
 				left: 150rpx;
 				width: 450rpx;
 				height: 450rpx;
-				border-radius: 50%;
+				border-radius: $uni-border-radius-circle;
 				background-color: rgba(255, 255, 255, 0.1);
 
 				.circle {
 					width: 92%;
 					height: 92%;
-					border-radius: 50%;
+					border-radius: $uni-border-radius-circle;
 					background-color: rgba(255, 255, 255, 0.3);
 
 					.img {
 						width: 80%;
 						height: 80%;
-						border-radius: 50%;
+						border-radius: $uni-border-radius-circle;
 					}
 				}
 			}
@@ -502,7 +502,7 @@
 						height: 100%;
 						background: rgba(0, 0, 0, 0.8);
 						opacity: 0.8;
-						border-radius: 50%;
+						border-radius: $uni-border-radius-circle;
 						z-index: 1;
 					}
 				
@@ -545,7 +545,7 @@
 			.ric {
 				text-align: center;
 				color: #F1F1F1;
-				font-size: 32rpx;
+				font-size: $uni-font-size-base;
 				opacity: 0.8;
 				height: 60rpx;
 				width: 90%;
@@ -554,7 +554,7 @@
 				&.cur {
 					font-size: 34rpx;
 					opacity: 1;
-					color: #8dc63f;
+					color: $uni-color-success;
 				}
 			}
 		}

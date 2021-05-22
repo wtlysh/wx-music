@@ -25,9 +25,8 @@
 /* 透明度 */
 /* 文章场景相关 */
 .playlist.data-v-34f1cb36 {
-  padding-top: 200rpx;
-  width: 90%;
-  margin: 0 auto;
+  position: relative;
+  top: 220rpx;
 }
 .playlist .playlist-item.data-v-34f1cb36 {
   height: 120rpx;
@@ -44,9 +43,5 @@
 .playlist .playlist-item .playlist-content.data-v-34f1cb36 {
   padding-left: 30rpx;
   width: 470rpx;
-}
-.playlist .playlist-item .playlist-more.data-v-34f1cb36 {
-  width: 50rpx;
-  height: 50rpx;
 }
 

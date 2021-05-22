@@ -26,10 +26,7 @@
 /* 文章场景相关 */
 .hotsong-li .hotsong-swiper.data-v-30ee28e4 {
   height: 420rpx;
-  position: fixed;
   width: 100%;
-  z-index: 999;
-  overflow: hidden;
   background: #fff;
 }
 .hotsong-li .hotsong-swiper .swiper-item.data-v-30ee28e4 {
@@ -54,13 +51,11 @@
 .hotsong-li .hotsong-swiper .swiper-item .li-con .li-img.data-v-30ee28e4 {
   width: 270rpx;
   height: 270rpx;
-  border-radius: 30rpx;
+  border-radius: 20rpx;
 }
 .hotsong-li .hotsong-swiper .swiper-item .li-con .li-name.data-v-30ee28e4 {
   color: #FFFFFF;
   width: 100%;
   text-align: center;
-  font-size: 40rpx;
-  font-weight: bold;
 }
 

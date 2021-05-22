@@ -6,7 +6,7 @@
 			<view class="playlist-detail-con">
 				<image style="width: 220rpx;height: 220rpx;border-radius: 20rpx;" :src="bgimg" mode=""></image>
 				<view class="play-count">
-					<uni-icons type="headphones" color="#fff" size="15"></uni-icons>
+					<uni-icons type="headphones" color="#fff" size="30"></uni-icons>
 					<text style="color: #fff;font-size: 22rpx;padding-left: 8rpx;">{{album.desc}}</text>
 				</view>
 				<view style="padding-left: 40rpx;width: 440rpx;" class="">
@@ -20,7 +20,7 @@
 					</view>
 					<view class="playlist-description">
 						<text class="playlist-desc-txt ellipsis">简介:{{album.description}}</text>
-						<image style="width: 35rpx;height: 35rpx;" src="../../../static/images/more-white.svg" mode="">
+						<uni-icons type="forward" color="#fff" size="40"></uni-icons>
 						</image>
 					</view>
 				</view>
@@ -46,14 +46,11 @@
 
 <style lang="scss" scoped>
 	.playlist-top {
-		position: fixed;
 		height: 400rpx;
-		padding-top: 20rpx;
+		padding-top: $uni-spacing-col-base;
 		background: #fff;
-		overflow: hidden;
 		width: 100%;
-		z-index: 999;
-
+		
 		.playlist-con {
 			position: absolute;
 			width: 100%;
@@ -77,7 +74,7 @@
 				.playlist-creator {
 					display: flex;
 					align-items: center;
-					margin: 10rpx 0 20rpx 0;
+					margin: $uni-spacing-col-sm 0 $uni-spacing-row-base 0;
 					height: 55rpx;
 				}
 
@@ -86,7 +83,7 @@
 					height: 35rpx;
 
 					.playlist-desc-txt {
-						font-size: 28rpx;
+						font-size: $uni-font-size-sm;
 						width: 400rpx;
 					}
 				}

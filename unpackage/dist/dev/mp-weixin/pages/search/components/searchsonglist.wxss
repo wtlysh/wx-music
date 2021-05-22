@@ -25,9 +25,8 @@
 /* 透明度 */
 /* 文章场景相关 */
 .song-list.data-v-9395d974 {
-  padding-top: 200rpx;
-  width: 90%;
-  margin: 0 auto;
+  position: relative;
+  top: 220rpx;
 }
 .song-list .song-list-item.data-v-9395d974 {
   -webkit-box-orient: horizontal;
@@ -41,7 +40,7 @@
   width: 580rpx;
 }
 .song-list .con .song-list-name.data-v-9395d974 {
-  margin-top: 12rpx;
+  margin-top: 10rpx;
   margin-right: 20rpx;
   line-height: 58rpx;
 }

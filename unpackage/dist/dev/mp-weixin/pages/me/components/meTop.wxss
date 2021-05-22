@@ -26,7 +26,6 @@
 /* 文章场景相关 */
 .me-top.data-v-7268f0dc {
   height: 300rpx;
-  position: fixed;
   width: 100%;
   z-index: 999;
   overflow: hidden;
@@ -52,13 +51,11 @@
 .me-top .me-top-con .me-avatar.data-v-7268f0dc {
   width: 200rpx;
   height: 200rpx;
-  border-radius: 100rpx;
+  border-radius: 50%;
 }
 .me-top .me-top-con .me-name.data-v-7268f0dc {
   color: #FFFFFF;
   width: 100%;
   text-align: center;
-  font-size: 40rpx;
-  font-weight: bold;
 }
 

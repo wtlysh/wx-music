@@ -26,17 +26,11 @@
 /* 文章场景相关 */
 .list-box.data-v-9e3c1cf4 {
   padding-top: 100rpx;
-  height: 100%;
-  width: 100%;
-  background-color: #FFFFFF;
 }
 .list-box .keyword-list-box.data-v-9e3c1cf4 {
   height: calc(100vh - 110rpx);
   padding-top: 10rpx;
   border-radius: 20rpx 20rpx 0 0;
-  background-color: #fff;
-  width: 90%;
-  margin: 0 auto;
 }
 .list-box .keyword-list-box .keyword-search.data-v-9e3c1cf4 {
   font-size: 36rpx;
@@ -44,7 +38,7 @@
   color: #8dc63f;
 }
 .list-box .keyword-list-box .keyword-entry-tap.data-v-9e3c1cf4 {
-  background-color: #eee;
+  background-color: #f2f2f2;
 }
 .list-box .keyword-list-box .keyword-entry.data-v-9e3c1cf4 {
   height: 80rpx;
@@ -64,29 +58,21 @@
 .list-box .keyword-box.data-v-9e3c1cf4 {
   height: calc(100vh - 110rpx);
   border-radius: 20rpx 20rpx 0 0;
-  background-color: #fff;
 }
 .list-box .keyword-box .keyword-block.data-v-9e3c1cf4 {
   padding: 10rpx 0;
 }
 .list-box .keyword-box .keyword-block .keyword-list-header.data-v-9e3c1cf4 {
-  width: 94%;
-  padding: 10rpx 3%;
-  font-size: 27rpx;
+  font-size: 28rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
-}
-.list-box .keyword-box .keyword-block .keyword-list-header .keyword-image.data-v-9e3c1cf4 {
-  width: 40rpx;
-  height: 40rpx;
+  margin-bottom: 10rpx;
 }
 .list-box .keyword-box .keyword-block .keyword.data-v-9e3c1cf4 {
-  width: 94%;
-  padding: 3px 3%;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -103,10 +89,10 @@
   margin: 10rpx 20rpx 10rpx 0;
   border-radius: 60rpx;
   height: 60rpx;
-  background-color: #f2f2f2;
+  background-color: #fff;
 }
 .list-box .keyword-box .keyword-block .keyword .keyword-hotview.data-v-9e3c1cf4 {
-  margin: 15rpx 0;
+  margin: 20rpx 0;
   width: 100%;
 }
 .list-box .keyword-box .keyword-block .keyword .keyword-hotview .keyword-index.data-v-9e3c1cf4 {
@@ -123,7 +109,5 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
-  font-size: 28rpx;
-  color: #6b6b6b;
 }
 

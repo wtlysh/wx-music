@@ -25,13 +25,10 @@
 /* 透明度 */
 /* 文章场景相关 */
 .playlist-top.data-v-a2131ec4 {
-  position: fixed;
   height: 400rpx;
   padding-top: 20rpx;
   background: #fff;
-  overflow: hidden;
   width: 100%;
-  z-index: 999;
 }
 .playlist-top .playlist-con.data-v-a2131ec4 {
   position: absolute;

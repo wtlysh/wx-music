@@ -95,8 +95,11 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
+    navBar: function() {
+      return __webpack_require__.e(/*! import() | components/nav-bar/nav-bar */ "components/nav-bar/nav-bar").then(__webpack_require__.bind(null, /*! @/components/nav-bar/nav-bar.vue */ 93))
+    },
     uniIcons: function() {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 121))
+      return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 100))
     }
   }
 } catch (e) {
@@ -202,13 +205,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _search = __webpack_require__(/*! ../../api/search.js */ 50);
 
 
 
 
-var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var searchKeyword = function searchKeyword() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchKeyword */ "pages/search/components/searchKeyword").then((function () {return resolve(__webpack_require__(/*! ./components/searchKeyword.vue */ 143));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 150));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchsonglist = function searchsonglist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchsonglist */ "pages/search/components/searchsonglist").then((function () {return resolve(__webpack_require__(/*! ./components/searchsonglist.vue */ 157));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchplaylist = function searchplaylist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchplaylist */ "pages/search/components/searchplaylist").then((function () {return resolve(__webpack_require__(/*! ./components/searchplaylist.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
-
+var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var searchKeyword = function searchKeyword() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchKeyword */ "pages/search/components/searchKeyword").then((function () {return resolve(__webpack_require__(/*! ./components/searchKeyword.vue */ 150));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 157));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchsonglist = function searchsonglist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchsonglist */ "pages/search/components/searchsonglist").then((function () {return resolve(__webpack_require__(/*! ./components/searchsonglist.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchplaylist = function searchplaylist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchplaylist */ "pages/search/components/searchplaylist").then((function () {return resolve(__webpack_require__(/*! ./components/searchplaylist.vue */ 171));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -232,8 +235,9 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
       isShowSongList: false,
       songList: [], //歌曲列表
       playlist: [], //歌单列表
-      searchTip: "" };
-
+      searchTip: "",
+      height: 0 //高度
+    };
   },
   components: {
     searchKeyword: searchKeyword,
@@ -241,19 +245,25 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
     searchsonglist: searchsonglist,
     searchplaylist: searchplaylist },
 
-  created: function created() {
+  created: function created() {var _this = this;
     this.loadDefaultKeyword();
+    uni.getSystemInfo({
+      success: function success(res) {
+        _this.height = res.statusBarHeight + 40;
+        _this.height = _this.height * (750 / res.windowWidth); //将高度乘以换算后的该设备的rpx与px的比例
+      } });
+
   },
   methods: {
     //加载默认搜索关键字
-    loadDefaultKeyword: function loadDefaultKeyword() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+    loadDefaultKeyword: function loadDefaultKeyword() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
 
                   (0, _search.apiSearchDefault)().then(function (res) {
                     var word = res.data.realkeyword;
                     if (word == null || word.length == 0) {
                       return;
                     };
-                    _this.defaultKeyword = word;
+                    _this2.defaultKeyword = word;
                   }));case 2:case "end":return _context.stop();}}}, _callee);}))();
     },
     blur: function blur() {
@@ -314,15 +324,15 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
       }
     },
     //监听输入
-    inputChange: function inputChange(e) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var keyword;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+    inputChange: function inputChange(e) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var keyword;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                 //兼容引入组件时传入参数情况
                 keyword = e.detail.value;
-                _this2.keyword = keyword;
-                _this2.showClear = !!keyword;
+                _this3.keyword = keyword;
+                _this3.showClear = !!keyword;
                 // console.log(this.keyword)
                 if (keyword) {_context2.next = 7;break;}
-                _this2.keywordList = [];
-                _this2.isShowKeywordList = false;return _context2.abrupt("return");case 7:_context2.next = 9;return (
+                _this3.keywordList = [];
+                _this3.isShowKeywordList = false;return _context2.abrupt("return");case 7:_context2.next = 9;return (
 
 
                   (0, _search.apiSerchSuggest)({
@@ -330,9 +340,9 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
                     keywords: keyword.trim() }).
                   then(function (res) {
                     var keywords = res.result.allMatch.map(function (val) {return val.keyword;});
-                    _this2.keywordList = _this2.drawCorrelativeKeyword(keywords, keyword);
-                    _this2.isShowKeywordList = true;
-                    _this2.searchTip = "搜索“" + _this2.keyword + "”";
+                    _this3.keywordList = _this3.drawCorrelativeKeyword(keywords, keyword);
+                    _this3.isShowKeywordList = true;
+                    _this3.searchTip = "搜索“" + _this3.keyword + "”";
                   }));case 9:case "end":return _context2.stop();}}}, _callee2);}))();
     },
     //高亮关键字
@@ -362,7 +372,7 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
       this.showCancel = false;
     },
     //获取歌曲歌单
-    getSongList: function getSongList(keyword) {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var par_0, par_1;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+    getSongList: function getSongList(keyword) {var _this4 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var par_0, par_1;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                 par_0 = {
                   keywords: keyword,
                   limit: 25,
@@ -376,7 +386,7 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
                   Promise.all([
                   (0, _search.apiSearch)(par_0), (0, _search.apiSearch)(par_1)]).
                   then(function (res) {
-                    _this3.songList = res[0].result.songs.map(function (item) {
+                    _this4.songList = res[0].result.songs.map(function (item) {
                       var desc = item.artists.map(function (t) {
                         return t.name;
                       }).join('/') + ' · ' + item.name;
@@ -387,7 +397,7 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
                       desc);
 
                     });
-                    _this3.playlist = res[1].result.playlists.map(function (item) {
+                    _this4.playlist = res[1].result.playlists.map(function (item) {
                       var desc = item.trackCount + '首歌曲 ' + item.creator.nickname + ' ' +
                       (0, _numberFormat.numberFormat)(item.playCount) + '播放';
                       return _defineProperty({
@@ -399,7 +409,7 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
 
                     });
                   }));case 4:
-                _this3.$forceUpdate();case 5:case "end":return _context3.stop();}}}, _callee3);}))();
+                _this4.$forceUpdate();case 5:case "end":return _context3.stop();}}}, _callee3);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

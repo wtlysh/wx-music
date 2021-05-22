@@ -27,6 +27,7 @@
 /*每个页面公共css */
 page {
   height: 100%;
+  background: #f4f4f4;
 }
 /* 是否播放 */
 .playing {
@@ -75,6 +76,10 @@ page {
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
+}
+.box-width {
+  width: 90%;
+  margin: 0 auto;
 }
 /* 文字 */
 .title {

@@ -26,18 +26,13 @@
 /* 文章场景相关 */
 .home-search.data-v-8b3e5b4a {
   position: fixed;
-  background: #FFFFFF;
   z-index: 100;
   width: 100%;
-  top: 0;
 }
 .home-search .home-search-box.data-v-8b3e5b4a {
-  margin: 20rpx 50rpx;
-  background: #f2f2f2;
+  margin: 20rpx 0;
+  background: #FFFFFF;
   height: 70rpx;
   border-radius: 35rpx;
-}
-.home-search .home-search-box .home-search-icon.data-v-8b3e5b4a {
-  margin-right: 15rpx;
 }
 

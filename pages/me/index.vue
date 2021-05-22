@@ -1,16 +1,17 @@
 <!-- 个人中心页面 -->
 <template>
 	<view class="me">
+		<nav-bar :title="title" :showIcon="false"></nav-bar>
 		<meTop :bg="bg"></meTop>
-		<typeTab :top="320" :tab="tab" :isActive="isActive" @tab="isActive=0" @toTab="isActive=1"></typeTab>
+		<typeTab style="position: relative;background: #fff;" :tab="tab" :isActive="isActive" @tab="isActive=0" @toTab="isActive=1"></typeTab>
 		<view v-if="isActive==0">
-			<plylistCon :top="top" :tracks="hisTracks" :options="options1" :disabled="disabled" @change="deleteSong">
+			<plylistCon  :tracks="hisTracks" :options="options1" :disabled="disabled" @change="deleteSong">
 			</plylistCon>
 			<view class="delete-fab" v-if="hisTracks.length>0" @click="deleteAll">
-				<uni-icons type="trash-filled" color="#fff" size="25"></uni-icons>
+				<uni-icons type="trash-filled" color="#fff" size="50"></uni-icons>
 			</view>
 		</view>
-		<plylistCon v-if="isActive==1" :top="top" :tracks="likeTracks" :options="options2" :disabled="disabled"
+		<plylistCon v-if="isActive==1" :tracks="likeTracks" :options="options2" :disabled="disabled"
 			@change="cancleLike">
 		</plylistCon>
 		<playing-box></playing-box>
@@ -22,6 +23,7 @@
 	import typeTab from '../../components/typeTab.vue'
 	import plylistCon from '../../components/playlistCon.vue'
 	const db = wx.cloud.database();
+	var statusBarHeight = uni.getSystemInfoSync().statusBarHeight
 	export default {
 		components: {
 			meTop,
@@ -30,6 +32,7 @@
 		},
 		data() {
 			return {
+				title:"音乐",
 				bg: 'http://p4.music.126.net/NDdtSac66rpsF_jMBh1JMQ==/109951164929306650.jpg',
 				isActive: 0,
 				tab: ['最近', '喜欢'],
@@ -138,12 +141,12 @@
 			position: fixed;
 			bottom: 120rpx;
 			right: 70rpx;
-			height: 40px;
-			width: 40px;
-			background: #8dc63f;
+			height: 80rpx;
+			width: 80rpx;
+			background: $uni-color-success;
 			text-align: center;
-			line-height: 40px;
-			border-radius: 20px;
+			line-height: 80rpx;
+			border-radius: $uni-border-radius-circle;
 		}
 	}
 </style>

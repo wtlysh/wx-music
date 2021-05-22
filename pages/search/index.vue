@@ -1,12 +1,13 @@
 <!-- 搜索页面 -->
 <template>
 	<view class="search">
+		<nav-bar></nav-bar>
 		<!-- 顶部搜索框 -->
 		<view class="search-box">
 			<view class="search__box flex-center">
 				<view class="search__box-icon-search flex-center">
 					<slot name="searchIcon">
-						<uni-icons color="#6b6b6b" size="18" type="search" />
+						<uni-icons color="#6b6b6b" size="40" type="search" />
 					</slot>
 				</view>
 				<input :focus="isFocus" :placeholder="defaultKeyword ? defaultKeyword:placeholder" 
@@ -18,7 +19,7 @@
 					@focus="focus" />
 				<view v-show="showClear" class="search__box-icon-clear" @click="clear">
 					<slot name="clearIcon">
-						<uni-icons color="#c0c4cc" size="18" type="clear" />
+						<uni-icons color="#c0c4cc" size="40" type="clear" />
 					</slot>
 				</view>
 			</view>
@@ -29,9 +30,9 @@
 			@search="doSearch"></searchKeyword>
 		<!-- 搜索结果 -->
 		<view v-show="isShowSongList">
-			<typeTab :top="100" :tab="tab" :isActive="isActive" @tab='isActive = 0' @toTab="isActive = 1"></typeTab>
-			<searchsonglist v-if="isActive==0" :songList="songList"></searchsonglist>
-			<searchplaylist v-if="isActive==1" :playlist="playlist"></searchplaylist>
+			<typeTab class="search-tab" :style="{top:(height+110)+'rpx'}" :tab="tab" :isActive="isActive" @tab='isActive = 0' @toTab="isActive = 1"></typeTab>
+			<searchsonglist class="search-list" v-if="isActive==0" :songList="songList"></searchsonglist>
+			<searchplaylist class="search-list" v-if="isActive==1" :playlist="playlist"></searchplaylist>
 		</view>
 		<playing-box></playing-box>
 	</view>
@@ -46,7 +47,6 @@
 	import {
 		numberFormat
 	} from '../../utils/numberFormat.js'
-	// import searchBox from './components/searchBox.vue'
 	import searchKeyword from './components/searchKeyword.vue'
 	import typeTab from '../../components/typeTab.vue'
 	import searchsonglist from "./components/searchsonglist.vue"
@@ -69,6 +69,7 @@
 				songList: [], //歌曲列表
 				playlist: [], //歌单列表
 				searchTip: "",
+				height:0,//高度
 			}
 		},
 		components: {
@@ -79,6 +80,12 @@
 		},
 		created() {
 			this.loadDefaultKeyword();
+			uni.getSystemInfo({
+				success: (res) => {
+					this.height = res.statusBarHeight + 40;
+					this.height = (this.height * (750 / res.windowWidth)); //将高度乘以换算后的该设备的rpx与px的比例
+				}
+			});
 		},
 		methods: {
 			//加载默认搜索关键字
@@ -242,22 +249,26 @@
 </script>
 
 <style lang="scss" scoped>
-	$uni-searchbar-height: 70rpx;
 
 	.search {
+		.search-tab{
+			position: fixed;
+			width: 100%;
+			z-index: 100;
+		}
 		.search-box {
 			position: fixed;
 			z-index: 999;
-			background: #FFFFFF;
+			background: $uni-bg-color-grey;
 			display: flex;
 			flex-direction: row;
-			width: 650rpx;
+			width: 675rpx;
 			height: 110rpx;
-			padding: 0 50rpx;
+			padding: 0 37.5rpx;
 
 			.search__box {
-				margin-top: 20rpx;
-				background: #f2f2f2;
+				margin-top: $uni-spacing-col-base;
+				background: $uni-bg-color;
 				box-sizing: border-box;
 				overflow: hidden;
 				position: relative;
@@ -287,7 +298,7 @@
 			}
 
 			.searchbox__cancel {
-				padding-left: 20rpx;
+				padding-left: $uni-spacing-row-base;
 				line-height: 110rpx;
 				font-size: $uni-font-size-sm;
 				// color: $uni-text-color;

@@ -2,6 +2,7 @@
   "navigationBarTitleText": "歌单详情",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "nav-bar": "/components/nav-bar/nav-bar",
     "playlist-top": "/pages/playlist/components/playlistTop",
     "playlist-con": "/components/playlistCon"
   }

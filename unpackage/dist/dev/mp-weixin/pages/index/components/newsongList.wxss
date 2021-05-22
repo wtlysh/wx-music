@@ -25,21 +25,18 @@
 /* 透明度 */
 /* 文章场景相关 */
 .newsong.data-v-66d54660 {
-  margin-bottom: 40rpx;
+  margin-bottom: 30rpx;
 }
-.newsong .newsong-container.data-v-66d54660 {
-  padding: 0 50rpx;
-}
-.newsong .newsong-container .newsong-list.data-v-66d54660 {
-  width: 200rpx;
+.newsong .newsong-list.data-v-66d54660 {
+  width: 215rpx;
   margin-bottom: 20rpx;
 }
-.newsong .newsong-container .newsong-list .newsong-img.data-v-66d54660 {
-  width: 200rpx;
-  height: 200rpx;
+.newsong .newsong-list .newsong-img.data-v-66d54660 {
+  width: 215rpx;
+  height: 215rpx;
   border-radius: 20rpx;
 }
-.newsong .newsong-container .newsong-list .newsong-content.data-v-66d54660 {
+.newsong .newsong-list .newsong-content.data-v-66d54660 {
   padding-left: 20rpx;
   margin: auto 0;
 }

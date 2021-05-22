@@ -1,6 +1,7 @@
 <!-- 新歌榜页面 -->
 <template>
 	<view class="songlist">
+		<nav-bar :title="title"></nav-bar>
 		<view class="songlist-top">
 			<image class="songlist-img" :src="bgimg" mode=""></image>
 		</view>
@@ -22,7 +23,8 @@
 			return{
 				top:380,
 				tracks:[],
-			    bgimg:''
+			    bgimg:'',
+				title:"新歌榜"
 			}
 		},
 		onLoad(param) {
@@ -47,17 +49,13 @@
 <style lang="scss" scoped>
 	.songlist{
 		.songlist-top{
-			position: fixed;
 			height: 400rpx;
-			padding-top: 20rpx;
+			padding-top: $uni-spacing-col-base;
 			background: #fff;
-			overflow: hidden;
-			width: 100%;
-			z-index: 999;
+			position: relative;
 			.songlist-img{
 				position: absolute;
 				top: 0;
-				left: 0;
 				height: 450rpx;
 				width: 750rpx;
 			}

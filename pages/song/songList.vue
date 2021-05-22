@@ -1,12 +1,13 @@
 <!-- 热门歌曲页面 -->
 <template>
 	<view class="hotsong-li">
+		<nav-bar :title="title"></nav-bar>
 		<swiper circular="true" class="hotsong-swiper" @change="handleChange">
 			<block v-for="(item,index) in imgs" :key="index">
 				<swiper-item class="swiper-item">
 					<view class="bg" :style="'background-image:url(' + item + ')'"></view>
 					<view class="li-con">
-						<image class="li-img" :src="item"></image>
+						<image class="li-img title" :src="item"></image>
 						<text space="true" class="li-name">{{cat[index].name}}</text>
 					</view>
 				</swiper-item>
@@ -29,7 +30,8 @@
 		},
 		data() {
 			return {
-				top:380,
+				title: '音乐',
+				leftIcon:"back",
 				songList: [{
 					tracks: [],
 				}],
@@ -91,14 +93,11 @@
 	.hotsong-li {
 		.hotsong-swiper {
 			height: 420rpx;
-			position: fixed;
 			width: 100%;
-			z-index: 999;
-			overflow: hidden;
 			background: #fff;
 
 			.swiper-item {
-				padding-top: 20rpx;
+				padding-top: $uni-spacing-col-base;
 				display: flex;
 				justify-content: center;
 
@@ -112,15 +111,13 @@
 					.li-img {
 						width: 270rpx;
 						height: 270rpx;
-						border-radius: 30rpx;
+						border-radius: $uni-border-radius-lg;
 					}
 
 					.li-name {
 						color: #FFFFFF;
 						width: 100%;
 						text-align: center;
-						font-size: 40rpx;
-						font-weight: bold;
 					}
 				}
 			}

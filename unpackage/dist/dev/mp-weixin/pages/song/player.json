@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "nav-bar": "/components/nav-bar/nav-bar",
+    "uni-icons": "/components/uni-icons/uni-icons",
     "play-bottom": "/pages/song/components/playBottom",
     "pop-list": "/components/popList"
   }

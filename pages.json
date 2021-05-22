@@ -61,6 +61,7 @@
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "音乐",
 		"navigationBarBackgroundColor": "#000",
-		"backgroundColor": "#F8F8F8"
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle":"custom"
 	}
 }

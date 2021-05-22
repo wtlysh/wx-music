@@ -1,0 +1,1 @@
+<view class="status-bar data-v-4e30dace" style="{{'height:'+(statusBarHeight)+';'}}"><slot></slot></view>

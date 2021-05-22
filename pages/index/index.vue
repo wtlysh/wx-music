@@ -1,6 +1,7 @@
 <!-- 首页 -->
 <template>
 	<view class="home">
+		<nav-bar :title="title" :showIcon="false"></nav-bar>
 		<Search></Search>
 		<view class="home-con">
 			<hotsongList :songs="Hotsongs"></hotsongList>
@@ -31,6 +32,7 @@
 		},
 		data() {
 			return {
+				title:"音乐",
 				hotId: "2250011882", //热门榜单ID
 				Hotsongs: [],
 				newId: "3779629",
@@ -79,7 +81,7 @@
 		.home-con {
 			position: relative;
 			top: 110rpx;
-			background: #FFFFFF;
+			background: $uni-bg-color-grey;
 		}
 	}
 </style>

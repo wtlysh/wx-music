@@ -7,7 +7,11 @@ Vue.prototype.$store = store
 Vue.prototype.$util = commonFuc
 
 import playingBox from './components/playingBox.vue'
+import NavBar from './components/nav-bar/nav-bar.vue'
+import UniIcons from './components/uni-icons/uni-icons.vue'
 Vue.component('playing-box', playingBox)
+Vue.component('nav-bar', NavBar)
+Vue.component('uni-icons', UniIcons)
 Vue.config.productionTip = false
 
 App.mpType = 'app'

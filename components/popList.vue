@@ -37,7 +37,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="poplist-close" @click="closeList">
+		<view class="poplist-close" @tap.stop="closeList">
 			关闭
 		</view>
 	</view>
@@ -221,10 +221,10 @@
 			width: 100%;
 			height: 120rpx;
 			line-height: 120rpx;
-			font-size: 34rpx;
+			font-size: $uni-font-size-base;
 	
 			.total {
-				font-size: 40rpx;
+				font-size: $uni-font-size-lg;
 				margin-left: 50rpx;
 			}
 	
@@ -241,7 +241,7 @@
 			background: #fff;
 			text-align: center;
 			line-height: 100rpx;
-			font-size: 32rpx;
+			font-size: $uni-font-size-base;
 		}
 	}
 </style>

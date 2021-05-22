@@ -9,7 +9,7 @@
 					class="home-playlist-item" v-for="(item,index) in playlist" :key="index">
 						<image class="home-playlist-img" :src="item.picUrl" mode=""></image>
 						<view class="play-count">
-							<uni-icons type="headphones" color="#fff" size="15"></uni-icons>
+							<uni-icons type="headphones" color="#fff" size="30"></uni-icons>
 							<text style="color: #fff;font-size: 22rpx;padding-left: 8rpx;">{{item.desc}}</text>
 						</view>
 						<view class="home-playlist-name ellipsis_2">
@@ -58,31 +58,31 @@
 
 <style lang="scss" scoped>
 	.home-playlist{
-		margin-bottom: 40rpx;
+		margin-bottom: $uni-spacing-col-lg;
 	    .playlist-container {
 			
 			.home-playlist-list{
-				width: 1325rpx;
-				padding:0 50rpx;
+				width: 1370rpx;
+				padding:0 37.5rpx;
 				.home-playlist-item {
-					width: 200rpx;
-					margin-bottom: 20rpx;
+					width: 215rpx;
+					margin-bottom: $uni-spacing-col-base;
 					position: relative;
 				
 					.home-playlist-img {
-						width: 200rpx;
-						height: 200rpx;
-						border-radius: 20rpx;
+						width: 215rpx;
+						height: 215rpx;
+						border-radius: $uni-border-radius-lg;
 					}
 					.play-count{
 						position: absolute;
-						top: 150rpx;
+						top: 165rpx;
 						right: 15rpx;
 					}
 					.home-playlist-name{
-						width: 200rpx;
-						font-size: 32rpx;
-						padding-top: 10rpx;
+						width: 215rpx;
+						font-size: $uni-font-size-base;
+						padding-top: $uni-spacing-col-sm;
 					}
 				}
 			}

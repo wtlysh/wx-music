@@ -1,12 +1,12 @@
 <!-- 歌单，歌曲顶部组件 -->
 <template>
-	<view class="song-top">
+	<view class="song-top box-width">
 		<view class="title" style="flex: 1;">
 			{{title}}
 		</view>
 		<view class="song-all flex-align" @click="toSongList">
 			<text class="song-text">更多</text>
-			<image style="width: 35rpx;height: 35rpx;" src="../../../static/images/more.svg"></image>
+			<uni-icons type="forward" color="#6b6b6b" size="40"></uni-icons>
 		</view>
 	</view>
 </template>
@@ -31,8 +31,7 @@
 <style lang="scss" scoped>
 	.song-top {
 		display: flex;
-		margin: 20rpx 0;
-		padding: 0 50rpx;
+		padding-bottom: $uni-spacing-col-base;
 
 		.song-all {
 			justify-content: flex-end;

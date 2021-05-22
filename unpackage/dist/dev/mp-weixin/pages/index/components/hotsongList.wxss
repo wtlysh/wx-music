@@ -25,23 +25,23 @@
 /* 透明度 */
 /* 文章场景相关 */
 .hotsong.data-v-8edca806 {
-  margin-bottom: 40rpx;
+  margin-bottom: 30rpx;
 }
-.hotsong .hotsong-container .hotsong-list.data-v-8edca806 {
-  width: 1950rpx;
+.hotsong .hotsong-list.data-v-8edca806 {
+  width: 2025rpx;
   height: 450rpx;
-  padding: 0 50rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  padding: 0 37.5rpx;
 }
-.hotsong .hotsong-container .hotsong-list .hotsong-li.data-v-8edca806 {
-  width: 650rpx;
+.hotsong .hotsong-list .hotsong-li.data-v-8edca806 {
+  width: 675rpx;
 }
-.hotsong .hotsong-container .hotsong-list .hotsong-li .hotsong-item.data-v-8edca806 {
+.hotsong .hotsong-list .hotsong-li .hotsong-item.data-v-8edca806 {
   margin-bottom: 20rpx;
 }
-.hotsong .hotsong-container .hotsong-list .hotsong-li .hotsong-item .hotsong-img.data-v-8edca806 {
+.hotsong .hotsong-list .hotsong-li .hotsong-item .hotsong-img.data-v-8edca806 {
   width: 130rpx;
   height: 130rpx;
   border-radius: 20rpx;

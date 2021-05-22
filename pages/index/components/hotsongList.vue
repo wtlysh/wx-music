@@ -2,22 +2,20 @@
 <template>
 	<view class="hotsong">
 		<songTop :title="title" @child="toSongList"></songTop>
-		<view class="hotsong-container flex-between">
+		<view class="flex-between">
 			<scroll-view scroll-x="true" scroll-with-animation="true">
 				<view class="hotsong-list">
 					<view class="hotsong-li" v-for="(list,index) in songs" :key="index">
-						<view class="hotsong-item flex-align" 
-						@click="toSong(item)"
-						v-for="item in list" :key="item.id">
+						<view class="hotsong-item flex-align" @click="toSong(item)" v-for="item in list" :key="item.id">
 							<image class="hotsong-img" :src="item.al.picUrl" mode=""></image>
-						    <view style="padding-left: 20rpx;">
-						    	<view class="name" style="padding-bottom:10rpx;">
-						    		{{item.name}}
-						    	</view>
+							<view style="padding-left: 20rpx;">
+								<view class="name" style="padding-bottom:10rpx;">
+									{{item.name}}
+								</view>
 								<view class="song-text">
 									{{item.ar[0].name}}-{{item.name}}
 								</view>
-						    </view>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -35,27 +33,28 @@
 				default: []
 			}
 		},
-		components:{
+		components: {
 			songTop
 		},
-		data(){
-			return{
-				title:'推荐歌曲'
+		data() {
+			return {
+				title: '推荐歌曲'
 			}
 		},
-		methods:{
+		methods: {
 			//跳转到歌曲播放页面
-			toSong(item){
+			toSong(item) {
 				let list = [item];
 				uni.navigateTo({
-					url:'/pages/song/player?songId='+item.id+'&index=0'+'&list='+ encodeURIComponent(JSON.stringify(list))
+					url: '/pages/song/player?songId=' + item.id + '&index=0' + '&list=' + encodeURIComponent(JSON
+						.stringify(list))
 				})
 
 			},
 			//跳转到热门歌曲页面
-			toSongList(){
+			toSongList() {
 				uni.navigateTo({
-					url:'/pages/song/songList'
+					url: '/pages/song/songList'
 				})
 			}
 		}
@@ -64,25 +63,26 @@
 
 <style lang="scss" scoped>
 	.hotsong {
-		margin-bottom: 40rpx;
-		.hotsong-container {
-			.hotsong-list {
-				width: 1950rpx;
-				height: 450rpx;
-				padding:0 50rpx;
-				display: flex;
-				.hotsong-li{
-					width: 650rpx;
-					.hotsong-item{
-						margin-bottom: 20rpx;
-						.hotsong-img{
-							width: 130rpx;
-							height: 130rpx;
-							border-radius: 20rpx;
-						}
+		margin-bottom: $uni-spacing-col-lg;
+
+		.hotsong-list {
+			width: 2025rpx;
+			height: 450rpx;
+			display: flex;
+			padding: 0 37.5rpx;
+
+			.hotsong-li {
+				width: 675rpx;
+
+				.hotsong-item {
+					margin-bottom: $uni-spacing-col-base;
+
+					.hotsong-img {
+						width: 130rpx;
+						height: 130rpx;
+						border-radius: $uni-border-radius-lg;
 					}
 				}
-
 			}
 
 		}

@@ -95,8 +95,11 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
+    navBar: function() {
+      return __webpack_require__.e(/*! import() | components/nav-bar/nav-bar */ "components/nav-bar/nav-bar").then(__webpack_require__.bind(null, /*! @/components/nav-bar/nav-bar.vue */ 93))
+    },
     uniIcons: function() {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 121))
+      return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 100))
     }
   }
 } catch (e) {
@@ -220,6 +223,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _vuex = __webpack_require__(/*! vuex */ 8);
 
 
@@ -231,7 +235,7 @@ var _player = __webpack_require__(/*! ../../api/player.js */ 75);
 
 
 
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var playBottom = function playBottom() {__webpack_require__.e(/*! require.ensure | pages/song/components/playBottom */ "pages/song/components/playBottom").then((function () {return resolve(__webpack_require__(/*! ./components/playBottom.vue */ 171));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var popList = function popList() {Promise.all(/*! require.ensure | components/popList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/popList")]).then((function () {return resolve(__webpack_require__(/*! ../../components/popList.vue */ 178));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var playBottom = function playBottom() {__webpack_require__.e(/*! require.ensure | pages/song/components/playBottom */ "pages/song/components/playBottom").then((function () {return resolve(__webpack_require__(/*! ./components/playBottom.vue */ 178));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var popList = function popList() {Promise.all(/*! require.ensure | components/popList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/popList")]).then((function () {return resolve(__webpack_require__(/*! ../../components/popList.vue */ 185));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var update = true;
 var db = wx.cloud.database();var _default =
 {
@@ -262,7 +266,8 @@ var db = wx.cloud.database();var _default =
       curPlayIndex: 0, //当前播放歌曲在list内的索引
       playTime: 0,
       curPlayTime: 0,
-      windowHeight: 0, //屏幕高度
+      height: 0, //内容高度
+      leftIcon: 'back',
       likeSong: {}, //收藏歌曲
       isLike: false, //是否收藏
       userId: "" //用户收藏id
@@ -274,9 +279,8 @@ var db = wx.cloud.database();var _default =
     }
     uni.getSystemInfo({
       success: function success(res) {
-        // 　　console.log(res.windowHeight) // 获取可使用窗口高度
-        _this.windowHeight = res.windowHeight * (750 / res.windowWidth); //将高度乘以换算后的该设备的rpx与px的比例
-        // 　　console.log(this.windowHeight) //最后获得转化后得rpx单位的窗口高度
+        _this.height = res.windowHeight - res.statusBarHeight - 40;
+        _this.height = _this.height * (750 / res.windowWidth); //将高度乘以换算后的该设备的rpx与px的比例
       } });
 
     var id = param.songId;

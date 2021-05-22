@@ -1,6 +1,7 @@
 <!-- 歌单详情页面 -->
 <template>
 	<view class="playlist-detail">
+		<nav-bar></nav-bar>
 		<playlistTop :bgimg="bgimg" :album="album"></playlistTop>
 		<playlistCon 
 		:top="top"

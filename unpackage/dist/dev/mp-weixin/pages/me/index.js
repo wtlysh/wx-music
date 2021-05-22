@@ -95,8 +95,11 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
+    navBar: function() {
+      return __webpack_require__.e(/*! import() | components/nav-bar/nav-bar */ "components/nav-bar/nav-bar").then(__webpack_require__.bind(null, /*! @/components/nav-bar/nav-bar.vue */ 93))
+    },
     uniIcons: function() {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 121))
+      return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 100))
     }
   }
 } catch (e) {
@@ -162,7 +165,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var meTop = function meTop() {__webpack_require__.e(/*! require.ensure | pages/me/components/meTop */ "pages/me/components/meTop").then((function () {return resolve(__webpack_require__(/*! ./components/meTop.vue */ 185));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 150));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var plylistCon = function plylistCon() {Promise.all(/*! require.ensure | components/playlistCon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/playlistCon")]).then((function () {return resolve(__webpack_require__(/*! ../../components/playlistCon.vue */ 136));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var meTop = function meTop() {__webpack_require__.e(/*! require.ensure | pages/me/components/meTop */ "pages/me/components/meTop").then((function () {return resolve(__webpack_require__(/*! ./components/meTop.vue */ 192));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 157));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var plylistCon = function plylistCon() {Promise.all(/*! require.ensure | components/playlistCon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/playlistCon")]).then((function () {return resolve(__webpack_require__(/*! ../../components/playlistCon.vue */ 143));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 
@@ -185,7 +188,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var db = wx.cloud.database();var _default =
+
+var db = wx.cloud.database();
+var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 {
   components: {
     meTop: meTop,
@@ -194,6 +199,7 @@ var db = wx.cloud.database();var _default =
 
   data: function data() {
     return {
+      title: "音乐",
       bg: 'http://p4.music.126.net/NDdtSac66rpsF_jMBh1JMQ==/109951164929306650.jpg',
       isActive: 0,
       tab: ['最近', '喜欢'],

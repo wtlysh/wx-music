@@ -14,7 +14,8 @@
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "音乐",
     "navigationBarBackgroundColor": "#000",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "color": "#6b6b6b",
@@ -37,7 +38,9 @@
   },
   "permission": {},
   "usingComponents": {
-    "playing-box": "/components/playingBox"
+    "playing-box": "/components/playingBox",
+    "nav-bar": "/components/nav-bar/nav-bar",
+    "uni-icons": "/components/uni-icons/uni-icons"
   },
-  "sitemapLocation": "sitemap17.json"
+  "sitemapLocation": "sitemap92.json"
 }

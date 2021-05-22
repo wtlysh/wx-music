@@ -1,7 +1,7 @@
 <!-- 歌曲列表公共组件 -->
 <template>
 	<view class="playlist-list-con">
-		<view class="playlist-list-top" :style="{top:top + 'rpx'}">
+		<view class="playlist-list-top">
 			<view class="top-con flex-align">
 				<view class="title" style="flex: 1;">
 					共{{tracks.length}}首歌曲
@@ -12,7 +12,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="playlist-list" :style="{top:(top+170)+'rpx'}">
+		<view class="playlist-list">
 			<swipeAction>
 				<swipeActionItem class="flex-align" :threshold="0" :right-options="options"
 					v-for="(item,index) in tracks" :key="index" @click="change(item.id)">
@@ -56,10 +56,6 @@
 			swipeActionItem
 		},
 		props: {
-			top: {
-				type: Number,
-				default: 0
-			},
 			tracks: {
 				type: Array,
 				default: []
@@ -123,16 +119,15 @@
 	.playlist-list-con {
 		background: #FFFFFF;
 		position: relative;
-		top: -50rpx;
 
 		.playlist-list-top {
-			position: fixed;
+			// position: fixed;
 			// top: 380rpx;
 			z-index: 1000;
 			background: #fff;
-			width: 650rpx;
+			width: 675rpx;
 			height: 70rpx;
-			padding: 0 50rpx;
+			padding: 0 37.5rpx;
 			border-top-left-radius: 50rpx;
 			// border-top-right-radius: 50rpx;
 			border-bottom: 1px solid #f2f2f2;
@@ -141,12 +136,13 @@
                 height: 100%;
 				.play-all {
 					text-align: right;
-					font-size: 32rpx;
+					font-size: $uni-font-size-base;
 				}
 			}
 		}
 		.playlist-list{
 			position: relative;
+			top: $uni-spacing-col-base;
 		}
 	}
 </style>

@@ -12,7 +12,7 @@
 					<image class="isplay-img" v-if="isplayingmusic==false" src="../static/images/notplaying.svg"
 						mode=""></image>
 				</view>
-				<uni-icons @click="isOpentList=true" type="list" color="#6b6b6b" size="25"></uni-icons>
+				<uni-icons @click="isOpentList=true" type="list" color="#6b6b6b" size="50"></uni-icons>
 			</view>
 		</view>
 		<popList :isOpentList="isOpentList" @close="isOpentList=false"></popList>
@@ -64,12 +64,12 @@
 		position: fixed;
 		bottom: 0;
 		background: #fff;
-		padding: 0 50rpx;
+		padding: 0 37.5rpx;
 		height: 90rpx;
 		border-top: 1px solid #ccc;
 
 		.playing-to {
-			width: 540rpx;
+			width: 565rpx;
 
 			.playing-img {
 				&.stoped {
@@ -79,15 +79,15 @@
 				animation: rotate 25s linear infinite;
 				width: 100rpx;
 				height: 100rpx;
-				border-radius: 50%;
+				border-radius: $uni-border-radius-circle;
 				position: relative;
 				top: -20rpx;
 			}
 
 			.playing-desc {
-				font-size: 32rpx;
+				font-size: $uni-font-size-base;
 				width: 410rpx;
-				margin: 0 20rpx;
+				margin: 0 $uni-spacing-row-base;
 			}
 		}
 

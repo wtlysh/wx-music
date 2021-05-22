@@ -24,10 +24,15 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.search .search-tab.data-v-482e85b8 {
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
 .search .search-box.data-v-482e85b8 {
   position: fixed;
   z-index: 999;
-  background: #FFFFFF;
+  background: #f4f4f4;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -35,13 +40,13 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
           flex-direction: row;
-  width: 650rpx;
+  width: 675rpx;
   height: 110rpx;
-  padding: 0 50rpx;
+  padding: 0 37.5rpx;
 }
 .search .search-box .search__box.data-v-482e85b8 {
   margin-top: 20rpx;
-  background: #f2f2f2;
+  background: #fff;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;

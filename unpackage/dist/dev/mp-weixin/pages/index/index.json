@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "nav-bar": "/components/nav-bar/nav-bar",
     "search": "/pages/index/components/search",
     "hotsong-list": "/pages/index/components/hotsongList",
     "newsong-list": "/pages/index/components/newsongList",

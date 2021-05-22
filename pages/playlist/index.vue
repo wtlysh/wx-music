@@ -1,20 +1,23 @@
 <!-- 推荐歌单页面 -->
 <template>
 	<view class="playlists">
-		<view class="playlists-list" v-for="(item,index) in playLists" :key="index">
-			<view class="playlists-name">
-				网友精选 · {{cat[index]}}歌单
-			</view>
-			<view class="playlists-con flex-between">
-				<view class="playlists-item" v-for="li in item" :key="li.id" @click="toPlaylist(li.id)">
-					<image style="width: 324rpx;height: 324rpx;border-radius: 20rpx;" :src="li.picUrl" mode="">
-					</image>
-					<view class="play-count">
-						<uni-icons type="headphones" color="#fff" size="15"></uni-icons>
-						<text style="color: #fff;font-size: 22rpx;padding-left: 8rpx;">{{li.desc}}</text>
-					</view>
-					<view class="playlists-item-name ellipsis_2">
-						{{li.name}}
+		<nav-bar :title="title"></nav-bar>
+		<view class="box-width">
+			<view class="playlists-list" v-for="(item,index) in playLists" :key="index">
+				<view class="playlists-name title">
+					网友精选 · {{cat[index]}}歌单
+				</view>
+				<view class="flex-between">
+					<view class="playlists-item" v-for="li in item" :key="li.id" @click="toPlaylist(li.id)">
+						<image style="width: 324rpx;height: 324rpx;border-radius: 20rpx;" :src="li.picUrl" mode="">
+						</image>
+						<view class="play-count">
+							<uni-icons type="headphones" color="#fff" size="30"></uni-icons>
+							<text style="color: #fff;font-size: 22rpx;padding-left: 8rpx;">{{li.desc}}</text>
+						</view>
+						<view class="playlists-item-name ellipsis_2">
+							{{li.name}}
+						</view>
 					</view>
 				</view>
 			</view>
@@ -27,10 +30,13 @@
 	import {
 		getMuList
 	} from '../../api/index.js'
-	import {numberFormat} from '../../utils/numberFormat.js'
+	import {
+		numberFormat
+	} from '../../utils/numberFormat.js'
 	export default {
 		data() {
 			return {
+				title:'歌单',
 				playLists: [],
 				cat: ['流行', '浪漫', '摇滚']
 			}
@@ -54,14 +60,14 @@
 					// console.log(res[0].playlists)
 					for (let i = 0; i < cat.length; i++) {
 						this.playLists[i] = res[i].playlists.map(item => {
-						    let desc =  numberFormat(item.playCount);
-						    return {
-							   id:item.id,
-							   name:item.name,
-							   picUrl:item.coverImgUrl,
-							   desc:desc,
-						   }
-					    });
+							let desc = numberFormat(item.playCount);
+							return {
+								id: item.id,
+								name: item.name,
+								picUrl: item.coverImgUrl,
+								desc: desc,
+							}
+						});
 					}
 				})
 				// console.log(this.playLists)
@@ -79,38 +85,32 @@
 
 <style lang="scss" scoped>
 	.playlists {
-		width: 90%;
-		margin: 0 auto;
-
 		.playlists-list {
-			padding: 30rpx 0 10rpx 0;
+			padding: $uni-spacing-col-lg 0 $uni-spacing-col-sm 0;
 
 			.playlists-name {
-				font-size: 40rpx;
-				font-weight: bold;
-				margin-bottom: 15rpx;
+				margin-bottom: $uni-spacing-col-base;
 			}
 
-			.playlists-con {
 
-				.playlists-item {
-					width: 48%;
-					margin-bottom: 30rpx;
-					position: relative;
+			.playlists-item {
+				width: 48%;
+				margin-bottom: $uni-spacing-col-lg;
+				position: relative;
 
-					&.playlists-firstitem {
-						margin-top: 30rpx;
-					}
-                    .play-count{
-                    	position: absolute;
-                    	top: 270rpx;
-                    	right: 15rpx;
-                    }
-					.playlists-item-name {
-						font-size: 32rpx;
-						padding-top: 10rpx;
-						color: #6b6b6b;
-					}
+				&.playlists-firstitem {
+					margin-top: $uni-spacing-col-lg;
+				}
+
+				.play-count {
+					position: absolute;
+					top: 270rpx;
+					right: 15rpx;
+				}
+
+				.playlists-item-name {
+					font-size: $uni-font-size-base;
+					padding-top: $uni-spacing-col-sm;
 				}
 			}
 		}

@@ -1,6 +1,6 @@
 <!-- 搜索结果歌曲列表组件 -->
 <template>
-	<view class="song-list">
+	<view class="song-list box-width">
 		<view class="song-list-item flex-align" v-for="(item, index) in songList" :key="index"
 			@click="toPlay(item)">
 			<view class="con">
@@ -40,10 +40,8 @@
 
 <style lang="scss" scoped>
 	.song-list {
-		padding-top: 200rpx;
-		width: 90%;
-		margin: 0 auto;
-
+		position: relative;
+		top: 220rpx;
 		.song-list-item {
 			flex-direction: row;
 			position: relative;
@@ -54,8 +52,8 @@
 			width: 580rpx;
 
 			.song-list-name {
-				margin-top: 12rpx;
-				margin-right: 20rpx;
+				margin-top: $uni-spacing-col-sm;
+				margin-right: $uni-spacing-row-base;
 				line-height: 58rpx;
 			}
 		}

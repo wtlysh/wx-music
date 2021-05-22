@@ -24,34 +24,27 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.playlists.data-v-4a0fcee4 {
-  width: 90%;
-  margin: 0 auto;
-}
 .playlists .playlists-list.data-v-4a0fcee4 {
   padding: 30rpx 0 10rpx 0;
 }
 .playlists .playlists-list .playlists-name.data-v-4a0fcee4 {
-  font-size: 40rpx;
-  font-weight: bold;
-  margin-bottom: 15rpx;
+  margin-bottom: 20rpx;
 }
-.playlists .playlists-list .playlists-con .playlists-item.data-v-4a0fcee4 {
+.playlists .playlists-list .playlists-item.data-v-4a0fcee4 {
   width: 48%;
   margin-bottom: 30rpx;
   position: relative;
 }
-.playlists .playlists-list .playlists-con .playlists-item.playlists-firstitem.data-v-4a0fcee4 {
+.playlists .playlists-list .playlists-item.playlists-firstitem.data-v-4a0fcee4 {
   margin-top: 30rpx;
 }
-.playlists .playlists-list .playlists-con .playlists-item .play-count.data-v-4a0fcee4 {
+.playlists .playlists-list .playlists-item .play-count.data-v-4a0fcee4 {
   position: absolute;
   top: 270rpx;
   right: 15rpx;
 }
-.playlists .playlists-list .playlists-con .playlists-item .playlists-item-name.data-v-4a0fcee4 {
+.playlists .playlists-list .playlists-item .playlists-item-name.data-v-4a0fcee4 {
   font-size: 32rpx;
   padding-top: 10rpx;
-  color: #6b6b6b;
 }
 

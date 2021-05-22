@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "新歌榜",
   "usingComponents": {
+    "nav-bar": "/components/nav-bar/nav-bar",
     "playlist-con": "/components/playlistCon"
   }
 }

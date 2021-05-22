@@ -31,7 +31,7 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  padding: 0 50rpx;
+  padding: 0 37.5rpx;
   margin-bottom: 30rpx;
 }
 .item-con.active.data-v-593ad0b8 {
@@ -78,10 +78,10 @@
   width: 100%;
   height: 120rpx;
   line-height: 120rpx;
-  font-size: 34rpx;
+  font-size: 32rpx;
 }
 .poplist-box .poplist-title .total.data-v-593ad0b8 {
-  font-size: 40rpx;
+  font-size: 36rpx;
   margin-left: 50rpx;
 }
 .poplist-box .poplist-title .model.data-v-593ad0b8 {

@@ -16,7 +16,7 @@
 
 /* 行为相关颜色 */
 $uni-color-primary: #007aff;
-$uni-color-success: #4cd964;
+$uni-color-success: #8dc63f;
 $uni-color-warning: #f0ad4e;
 $uni-color-error: #dd524d;
 
@@ -28,9 +28,9 @@ $uni-text-color-placeholder: #6b6b6b;
 $uni-text-color-disable:#c0c0c0;
 
 /* 背景颜色 */
-$uni-bg-color:#ffffff;
-$uni-bg-color-grey:#f8f8f8;
-$uni-bg-color-hover:#f1f1f1;//点击状态颜色
+$uni-bg-color:#fff;
+$uni-bg-color-grey:#f4f4f4;
+$uni-bg-color-hover:#f2f2f2;//点击状态颜色
 $uni-bg-color-mask:rgba(0, 0, 0, 0.4);//遮罩颜色
 
 /* 边框颜色 */
@@ -45,13 +45,13 @@ $uni-font-size-lg:36rpx;
 
 /* 图片尺寸 */
 $uni-img-size-sm:40rpx;
-$uni-img-size-base:52rpx;
+$uni-img-size-base:50rpx;
 $uni-img-size-lg:80rpx;
 
 /* Border Radius */
 $uni-border-radius-sm: 4rpx;
-$uni-border-radius-base: 6rpx;
-$uni-border-radius-lg: 12rpx;
+$uni-border-radius-base: 10rpx;
+$uni-border-radius-lg: 20rpx;
 $uni-border-radius-circle: 50%;
 
 /* 水平间距 */
@@ -60,9 +60,12 @@ $uni-spacing-row-base: 20rpx;
 $uni-spacing-row-lg: 30rpx;
 
 /* 垂直间距 */
-$uni-spacing-col-sm: 8rpx;
-$uni-spacing-col-base: 16rpx;
-$uni-spacing-col-lg: 24rpx;
+$uni-spacing-col-sm: 10rpx;
+$uni-spacing-col-base: 20rpx;
+$uni-spacing-col-lg: 30rpx;
+
+// 搜索高度
+$uni-searchbar-height: 70rpx;
 
 /* 透明度 */
 $uni-opacity-disabled: 0.3; // 组件禁用态的透明度

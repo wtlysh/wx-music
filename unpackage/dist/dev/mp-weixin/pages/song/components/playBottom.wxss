@@ -57,8 +57,4 @@
   display: flex;
   padding-right: 30rpx;
 }
-.play-bottom .play-opration .play-text .img-box .bottom-img.data-v-2d1961d7 {
-  width: 50rpx;
-  height: 50rpx;
-}
 

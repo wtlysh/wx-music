@@ -1,5 +1,6 @@
 page {
 	height: 100%;
+	background: $uni-bg-color-grey;
 }
 
 /* 是否播放 */
@@ -41,6 +42,12 @@ page {
 	align-items: center;
 }
 
+// 宽度
+.box-width{
+	width: 90%;
+	margin: 0 auto;
+}
+
 /* 文字 */
 .title {
 	font-size: $uni-font-size-lg;
@@ -55,6 +62,11 @@ page {
 .song-text {
 	font-size: $uni-font-size-sm;
 	color: $uni-text-color;
+}
+
+// 图片
+.img{
+	
 }
 
 /* 背景图 */
