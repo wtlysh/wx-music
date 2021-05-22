@@ -1,10 +1,10 @@
 <!-- 歌曲播放页面 -->
 <template>
 	<view class="song-player">
-		<nav-bar :title="song.name" :leftIcon="leftIcon" :fixed="true" :statusBar="true"></nav-bar>
+		<view class="player-bgimg" :style="'background-image:url('+song.picUrl+')'"></view>
+		<nav-bar :title="song.name" :fixed="false" :backgroundColor="bgColor" :color="color"></nav-bar>
 		<view class="player-content" v-if="isCanPlay" :style="{height:height+'rpx'}">
-			<view class="player-bgimg" :style="'background-image:url('+song.picUrl+')'"></view>
-			<view v-show="!isLyric">
+			<view v-show="!isLyric" style="position: relative;">
 				<view class="player-img flex-center" :class="[isPlay ? '' : 'stoped']">
 					<view class="circle flex-center">
 						<image class="img" :src="song.picUrl" mode=""></image>
@@ -27,6 +27,12 @@
 					<view class="ric ellipsis">{{lytop}}</view>
 					<view class="ric cur ellipsis">{{lycur}}</view>
 					<view class="ric ellipsis">{{lybot}}</view>
+				</view>
+				<view class="slider-bar flex-align">
+					<view class="time start">{{curPlayTimeNum}}</view>
+					<slider class="line" :value="curPlayTime" :min="0" :max="playTime" @change="sliderChange" block-size="15"
+					 backgroundColor="rgba(255,255,255,.5)" activeColor="rgba(255,255,255,.5)" />
+					<view class="time end">{{playTimeNum}}</view>
 				</view>
 			</view>
 			<view v-show="isLyric" class="lyric-opcity all-lyric" :style="{height:(height-300) + 'rpx'}"
@@ -78,6 +84,8 @@
 		},
 		data() {
 			return {
+				color:'#fff',
+				bgColor:"",
 				isOpentList: false, //是否打开播放列表
 				song: {
 					id: '',
@@ -104,6 +112,7 @@
 				likeSong: {}, //收藏歌曲
 				isLike: false, //是否收藏
 				userId: "", //用户收藏id
+				windowHeight: 0
 			}
 		},
 		onLoad(param) {
@@ -113,6 +122,7 @@
 			uni.getSystemInfo({
 				success: (res) => {
 					this.height = res.windowHeight- res.statusBarHeight - 40;
+					this.windowHeight = res.windowHeight;
 					this.height = (this.height * (750 / res.windowWidth)); //将高度乘以换算后的该设备的rpx与px的比例
 				}
 			});
@@ -137,11 +147,18 @@
 		},
 		methods: {
 			...mapMutations(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
+			//进度条
+			sliderChange(e) {
+				this.curPlayTime = e.detail.value;
+				this.$au_player.seek(this.curPlayTime)
+			},
+			//上一首播放
 			prev() {
 				const index = this.$refs.child.getIndex('prev');
 				this.curPlayIndex = index;
 				this.initPlay(this.audiolist[index].id)
 			},
+			//下一首播放
 			next(isAuto) {
 				const index = this.$refs.child.getIndex('next', isAuto)
 				this.curPlayIndex = index;
@@ -428,15 +445,17 @@
 <style lang='scss' scoped>
 	.song-player {
 		height: 100%;
-		
+		overflow:hidden;
+		position: relative;
+	
 		.player-bgimg {
+			position: absolute;
 			width: 100%;
 			height: 100%;
 			filter: blur(25px);
 			background-position: center center;
 			background-repeat: no-repeat;
 			background-size: cover;
-			position: absolute;
 			transform: scale(1.5);
 		}
 
@@ -526,11 +545,43 @@
 			}
 
 			.player-lyric {
-				position: absolute;
-				bottom: 250rpx;
+				position: relative;
+				top: 500rpx;
 				width: 100%;
 				height: 180rpx;
 			}
+			.slider-bar {
+				/* bottom: 160rpx; */
+				position: relative;
+				top: 600rpx;
+				width: 90%;
+				margin: 0 auto;
+				color: $uni-bg-color;
+			
+				.line {
+					flex: 1;
+				}
+			
+				.time {
+					height: 28rpx;
+					line-height: 28rpx;
+					font-size: $uni-font-size-sm;
+					min-width: 66rpx;
+				}
+			
+				.line {
+					margin: $uni-spacing-col-base $uni-spacing-row-base;
+				}
+			
+				.start {
+					margin-left: $uni-spacing-row-lg;
+				}
+			
+				.end {
+					margin-right: $uni-spacing-row-lg;
+				}
+			}
+			
 
 			.all-lyric {
 				width: 100%;

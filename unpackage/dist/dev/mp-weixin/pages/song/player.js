@@ -224,6 +224,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 8);
 
 
@@ -245,6 +251,8 @@ var db = wx.cloud.database();var _default =
 
   data: function data() {
     return {
+      color: '#fff',
+      bgColor: "",
       isOpentList: false, //是否打开播放列表
       song: {
         id: '',
@@ -270,8 +278,9 @@ var db = wx.cloud.database();var _default =
       leftIcon: 'back',
       likeSong: {}, //收藏歌曲
       isLike: false, //是否收藏
-      userId: "" //用户收藏id
-    };
+      userId: "", //用户收藏id
+      windowHeight: 0 };
+
   },
   onLoad: function onLoad(param) {var _this = this;
     if (!param.songId) {
@@ -280,6 +289,7 @@ var db = wx.cloud.database();var _default =
     uni.getSystemInfo({
       success: function success(res) {
         _this.height = res.windowHeight - res.statusBarHeight - 40;
+        _this.windowHeight = res.windowHeight;
         _this.height = _this.height * (750 / res.windowWidth); //将高度乘以换算后的该设备的rpx与px的比例
       } });
 
@@ -304,11 +314,18 @@ var db = wx.cloud.database();var _default =
 
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive'])), {}, {
+    //进度条
+    sliderChange: function sliderChange(e) {
+      this.curPlayTime = e.detail.value;
+      this.$au_player.seek(this.curPlayTime);
+    },
+    //上一首播放
     prev: function prev() {
       var index = this.$refs.child.getIndex('prev');
       this.curPlayIndex = index;
       this.initPlay(this.audiolist[index].id);
     },
+    //下一首播放
     next: function next(isAuto) {
       var index = this.$refs.child.getIndex('next', isAuto);
       this.curPlayIndex = index;

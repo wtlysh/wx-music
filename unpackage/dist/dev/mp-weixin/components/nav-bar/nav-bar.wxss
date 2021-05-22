@@ -36,7 +36,6 @@
 .uni-navbar__content.data-v-010c2ed8 {
   position: relative;
   width: 750rpx;
-  background-color: #fff;
   overflow: hidden;
 }
 .uni-navbar__content_view.data-v-010c2ed8 {
