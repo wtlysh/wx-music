@@ -3,17 +3,21 @@
 	<view class="me">
 		<nav-bar :title="title" :showIcon="false"></nav-bar>
 		<meTop :bg="bg"></meTop>
-		<typeTab style="position: relative;background: #fff;" :tab="tab" :isActive="isActive" @tab="isActive=0" @toTab="isActive=1"></typeTab>
-		<view v-if="isActive==0">
-			<plylistCon  :tracks="hisTracks" :options="options1" :disabled="disabled" @change="deleteSong">
-			</plylistCon>
-			<view class="delete-fab" v-if="hisTracks.length>0" @click="deleteAll">
-				<uni-icons type="trash-filled" color="#fff" size="50"></uni-icons>
-			</view>
+		<typeTab style="position: relative;background: #fff;" :tab="tab" :isActive="isActive" @tab="switchNav">
+		</typeTab>
+		<swiper :current="isActive" @change="handleChange" :style="{height:swiperHeight+'px'}">
+			<swiper-item>
+				<plylistCon class="his_list" :tracks="hisTracks">
+				</plylistCon>
+			</swiper-item>
+			<swiper-item>
+				<plylistCon class="like_list" :tracks="likeTracks">
+				</plylistCon>
+			</swiper-item>
+		</swiper>
+		<view class="delete-fab" v-if="hisTracks.length>0 && isActive==0" @click="deleteAll">
+			<uni-icons type="trash-filled" color="#fff" size="50"></uni-icons>
 		</view>
-		<plylistCon v-if="isActive==1" :tracks="likeTracks" :options="options2" :disabled="disabled"
-			@change="cancleLike">
-		</plylistCon>
 		<playing-box></playing-box>
 	</view>
 </template>
@@ -32,7 +36,7 @@
 		},
 		data() {
 			return {
-				title:"音乐",
+				title: "音乐",
 				bg: 'http://p4.music.126.net/NDdtSac66rpsF_jMBh1JMQ==/109951164929306650.jpg',
 				isActive: 0,
 				tab: ['最近', '喜欢'],
@@ -40,26 +44,39 @@
 				top: 420,
 				likeTracks: [],
 				userId: "",
-				options1: [{
-					text: '删除记录',
-					style: {
-						backgroundColor: '#dd524d'
-					}
-				}],
-				options2: [{
-					text: '取消收藏',
-					style: {
-						backgroundColor: '#dd524d'
-					}
-				}],
-				disabled: false
+				swiperHeight: 0,
 			}
 		},
 		onShow() {
 			this.getData();
+			setTimeout(() => {
+				let list = ".his_list";
+				this.getlistHeight(list);
+			}, 10)
 			// console.log(this.playdetail)
 		},
 		methods: {
+			getlistHeight(list) {
+				let vm = this
+				let info = uni.createSelectorQuery().select(list);
+				info.boundingClientRect((data) => {
+					vm.swiperHeight = data.height; // 获取元素高度
+				}).exec();
+			},
+			handleChange(e) {
+				let vm = this;
+				vm.isActive = e.mp.detail.current;
+				if (vm.isActive == 0) {
+					let list = ".his_list";
+					vm.getlistHeight(list);
+				} else if (vm.isActive == 1) {
+					let list = ".like_list";
+					vm.getlistHeight(list);
+				}
+			},
+			switchNav(index) {
+				this.isActive = index;
+			},
 			deleteSong(id) {
 				this.hisTracks.forEach((item, index) => {
 					if (item.id == id) {
@@ -131,7 +148,7 @@
 					},
 				})
 			}
-		}
+		},
 	}
 </script>
 

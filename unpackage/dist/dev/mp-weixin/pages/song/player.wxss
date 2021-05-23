@@ -84,9 +84,10 @@
   position: relative;
   top: 250rpx;
   height: 100rpx;
+  width: 90%;
+  margin: 0 auto;
 }
 .song-player .player-content .play-ctrol .flex-item.data-v-108ee09c {
-  padding: 0 50rpx;
   width: 50rpx;
   height: 100%;
 }

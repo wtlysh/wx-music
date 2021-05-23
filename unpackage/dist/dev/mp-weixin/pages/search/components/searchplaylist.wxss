@@ -24,10 +24,6 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.playlist.data-v-34f1cb36 {
-  position: relative;
-  top: 220rpx;
-}
 .playlist .playlist-item.data-v-34f1cb36 {
   height: 120rpx;
   padding-bottom: 30rpx;

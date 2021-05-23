@@ -40,8 +40,6 @@
 
 <style lang="scss" scoped>
 	.song-list {
-		position: relative;
-		top: 220rpx;
 		.song-list-item {
 			flex-direction: row;
 			position: relative;

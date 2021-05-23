@@ -1,33 +1,33 @@
 <template>
-	<view class="uni-navbar">
-		<view :class="{ 'uni-navbar--fixed': fixed, 'uni-navbar--shadow': shadow, 'uni-navbar--border': border }" :style="{ 'background-color': backgroundColor }"
-		 class="uni-navbar__content">
+	<view class="navbar">
+		<view :class="{ 'navbar--fixed': fixed, 'navbar--shadow': shadow, 'navbar--border': border }" :style="{ 'background-color': backgroundColor }"
+		 class="navbar__content">
 			<status-bar v-if="statusBar" />
-			<view :style="{ color: color,backgroundColor: backgroundColor }" class="uni-navbar__header uni-navbar__content_view">
-				<view class="uni-navbar__header-btns uni-navbar__header-btns-left uni-navbar__content_view">
-					<view v-if="showIcon" @tap="Back" class="uni-navbar__content_view">
+			<view :style="{ color: color,backgroundColor: backgroundColor }" class="navbar__header">
+				<view class="flex-center navbar__header-btns navbar__content_view">
+					<view v-if="showIcon" @tap="Back" class="navbar-btn-text navbar_lefet">
 						<uni-icons :color="color" type="back" size="50" />
 					</view>
-					<view v-if="showIcon" @tap="toHome" class="uni-navbar-btn-text uni-navbar__content_view">
+					<view v-if="showIcon" @tap="toHome" class="navbar-btn-text navbar_lefet">
 					   <uni-icons :color="color" type="home-filled" size="50" />
 					</view>
 					<slot name="left" />
 				</view>
-				<view class="uni-navbar__header-container uni-navbar__content_view">
-					<view class="uni-navbar__header-container-inner uni-navbar__content_view" v-if="title.length">
-						<text class="uni-nav-bar-text" :style="{color: color }">{{ title }}</text>
+				<view class="navbar__header-container">
+					<view class="flex-center navbar__header-container-inner" v-if="title.length">
+						<text class="nav-bar-text" :style="{color: color }">{{ title }}</text>
 					</view>
 					<!-- 标题插槽 -->
 					<slot />
 				</view>
-				<view class="uni-navbar__header-btns uni-navbar__content_view">
+				<view class="navbar__content_view">
 					<slot name="right" />
 				</view>
 			</view>
 		</view>
-		<view class="uni-navbar__placeholder" v-if="fixed">
+		<view class="navbar__placeholder" v-if="fixed">
 			<status-bar v-if="statusBar" />
-			<view class="uni-navbar__placeholder-view" />
+			<view class="navbar__placeholder-view" />
 		</view>
 	</view>
 </template>
@@ -99,110 +99,69 @@
 
 <style lang="scss" scoped>
 	$nav-height: 44px;
-	.uni-nav-bar-text {
-		/* #ifdef APP-PLUS */
+	.nav-bar-text {
 		font-size: 34rpx;
-		/* #endif */
-		/* #ifndef APP-PLUS */
 		font-size: $uni-font-size-lg;
-		/* #endif */
 	}
-	.uni-nav-bar-right-text {
-		font-size: $uni-font-size-base;
-	}
-
-	.uni-navbar {
+	.navbar {
 		width: 750rpx;
 	}
 
-	.uni-navbar__content {
+	.navbar__content {
 		position: relative;
 		width: 750rpx;
-		// background-color: $uni-bg-color;
 		overflow: hidden;
 	}
 
-	.uni-navbar__content_view {
-		/* #ifndef APP-NVUE */
+	.navbar__content_view {
 		display: flex;
-		/* #endif */
 		align-items: center;
 		flex-direction: row;
+		width: 25%;
+	}
+	
+	.navbar_lefet{
 		width: 50%;
-		// background-color: #FFFFFF;
 	}
 
-	.uni-navbar__header {
-		/* #ifndef APP-NVUE */
+	.navbar__header {
 		display: flex;
-		/* #endif */
 		flex-direction: row;
-		width: 750rpx;
+		width: 90%;
+		margin: 0 auto;
 		height: $nav-height;
 		line-height: $nav-height;
 		font-size: 16px;
-		// background-color: #ffffff;
 	}
 
-	.uni-navbar__header-btns {
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
+	.navbar__header-btns {
 		flex-wrap: nowrap;
-		width: 120rpx;
-		margin-left: 37.5rpx;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.uni-navbar__header-btns-left {
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		width: 150rpx;
 		justify-content: flex-start;
 	}
 
-	.uni-navbar__header-btns-right {
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		width: 150rpx;
-		padding-right: 30rpx;
-		justify-content: flex-end;
-	}
-
-	.uni-navbar__header-container {
-		flex: 1;
-	}
-
-	.uni-navbar__header-container-inner {
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		flex: 1;
-		align-items: center;
-		justify-content: center;
-		font-size: $uni-font-size-base;
+	.navbar__header-container {
+		width: 50%;
+		.navbar__header-container-inner {
+			width: 100%;
+			font-size: $uni-font-size-base;
+		}
 	}
 
 
-	.uni-navbar__placeholder-view {
+	.navbar__placeholder-view {
 		height: $nav-height;
 	}
 
-	.uni-navbar--fixed {
+	.navbar--fixed {
 		position: fixed;
 		z-index: 998;
 	}
 
-	.uni-navbar--shadow {
-		/* #ifndef APP-NVUE */
+	.navbar--shadow {
 		box-shadow: 0 1px 6px #ccc;
-		/* #endif */
 	}
 
-	.uni-navbar--border {
+	.navbar--border {
 		// border-bottom-width: 1rpx;
 		// border-bottom-style: solid;
 		// border-bottom-color: $uni-border-color;

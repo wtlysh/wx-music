@@ -33,6 +33,7 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  width: 100%;
 }
 .type .type-box .type-list.data-v-60397110 {
   width: 50%;

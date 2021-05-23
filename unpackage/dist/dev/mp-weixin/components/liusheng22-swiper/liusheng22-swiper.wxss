@@ -24,20 +24,39 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.song-list .song-list-item.data-v-9395d974 {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
+.scroll_list.data-v-890971a4 {
+  height: 1000rpx;
+  margin-top: 60rpx;
+  white-space: nowrap;
+  -webkit-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+}
+.scroll_list .card_item.data-v-890971a4 {
+  width: 548rpx;
+  padding-right: 38rpx;
+  height: 910rpx;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+          flex: none;
   position: relative;
-  height: 120rpx;
+  display: inline-block;
+  vertical-align: middle;
 }
-.song-list .con.data-v-9395d974 {
-  width: 580rpx;
+.scroll_list .card_item.data-v-890971a4:first-child {
+  margin-left: 120rpx;
 }
-.song-list .con .song-list-name.data-v-9395d974 {
-  margin-top: 10rpx;
-  margin-right: 20rpx;
-  line-height: 58rpx;
+.scroll_list .card_item.data-v-890971a4:last-child {
+  margin-right: 120rpx;
+}
+.scroll_list .card_item .img.data-v-890971a4 {
+  width: 510rpx;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+}
+.scroll_list .card_checked.data-v-890971a4 {
+  height: 1000rpx;
 }
 

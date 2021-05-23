@@ -11,7 +11,7 @@
 					</view>
 				</view>
 				<view class="play-ctrol flex-align">
-					<view v-if="audiolist.length>1" class="flex-item" @click="prev">
+					<view v-if="audiolist.length>1" class="flex-item flex-align" @click="prev">
 						<uni-icons type="arrowleft" color="#fff" size="50"></uni-icons>
 					</view>
 					<view class="isplay flex-center" @click="playCtrol">
@@ -19,7 +19,7 @@
 						<image class="isplay-img" v-if="isPlay" src="../../static/images/play.svg" mode=""></image>
 						<image class="isplay-img" v-if="!isPlay" src="../../static/images/notplay.svg" mode=""></image>
 					</view>
-					<view v-if="audiolist.length>1" class="flex-item" @click="next(false)">
+					<view v-if="audiolist.length>1" class="flex-item flex-align" @click="next(false)">
 						<uni-icons type="arrowright" color="#fff" size="50"></uni-icons>
 					</view>
 				</view>
@@ -505,9 +505,10 @@
 				position: relative;
 				top: 250rpx;
 				height: 100rpx;
+				width: 90%;
+				margin: 0 auto;
 				
 				.flex-item{
-					padding: 0 50rpx;
 					width: 50rpx;
 					height: 100%;
 				}

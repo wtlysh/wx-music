@@ -154,10 +154,32 @@ __webpack_require__.r(__webpack_exports__);
 
   data: function data() {
     return {
-      title: '推荐歌曲' };
+      title: '推荐歌曲',
+      clientX: '',
+      cardIndex: 0 };
 
   },
   methods: {
+    scroll: function scroll(e) {
+      console.log(e);
+    },
+    start: function start(e) {
+      this.clientX = e.changedTouches[0].clientX;
+    },
+    end: function end(e) {
+      var subX = e.changedTouches[0].clientX - this.clientX;
+      if (subX > 10) {
+        if (this.cardIndex == 0) {
+          return;
+        }
+        this.cardIndex--;
+      } else if (subX < -10) {
+        if (this.cardIndex == 2) {
+          return;
+        }
+        this.cardIndex++;
+      }
+    },
     //跳转到歌曲播放页面
     toSong: function toSong(item) {
       var list = [item];

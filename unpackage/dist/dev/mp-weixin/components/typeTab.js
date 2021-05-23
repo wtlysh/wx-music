@@ -126,7 +126,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
 var _default =
 {
   props: {
@@ -144,11 +143,8 @@ var _default =
 
 
   methods: {
-    Tab: function Tab() {
-      this.$emit('tab');
-    },
-    toTab: function toTab() {
-      this.$emit('toTab');
+    switchNav: function switchNav(index) {
+      this.$emit('tab', index);
     } } };exports.default = _default;
 
 /***/ }),

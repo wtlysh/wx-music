@@ -86,4 +86,9 @@
   line-height: 110rpx;
   font-size: 28rpx;
 }
+.search .search-list.data-v-482e85b8 {
+  position: relative;
+  top: 220rpx;
+  background-color: #fff;
+}
 

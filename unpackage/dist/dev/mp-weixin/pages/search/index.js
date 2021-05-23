@@ -123,15 +123,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  if (!_vm._isMounted) {
-    _vm.e0 = function($event) {
-      _vm.isActive = 0
-    }
-
-    _vm.e1 = function($event) {
-      _vm.isActive = 1
-    }
-  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -206,6 +197,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 var _search = __webpack_require__(/*! ../../api/search.js */ 50);
 
 
@@ -236,8 +233,9 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
       songList: [], //歌曲列表
       playlist: [], //歌单列表
       searchTip: "",
-      height: 0 //高度
-    };
+      height: 0, //高度
+      swiperHeight: 0 };
+
   },
   components: {
     searchKeyword: searchKeyword,
@@ -249,12 +247,35 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
     this.loadDefaultKeyword();
     uni.getSystemInfo({
       success: function success(res) {
+        _this.swiperHeight = 3000 * res.windowWidth / 750;
         _this.height = res.statusBarHeight + 40;
         _this.height = _this.height * (750 / res.windowWidth); //将高度乘以换算后的该设备的rpx与px的比例
       } });
 
   },
   methods: {
+    //选项卡切换
+    switchNav: function switchNav(index) {
+      this.isActive = index;
+    },
+    getlistHeight: function getlistHeight(list) {
+      var vm = this;
+      var info = uni.createSelectorQuery().select(list);
+      info.boundingClientRect(function (data) {
+        vm.swiperHeight = data.height; // 获取元素高度
+      }).exec();
+    },
+    handleChange: function handleChange(e) {
+      var vm = this;
+      vm.isActive = e.mp.detail.current;
+      if (vm.isActive == 0) {
+        var list = ".search-songlist";
+        vm.getlistHeight(list);
+      } else if (vm.isActive == 1) {
+        var _list = ".search-playlist";
+        vm.getlistHeight(_list);
+      }
+    },
     //加载默认搜索关键字
     loadDefaultKeyword: function loadDefaultKeyword() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
 

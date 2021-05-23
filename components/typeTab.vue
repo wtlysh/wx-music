@@ -1,11 +1,10 @@
 <template>
 	<view class="type">
 		<view class="type-box box-width">
-			<view class="type-list" @click="Tab">
-				<text :class="isActive==0 ? 'active' : ''">{{tab[0]}}</text>
-			</view>
-			<view class="type-list" @click="toTab">
-				<text :class="isActive==1 ? 'active' : ''">{{tab[1]}}</text>
+		    <view v-for="(item, index) in tab" :key="index" 
+			class="type-list" 
+			@tap="switchNav(index)">
+			<text :class="isActive==index ? 'active' : ''">{{item}}</text>
 			</view>
 		</view>
 	</view>
@@ -28,11 +27,8 @@
 			}
 		},
 		methods: {
-			Tab() {
-				this.$emit('tab')
-			},
-			toTab() {
-				this.$emit('toTab')
+			switchNav(index) {
+				this.$emit('tab',index);
 			}
 		}
 	}
@@ -46,6 +42,7 @@
 
 		.type-box {
 			display: flex;
+			width: 100%;
 
 			.type-list {
 				width: 50%;

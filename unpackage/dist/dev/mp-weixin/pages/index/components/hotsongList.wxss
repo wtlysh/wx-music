@@ -33,10 +33,11 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  padding: 0 37.5rpx;
+  padding-right: 75rpx;
 }
 .hotsong .hotsong-list .hotsong-li.data-v-8edca806 {
   width: 675rpx;
+  padding-left: 37.5rpx;
 }
 .hotsong .hotsong-list .hotsong-li .hotsong-item.data-v-8edca806 {
   margin-bottom: 20rpx;

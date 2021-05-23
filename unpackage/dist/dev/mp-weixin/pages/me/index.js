@@ -123,15 +123,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  if (!_vm._isMounted) {
-    _vm.e0 = function($event) {
-      _vm.isActive = 0
-    }
-
-    _vm.e1 = function($event) {
-      _vm.isActive = 1
-    }
-  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -189,6 +180,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var db = wx.cloud.database();
 var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 {
@@ -207,30 +202,43 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
       top: 420,
       likeTracks: [],
       userId: "",
-      options1: [{
-        text: '删除记录',
-        style: {
-          backgroundColor: '#dd524d' } }],
-
-
-      options2: [{
-        text: '取消收藏',
-        style: {
-          backgroundColor: '#dd524d' } }],
-
-
-      disabled: false };
+      swiperHeight: 0 };
 
   },
-  onShow: function onShow() {
+  onShow: function onShow() {var _this = this;
     this.getData();
+    setTimeout(function () {
+      var list = ".his_list";
+      _this.getlistHeight(list);
+    }, 10);
     // console.log(this.playdetail)
   },
   methods: {
-    deleteSong: function deleteSong(id) {var _this = this;
+    getlistHeight: function getlistHeight(list) {
+      var vm = this;
+      var info = uni.createSelectorQuery().select(list);
+      info.boundingClientRect(function (data) {
+        vm.swiperHeight = data.height; // 获取元素高度
+      }).exec();
+    },
+    handleChange: function handleChange(e) {
+      var vm = this;
+      vm.isActive = e.mp.detail.current;
+      if (vm.isActive == 0) {
+        var list = ".his_list";
+        vm.getlistHeight(list);
+      } else if (vm.isActive == 1) {
+        var _list = ".like_list";
+        vm.getlistHeight(_list);
+      }
+    },
+    switchNav: function switchNav(index) {
+      this.isActive = index;
+    },
+    deleteSong: function deleteSong(id) {var _this2 = this;
       this.hisTracks.forEach(function (item, index) {
         if (item.id == id) {
-          _this.hisTracks.splice(index, 1);
+          _this2.hisTracks.splice(index, 1);
         }
       });
       uni.setStorage({
@@ -240,7 +248,7 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 
     },
     //删除所有历史播放记录
-    deleteAll: function deleteAll() {var _this2 = this;
+    deleteAll: function deleteAll() {var _this3 = this;
       uni.showModal({
         content: '确定删除所有播放记录？',
         success: function success(res) {
@@ -249,7 +257,7 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
             uni.removeStorage({
               key: 'OldSongs',
               success: function success() {
-                _this2.hisTracks = [];
+                _this3.hisTracks = [];
               } });
 
           } else if (res.cancel) {
@@ -259,10 +267,10 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
         } });
 
     },
-    cancleLike: function cancleLike(id) {var _this3 = this;
+    cancleLike: function cancleLike(id) {var _this4 = this;
       this.likeTracks.forEach(function (item, index) {
         if (item.id == id) {
-          _this3.likeTracks.splice(index, 1);
+          _this4.likeTracks.splice(index, 1);
         }
       });
       db.collection('userLike').doc(this.userId).update({
@@ -278,21 +286,21 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 
     },
     //获取历史播放和收藏歌曲
-    getData: function getData() {var _this4 = this;
+    getData: function getData() {var _this5 = this;
       uni.getStorage({
         key: 'OldSongs',
         success: function success(res) {
-          _this4.hisTracks = res.data;
+          _this5.hisTracks = res.data;
         } });
 
       uni.getStorage({
         key: "userId",
         success: function success(res) {
           var id = res.data;
-          _this4.userId = id;
+          _this5.userId = id;
           db.collection('userLike').doc(id).get({
             success: function success(re) {
-              _this4.likeTracks = re.data.like_songs;
+              _this5.likeTracks = re.data.like_songs;
             } });
 
         } });

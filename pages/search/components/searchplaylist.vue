@@ -36,8 +36,6 @@
 
 <style lang="scss" scoped>
 	.playlist {
-		position: relative;
-		top: 220rpx;
 		.playlist-item {
 			height: 120rpx;
 			padding-bottom: $uni-spacing-col-lg;
