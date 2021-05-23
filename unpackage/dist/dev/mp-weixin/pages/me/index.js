@@ -235,12 +235,8 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
     switchNav: function switchNav(index) {
       this.isActive = index;
     },
-    deleteSong: function deleteSong(id) {var _this2 = this;
-      this.hisTracks.forEach(function (item, index) {
-        if (item.id == id) {
-          _this2.hisTracks.splice(index, 1);
-        }
-      });
+    deleteSong: function deleteSong(id, index) {
+      this.hisTracks.splice(index, 1);
       uni.setStorage({
         key: 'OldSongs',
         data: this.hisTracks,
@@ -248,7 +244,7 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 
     },
     //删除所有历史播放记录
-    deleteAll: function deleteAll() {var _this3 = this;
+    deleteAll: function deleteAll() {var _this2 = this;
       uni.showModal({
         content: '确定删除所有播放记录？',
         success: function success(res) {
@@ -257,7 +253,7 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
             uni.removeStorage({
               key: 'OldSongs',
               success: function success() {
-                _this3.hisTracks = [];
+                _this2.hisTracks = [];
               } });
 
           } else if (res.cancel) {
@@ -267,12 +263,8 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
         } });
 
     },
-    cancleLike: function cancleLike(id) {var _this4 = this;
-      this.likeTracks.forEach(function (item, index) {
-        if (item.id == id) {
-          _this4.likeTracks.splice(index, 1);
-        }
-      });
+    cancelLike: function cancelLike(id, index) {
+      this.likeTracks.splice(index, 1);
       db.collection('userLike').doc(this.userId).update({
         data: {
           like_songs: this.likeTracks },
@@ -286,21 +278,21 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 
     },
     //获取历史播放和收藏歌曲
-    getData: function getData() {var _this5 = this;
+    getData: function getData() {var _this3 = this;
       uni.getStorage({
         key: 'OldSongs',
         success: function success(res) {
-          _this5.hisTracks = res.data;
+          _this3.hisTracks = res.data;
         } });
 
       uni.getStorage({
         key: "userId",
         success: function success(res) {
           var id = res.data;
-          _this5.userId = id;
+          _this3.userId = id;
           db.collection('userLike').doc(id).get({
             success: function success(re) {
-              _this5.likeTracks = re.data.like_songs;
+              _this3.likeTracks = re.data.like_songs;
             } });
 
         } });

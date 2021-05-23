@@ -7,11 +7,11 @@
 		</typeTab>
 		<swiper :current="isActive" @change="handleChange" :style="{height:swiperHeight+'px'}">
 			<swiper-item>
-				<plylistCon class="his_list" :tracks="hisTracks">
+				<plylistCon class="his_list" :tracks="hisTracks" :isShowDelete="true" @delete="deleteSong">
 				</plylistCon>
 			</swiper-item>
 			<swiper-item>
-				<plylistCon class="like_list" :tracks="likeTracks">
+				<plylistCon class="like_list" :tracks="likeTracks" :isShowCancel="true" @cancel="cancelLike">
 				</plylistCon>
 			</swiper-item>
 		</swiper>
@@ -77,12 +77,8 @@
 			switchNav(index) {
 				this.isActive = index;
 			},
-			deleteSong(id) {
-				this.hisTracks.forEach((item, index) => {
-					if (item.id == id) {
-						this.hisTracks.splice(index, 1);
-					}
-				})
+			deleteSong(id,index) {
+				this.hisTracks.splice(index, 1);
 				uni.setStorage({
 					key: 'OldSongs',
 					data: this.hisTracks,
@@ -109,12 +105,8 @@
 					}
 				});
 			},
-			cancleLike(id) {
-				this.likeTracks.forEach((item, index) => {
-					if (item.id == id) {
-						this.likeTracks.splice(index, 1);
-					}
-				})
+			cancelLike(id,index) {
+				this.likeTracks.splice(index, 1);
 				db.collection('userLike').doc(this.userId).update({
 					data: {
 						like_songs: this.likeTracks

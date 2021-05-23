@@ -44,9 +44,6 @@
 			}
 		},
 		methods: {
-			scroll(e){
-				console.log(e)
-			},
 			start(e) {
 				this.clientX = e.changedTouches[0].clientX;
 			},

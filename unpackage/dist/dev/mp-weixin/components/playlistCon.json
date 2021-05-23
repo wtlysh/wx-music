@@ -1,7 +1,6 @@
 {
-  "component": true,
   "usingComponents": {
-    "swipe-action": "/components/swipe-action/index",
-    "swipe-action-item": "/components/swipe-action/swipe-action-item/index"
-  }
+    "uni-popup": "/components/uni-popup/uni-popup"
+  },
+  "component": true
 }

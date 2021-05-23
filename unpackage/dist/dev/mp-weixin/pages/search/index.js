@@ -253,6 +253,11 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
       } });
 
   },
+  onLoad: function onLoad(param) {
+    if (param.keyword) {
+      this.doSearch(param.keyword);
+    }
+  },
   methods: {
     //选项卡切换
     switchNav: function switchNav(index) {

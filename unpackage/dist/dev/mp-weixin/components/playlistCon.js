@@ -156,6 +156,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 8);
 
 
@@ -163,58 +180,75 @@ var _player = __webpack_require__(/*! ../api/player.js */ 75);
 
 
 
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var swipeAction = function swipeAction() {__webpack_require__.e(/*! require.ensure | components/swipe-action/index */ "components/swipe-action/index").then((function () {return resolve(__webpack_require__(/*! ./swipe-action/index.vue */ 213));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var swipeActionItem = function swipeActionItem() {Promise.all(/*! require.ensure | components/swipe-action/swipe-action-item/index */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/swipe-action/swipe-action-item/index")]).then((function () {return resolve(__webpack_require__(/*! ./swipe-action/swipe-action-item/index.vue */ 218));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
-
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniPopup = function uniPopup() {__webpack_require__.e(/*! require.ensure | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then((function () {return resolve(__webpack_require__(/*! ./uni-popup/uni-popup.vue */ 246));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 {
   components: {
-    swipeAction: swipeAction,
-    swipeActionItem: swipeActionItem },
+    uniPopup: uniPopup },
 
   props: {
     tracks: {
       type: Array,
       default: [] },
 
-    options: {
-      type: Array,
-      default: [] },
-
-    disabled: {
+    isShowDelete: {
       type: Boolean,
-      default: true } },
+      default: false },
+
+    isShowCancel: {
+      type: Boolean,
+      default: false } },
 
 
   data: function data() {
-    return {
-      time: 0,
-      playTime: 0,
-      curPlayTime: 0 };
+    return {};
 
   },
-  computed: _objectSpread(_objectSpread({},
-  (0, _vuex.mapGetters)(['playdetail'])), {}, {
-    playTimeNum: function playTimeNum() {
-      return this.$util.formatTime(this.playTime);
-    },
-    curPlayTimeNum: function curPlayTimeNum() {
-      return this.$util.formatTime(this.curPlayTime);
-    } }),
+  computed: _objectSpread({},
+  (0, _vuex.mapGetters)(['playdetail'])),
 
   methods: {
-    //跳转到歌曲播放页面
-    toSong: function toSong(id) {var _this = this;
-      var list = this.tracks;
-      var index = 0;
-      list.forEach(function (v, i) {
-        _this.$set(v, 'index', i);
-        if (v.id == id) {
-          index = i;
-        }
-      });
-      // console.log(list)
+    cancel: function cancel(id, index) {
+      this.$refs.popup[index].close();
+      this.$emit('cancel', id, index);
+    },
+    //删除记录
+    Delete: function Delete(id, index) {
+      this.$refs.popup[index].close();
+      this.$emit('delete', id, index);
+    },
+    //搜索
+    search: function search(value, index) {
+      this.$refs.popup[index].close();
       uni.navigateTo({
-        url: '/pages/song/player?songId=' + id + '&index=' + index + '&list=' + encodeURIComponent(JSON.stringify(list)) });
+        url: "/pages/search/index?keyword=" + value });
+
+    },
+    //复制歌名
+    paste: function paste(value, index) {
+      this.$refs.popup[index].close();
+      uni.setClipboardData({
+        data: value,
+        success: function success() {
+          uni.showToast({
+            title: '复制成功',
+            icon: 'none' });
+
+        } });
+
+    },
+    //长按出现弹窗
+    longtap: function longtap(index) {
+      // console.log(this.$refs.popup[index])
+      this.$refs.popup[index].open('center');
+    },
+    //跳转到歌曲播放页面
+    toSong: function toSong(id, index) {
+      var list = this.tracks;
+      // console.log(index)
+      uni.navigateTo({
+        url: '/pages/song/player?songId=' + id + '&index=' + index + '&list=' + encodeURIComponent(JSON.
+        stringify(list)) });
 
     },
     //播放全部歌曲

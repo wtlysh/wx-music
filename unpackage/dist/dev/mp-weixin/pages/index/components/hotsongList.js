@@ -160,9 +160,6 @@ __webpack_require__.r(__webpack_exports__);
 
   },
   methods: {
-    scroll: function scroll(e) {
-      console.log(e);
-    },
     start: function start(e) {
       this.clientX = e.changedTouches[0].clientX;
     },

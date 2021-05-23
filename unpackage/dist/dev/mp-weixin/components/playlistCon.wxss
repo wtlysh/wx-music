@@ -77,4 +77,13 @@
   position: relative;
   top: 20rpx;
 }
+.playlist-list-con .playlist-list .popup-list.data-v-4c5cbf36 {
+  width: 600rpx;
+  background-color: #fff;
+}
+.playlist-list-con .playlist-list .popup-list .popup-list-item.data-v-4c5cbf36 {
+  height: 50rpx;
+  font-size: 32rpx;
+  padding: 30rpx 0 30rpx 50rpx;
+}
 
