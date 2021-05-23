@@ -8,36 +8,10 @@
 		<uni-transition key="2" :mode-class="ani" name="content" :styles="transClass" :duration="duration" :show="showTrans" @click="onTap">
 			<view class="uni-popup__wrapper" :style="{ backgroundColor: bg }" :class="[popupstyle]" @click="clear"><slot /></view>
 		</uni-transition>
-		<!-- #ifdef H5
-		<keypress v-if="maskShow" @esc="onTap" />
-		<!-- #endif --> -->
 	</view>
 </template>
 
 <script>
-// #ifdef H5
-// import keypress from './keypress.js'
-// #endif
-
-/**
- * PopUp 弹出层
- * @description 弹出层组件，为了解决遮罩弹层的问题
- * @tutorial https://ext.dcloud.net.cn/plugin?id=329
- * @property {String} type = [top|center|bottom|left|right|message|dialog|share] 弹出方式
- * 	@value top 顶部弹出
- * 	@value center 中间弹出
- * 	@value bottom 底部弹出
- * 	@value left		左侧弹出
- * 	@value right  右侧弹出
- * 	@value message 消息提示
- * 	@value dialog 对话框
- * 	@value share 底部分享示例
- * @property {Boolean} animation = [ture|false] 是否开启动画
- * @property {Boolean} maskClick = [ture|false] 蒙版点击是否关闭弹窗
- * @property {String}  backgroundColor 					主窗口背景色
- * @property {Boolean} safeArea									是否适配底部安全区
- * @event {Function} change 打开关闭弹窗触发，e={show: false}
- */
 
 export default {
 	name: 'uniPopup',
@@ -184,9 +158,6 @@ export default {
 		},
 		// TODO nvue 取消冒泡
 		clear(e) {
-			// #ifndef APP-NVUE
-			e.stopPropagation()
-			// #endif
 			this.clearPropagation = true
 		},
 		
@@ -212,8 +183,6 @@ export default {
 				type: this.type
 			})
 			clearTimeout(this.timer)
-			// // 自定义关闭事件
-			// this.customOpen && this.customClose()
 			this.timer = setTimeout(() => {
 				this.showPopup = false
 			}, 300)
@@ -278,46 +247,22 @@ export default {
 <style lang="scss" scoped>
 .uni-popup {
 	position: fixed;
-	/* #ifndef APP-NVUE */
 	z-index: 99;
-	/* #endif */
-	&.top,
-	&.left,
-	&.right {
-		/* #ifdef H5 */
-		top: var(--window-top);
-		/* #endif */
-		/* #ifndef H5 */
-		top: 0;
-		/* #endif */
-	}
 	.uni-popup__wrapper {
-		/* #ifndef APP-NVUE */
 		display: block;
-		/* #endif */
 		position: relative;
 		/* iphonex 等安全区设置，底部安全区适配 */
-		/* #ifndef APP-NVUE */
 		padding-bottom: constant(safe-area-inset-bottom);
 		padding-bottom: env(safe-area-inset-bottom);
-		/* #endif */
 		&.left,
 		&.right {
-			/* #ifdef H5 */
-			padding-top: var(--window-top);
-			/* #endif */
-			/* #ifndef H5 */
-			padding-top: 0;
-			/* #endif */
 			flex: 1;
 		}
 	}
 }
 
 .fixforpc-z-index {
-	/* #ifndef APP-NVUE */
 	z-index: 999;
-	/* #endif */
 }
 
 .fixforpc-top {
