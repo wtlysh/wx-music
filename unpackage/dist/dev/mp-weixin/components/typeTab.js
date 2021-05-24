@@ -129,10 +129,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   props: {
-    top: {
-      type: Number,
-      default: 0 },
-
     tab: {
       type: Array,
       default: [] },

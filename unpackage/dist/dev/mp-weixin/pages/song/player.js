@@ -100,6 +100,9 @@ try {
     },
     uniIcons: function() {
       return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 100))
+    },
+    uniPopup: function() {
+      return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 213))
     }
   }
 } catch (e) {
@@ -123,15 +126,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  if (!_vm._isMounted) {
-    _vm.e0 = function($event) {
-      _vm.isOpentList = true
-    }
-
-    _vm.e1 = function($event) {
-      _vm.isOpentList = false
-    }
-  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -230,6 +224,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _vuex = __webpack_require__(/*! vuex */ 8);
 
 
@@ -253,7 +249,6 @@ var db = wx.cloud.database();var _default =
     return {
       color: '#fff',
       bgColor: "",
-      isOpentList: false, //是否打开播放列表
       song: {
         id: '',
         url: '',
@@ -314,6 +309,12 @@ var db = wx.cloud.database();var _default =
 
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive'])), {}, {
+    opentList: function opentList() {
+      this.$refs.popup.open('bottom');
+    },
+    closeList: function closeList() {
+      this.$refs.popup.close();
+    },
     //进度条
     sliderChange: function sliderChange(e) {
       this.curPlayTime = e.detail.value;
@@ -329,6 +330,7 @@ var db = wx.cloud.database();var _default =
     next: function next(isAuto) {
       var index = this.$refs.child.getIndex('next', isAuto);
       this.curPlayIndex = index;
+      // console.log(this.audiolist[index])
       this.initPlay(this.audiolist[index].id);
     },
     //获取歌曲数据并开始播放

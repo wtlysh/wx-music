@@ -5,19 +5,17 @@
 		<meTop :bg="bg"></meTop>
 		<typeTab style="position: relative;background: #fff;" :tab="tab" :isActive="isActive" @tab="switchNav">
 		</typeTab>
-		<swiper :current="isActive" @change="handleChange" :style="{height:swiperHeight+'px'}">
-			<swiper-item>
-				<plylistCon class="his_list" :tracks="hisTracks" :isShowDelete="true" @delete="deleteSong">
-				</plylistCon>
-			</swiper-item>
-			<swiper-item>
-				<plylistCon class="like_list" :tracks="likeTracks" :isShowCancel="true" @cancel="cancelLike">
-				</plylistCon>
-			</swiper-item>
-		</swiper>
-		<view class="delete-fab" v-if="hisTracks.length>0 && isActive==0" @click="deleteAll">
-			<uni-icons type="trash-filled" color="#fff" size="50"></uni-icons>
+		<view v-show="isActive==0">
+			<plylistCon class="his_list" :height="(swiperHeight-70)" :tracks="hisTracks" :isShowDelete="true"
+				@delete="deleteSong">
+			</plylistCon>
+			<view class="delete-fab" v-if="hisTracks.length>0 && isActive==0" @click="deleteAll">
+				<uni-icons type="trash-filled" color="#fff" size="50"></uni-icons>
+			</view>
 		</view>
+		<plylistCon v-show="isActive==1" class="like_list" :height="(swiperHeight-70)" :tracks="likeTracks" :isShowCancel="true"
+			@cancel="cancelLike">
+		</plylistCon>
 		<playing-box></playing-box>
 	</view>
 </template>
@@ -44,45 +42,26 @@
 				top: 420,
 				likeTracks: [],
 				userId: "",
-				swiperHeight: 0,
 			}
 		},
 		onShow() {
 			this.getData();
-			setTimeout(() => {
-				let list = ".his_list";
-				this.getlistHeight(list);
-			}, 10)
-			// console.log(this.playdetail)
 		},
 		methods: {
-			getlistHeight(list) {
-				let vm = this
-				let info = uni.createSelectorQuery().select(list);
-				info.boundingClientRect((data) => {
-					vm.swiperHeight = data.height; // 获取元素高度
-				}).exec();
-			},
-			handleChange(e) {
-				let vm = this;
-				vm.isActive = e.mp.detail.current;
-				if (vm.isActive == 0) {
-					let list = ".his_list";
-					vm.getlistHeight(list);
-				} else if (vm.isActive == 1) {
-					let list = ".like_list";
-					vm.getlistHeight(list);
-				}
-			},
 			switchNav(index) {
 				this.isActive = index;
 			},
-			deleteSong(id,index) {
+			deleteSong(id, index) {
 				this.hisTracks.splice(index, 1);
 				uni.setStorage({
 					key: 'OldSongs',
 					data: this.hisTracks,
-					success: res => {}
+					success: res => {
+						uni.showToast({
+							title: '删除成功',
+							icon: 'none'
+						});
+					}
 				});
 			},
 			//删除所有历史播放记录
@@ -105,14 +84,17 @@
 					}
 				});
 			},
-			cancelLike(id,index) {
+			cancelLike(id, index) {
 				this.likeTracks.splice(index, 1);
 				db.collection('userLike').doc(this.userId).update({
 					data: {
 						like_songs: this.likeTracks
 					},
 					success: (res) => {
-						// console.log(es.data)
+						uni.showToast({
+							title: '取消收藏成功',
+							icon: 'none'
+						});
 					},
 					fail: err => {
 						// console.log(er);
@@ -146,6 +128,10 @@
 
 <style lang="scss" scoped>
 	.me {
+		.me-swiper-item {
+			background-color: $uni-bg-color;
+		}
+
 		.delete-fab {
 			position: fixed;
 			bottom: 120rpx;

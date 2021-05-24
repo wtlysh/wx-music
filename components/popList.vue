@@ -1,5 +1,5 @@
 <template>
-	<view class="poplist-box" :class="[isOpentList?'':'hide']">
+	<view class="poplist-box">
 		<view class="poplist-title">
 			<text class="total">当前播放({{audiolist.length}})</text>
 			<text class="model" v-if="playModel==0" @click="setPlayModel">
@@ -52,26 +52,15 @@
 		apiSong,
 		apiSongDetail
 	} from '../api/player.js'
-	// import Vue from 'vue'
 	export default{
-		props:{
-			isOpentList:{
-				type:Boolean,
-				default:false
-			},
-		},
 		data(){
 			return {
 				playModel: 0,//播放模式
 				isPlay: false,//当前是否播放	
-				// playTime: 0,
 			}
 		},
 		computed:{
 			...mapGetters(['playdetail','audiolist']),
-			// playTimeNum() {
-			// 	return this.$util.formatTime(this.playTime)
-			// }
 		},
 		methods:{
 			...mapMutations(['setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
@@ -200,21 +189,12 @@
 <style lang="scss" scoped>
 	@import "../static/scss/songList.scss";
 	.poplist-box {
-		position: fixed;
 		display: block;
-		bottom: 0;
 		height: 800rpx;
 		width: 100%;
 		background-color: #FFFFFF;
-		z-index: 1001;
 		border-radius: 5% 5% 0 0;
-	
-		&.hide {
-			bottom: -800rpx;
-		}
-	
-		transition: all .15s linear;
-	
+	    position: relative;
 		.poplist-title {
 			display: flex;
 			justify-content: space-between;

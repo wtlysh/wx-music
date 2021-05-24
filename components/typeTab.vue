@@ -13,10 +13,6 @@
 <script>
 	export default {
 		props: {
-			top: {
-				type: Number,
-				default: 0
-			},
 			tab: {
 				type: Array,
 				default: []

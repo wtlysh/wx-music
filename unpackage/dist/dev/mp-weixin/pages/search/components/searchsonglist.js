@@ -130,12 +130,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   props: {
     songList: {
       type: Array,
-      default: [] } },
+      default: [] },
+
+    height: {
+      type: [String, Number],
+      default: "100%" } },
 
 
   data: function data() {
@@ -146,7 +152,8 @@ var _default =
     toPlay: function toPlay(item) {
       var list = [item];
       uni.navigateTo({
-        url: '/pages/song/player?songId=' + item.id + '&index=0' + '&list=' + encodeURIComponent(JSON.stringify(list)) });
+        url: '/pages/song/player?songId=' + item.id + '&index=0' + '&list=' + encodeURIComponent(JSON.
+        stringify(list)) });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

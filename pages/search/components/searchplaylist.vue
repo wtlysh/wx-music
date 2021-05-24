@@ -1,17 +1,19 @@
 <!-- 搜索结构歌单列表 -->
 <template>
 	<view class="playlist box-width">
-		<view :class="['playlist-item','flex-align',index==0 ? 'playlist-firstitem':'']" v-for="(item, index) in playlist"
-			:key="index" @click="toPlaylist(item.id)">
-			<view class="playlist-item-img">
-				<image class="playlist-img" :src="item.picUrl" mode=""></image>
+		<scroll-view scroll-y="true" :style="{height:height+'rpx'}">
+			<view :class="['playlist-item','flex-align',index==0 ? 'playlist-firstitem':'']"
+				v-for="(item, index) in playlist" :key="index" @click="toPlaylist(item.id)">
+				<view class="playlist-item-img">
+					<image class="playlist-img" :src="item.picUrl" mode=""></image>
+				</view>
+				<view class="playlist-content">
+					<view class="name ellipsis">{{item.name}}</view>
+					<view style="padding-top: 10rpx;" class="ellipsis song-text">{{item.desc}}</view>
+				</view>
+				<uni-icons type="forward" color="#6b6b6b" size="50"></uni-icons>
 			</view>
-			<view class="playlist-content">
-				<view class="name ellipsis">{{item.name}}</view>
-				<view style="padding-top: 10rpx;" class="ellipsis song-text">{{item.desc}}</view>
-			</view>
-			<uni-icons type="forward" color="#6b6b6b" size="50"></uni-icons>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -21,6 +23,10 @@
 			playlist: {
 				type: Array,
 				default: []
+			},
+			height:{
+				type:[String,Number],
+				default: "100%"
 			}
 		},
 		methods: {

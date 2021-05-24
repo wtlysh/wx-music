@@ -54,19 +54,12 @@
   color: #6b6b6b;
 }
 .poplist-box.data-v-593ad0b8 {
-  position: fixed;
   display: block;
-  bottom: 0;
   height: 800rpx;
   width: 100%;
   background-color: #FFFFFF;
-  z-index: 1001;
   border-radius: 5% 5% 0 0;
-  -webkit-transition: all .15s linear;
-  transition: all .15s linear;
-}
-.poplist-box.hide.data-v-593ad0b8 {
-  bottom: -800rpx;
+  position: relative;
 }
 .poplist-box .poplist-title.data-v-593ad0b8 {
   display: -webkit-box;

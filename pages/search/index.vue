@@ -31,12 +31,12 @@
 		<!-- 搜索结果 -->
 		<view v-show="isShowSongList">
 			<typeTab class="search-tab" :style="{top:(height+110)+'rpx'}" :tab="tab" :isActive="isActive" @tab="switchNav"></typeTab>
-			<swiper class="search-list" :current="isActive" @change="handleChange" :style="{height:swiperHeight+'px'}">
+			<swiper class="search-list" :current="isActive" @change="handleChange" :style="{height:swiperHeight+'rpx'}">
 				<swiper-item>
-					<searchsonglist class="search-songlist" :songList="songList"></searchsonglist>
+					<searchsonglist :height="swiperHeight" class="search-songlist" :songList="songList"></searchsonglist>
 				</swiper-item>
 				<swiper-item>
-					<searchplaylist class="search-playlist" :playlist="playlist"></searchplaylist>
+					<searchplaylist :height="swiperHeight" class="search-playlist" :playlist="playlist"></searchplaylist>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -89,9 +89,9 @@
 			this.loadDefaultKeyword();
 			uni.getSystemInfo({
 				success: (res) => {
-					this.swiperHeight = 3000*res.windowWidth/750;
-					this.height = res.statusBarHeight + 40;
-					this.height = (this.height * (750 / res.windowWidth)); //将高度乘以换算后的该设备的rpx与px的比例
+					let item = (750 / res.windowWidth);
+					this.height = ((res.statusBarHeight + 44) * item);
+					this.swiperHeight = ((res.windowHeight * item)-this.height - 210);
 				}
 			});
 		},
@@ -105,23 +105,9 @@
 			switchNav(index){
 				this.isActive=index;
 			},
-			getlistHeight(list) {
-				let vm = this
-				let info = uni.createSelectorQuery().select(list);
-				info.boundingClientRect((data) => {
-					vm.swiperHeight = data.height; // 获取元素高度
-				}).exec();
-			},
 			handleChange(e) {
 				let vm = this;
 				vm.isActive = e.mp.detail.current;
-				if (vm.isActive == 0) {
-					let list = ".search-songlist";
-					vm.getlistHeight(list);
-				} else if (vm.isActive == 1) {
-					let list = ".search-playlist";
-					vm.getlistHeight(list);
-				}
 			},
 			//加载默认搜索关键字
 			async loadDefaultKeyword() {

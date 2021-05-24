@@ -247,9 +247,9 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
     this.loadDefaultKeyword();
     uni.getSystemInfo({
       success: function success(res) {
-        _this.swiperHeight = 3000 * res.windowWidth / 750;
-        _this.height = res.statusBarHeight + 40;
-        _this.height = _this.height * (750 / res.windowWidth); //将高度乘以换算后的该设备的rpx与px的比例
+        var item = 750 / res.windowWidth;
+        _this.height = (res.statusBarHeight + 44) * item;
+        _this.swiperHeight = res.windowHeight * item - _this.height - 210;
       } });
 
   },
@@ -263,23 +263,9 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
     switchNav: function switchNav(index) {
       this.isActive = index;
     },
-    getlistHeight: function getlistHeight(list) {
-      var vm = this;
-      var info = uni.createSelectorQuery().select(list);
-      info.boundingClientRect(function (data) {
-        vm.swiperHeight = data.height; // 获取元素高度
-      }).exec();
-    },
     handleChange: function handleChange(e) {
       var vm = this;
       vm.isActive = e.mp.detail.current;
-      if (vm.isActive == 0) {
-        var list = ".search-songlist";
-        vm.getlistHeight(list);
-      } else if (vm.isActive == 1) {
-        var _list = ".search-playlist";
-        vm.getlistHeight(_list);
-      }
     },
     //加载默认搜索关键字
     loadDefaultKeyword: function loadDefaultKeyword() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (

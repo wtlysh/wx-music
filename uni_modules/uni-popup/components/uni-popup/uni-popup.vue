@@ -1,5 +1,5 @@
 <template>
-	<view v-if="showPopup" class="uni-popup" :class="[popupstyle, isDesktop ? 'fixforpc-z-index' : '']" 
+	<view v-if="showPopup" class="uni-popup popupstyle"
 	@touchmove.stop.prevent="clear">
 		<view @touchstart="touchstart" >
 				<uni-transition key="1" v-if="maskShow" name="mask" mode-class="fade" :styles="maskClass" :duration="duration" :show="showTrans" @click="onTap" />
@@ -53,13 +53,6 @@ export default {
 			},
 			immediate: true
 		},
-		isDesktop: {
-			handler: function(newVal) {
-				if (!this.config[newVal]) return
-				this[this.config[this.type]](true)
-			},
-			immediate: true
-		},
 		/**
 		 * 监听遮罩是否可点击
 		 * @param {Object} val
@@ -103,13 +96,9 @@ export default {
 			},
 			maskShow: true,
 			mkclick: true,
-			popupstyle: this.isDesktop ? 'fixforpc-top' : 'top'
 		}
 	},
 	computed: {
-		isDesktop() {
-			return this.popupWidth >= 500 && this.popupHeight >= 500
-		},
 		bg() {
 			if (this.backgroundColor === '' || this.backgroundColor === 'none') {
 				return 'transparent'
@@ -225,10 +214,8 @@ export default {
 			this.ani = ['zoom-out', 'fade']
 			this.transClass = {
 				position: 'fixed',
-				/* #ifndef APP-NVUE */
 				display: 'flex',
 				flexDirection: 'column',
-				/* #endif */
 				bottom: 0,
 				left: 0,
 				right: 0,

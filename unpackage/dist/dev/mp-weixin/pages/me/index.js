@@ -182,8 +182,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
 var db = wx.cloud.database();
 var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 {
@@ -201,37 +199,13 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
       hisTracks: [],
       top: 420,
       likeTracks: [],
-      userId: "",
-      swiperHeight: 0 };
+      userId: "" };
 
   },
-  onShow: function onShow() {var _this = this;
+  onShow: function onShow() {
     this.getData();
-    setTimeout(function () {
-      var list = ".his_list";
-      _this.getlistHeight(list);
-    }, 10);
-    // console.log(this.playdetail)
   },
   methods: {
-    getlistHeight: function getlistHeight(list) {
-      var vm = this;
-      var info = uni.createSelectorQuery().select(list);
-      info.boundingClientRect(function (data) {
-        vm.swiperHeight = data.height; // 获取元素高度
-      }).exec();
-    },
-    handleChange: function handleChange(e) {
-      var vm = this;
-      vm.isActive = e.mp.detail.current;
-      if (vm.isActive == 0) {
-        var list = ".his_list";
-        vm.getlistHeight(list);
-      } else if (vm.isActive == 1) {
-        var _list = ".like_list";
-        vm.getlistHeight(_list);
-      }
-    },
     switchNav: function switchNav(index) {
       this.isActive = index;
     },
@@ -240,11 +214,16 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
       uni.setStorage({
         key: 'OldSongs',
         data: this.hisTracks,
-        success: function success(res) {} });
+        success: function success(res) {
+          uni.showToast({
+            title: '删除成功',
+            icon: 'none' });
+
+        } });
 
     },
     //删除所有历史播放记录
-    deleteAll: function deleteAll() {var _this2 = this;
+    deleteAll: function deleteAll() {var _this = this;
       uni.showModal({
         content: '确定删除所有播放记录？',
         success: function success(res) {
@@ -253,7 +232,7 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
             uni.removeStorage({
               key: 'OldSongs',
               success: function success() {
-                _this2.hisTracks = [];
+                _this.hisTracks = [];
               } });
 
           } else if (res.cancel) {
@@ -270,7 +249,10 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
           like_songs: this.likeTracks },
 
         success: function success(res) {
-          // console.log(es.data)
+          uni.showToast({
+            title: '取消收藏成功',
+            icon: 'none' });
+
         },
         fail: function fail(err) {
           // console.log(er);
@@ -278,21 +260,21 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 
     },
     //获取历史播放和收藏歌曲
-    getData: function getData() {var _this3 = this;
+    getData: function getData() {var _this2 = this;
       uni.getStorage({
         key: 'OldSongs',
         success: function success(res) {
-          _this3.hisTracks = res.data;
+          _this2.hisTracks = res.data;
         } });
 
       uni.getStorage({
         key: "userId",
         success: function success(res) {
           var id = res.data;
-          _this3.userId = id;
+          _this2.userId = id;
           db.collection('userLike').doc(id).get({
             success: function success(re) {
-              _this3.likeTracks = re.data.like_songs;
+              _this2.likeTracks = re.data.like_songs;
             } });
 
         } });

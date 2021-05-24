@@ -1,16 +1,18 @@
 <!-- 搜索结果歌曲列表组件 -->
 <template>
 	<view class="song-list box-width">
-		<view class="song-list-item flex-align" v-for="(item, index) in songList" :key="index"
-			@click="toPlay(item)">
-			<view class="con">
-				<view class="song-list-name name ellipsis">{{item.name}}</view>
-				<view style="line-height: 40rpx;" class="song-text ellipsis">{{item.desc}}</view>
+		<scroll-view scroll-y="true" :style="{height:height+'rpx'}">
+			<view class="song-list-item flex-align" v-for="(item, index) in songList" :key="index"
+				@click="toPlay(item)">
+				<view class="con">
+					<view class="song-list-name name ellipsis">{{item.name}}</view>
+					<view style="line-height: 40rpx;" class="song-text ellipsis">{{item.desc}}</view>
+				</view>
+				<view style="flex: 1;text-align: right;">
+					<image style="width: 50rpx;height: 50rpx;" src="../../../static/images/topaly.svg" mode=""></image>
+				</view>
 			</view>
-			<view style="flex: 1;text-align: right;">
-				<image style="width: 50rpx;height: 50rpx;" src="../../../static/images/topaly.svg" mode=""></image>
-			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -20,6 +22,10 @@
 			songList: {
 				type: Array,
 				default: []
+			},
+			height:{
+				type:[String,Number],
+				default: "100%"
 			}
 		},
 		data() {
@@ -30,7 +36,8 @@
 			toPlay(item) {
 				let list = [item];
 				uni.navigateTo({
-					url:'/pages/song/player?songId='+item.id+'&index=0'+'&list='+ encodeURIComponent(JSON.stringify(list))
+					url: '/pages/song/player?songId=' + item.id + '&index=0' + '&list=' + encodeURIComponent(JSON
+						.stringify(list))
 				})
 			}
 
@@ -44,13 +51,13 @@
 			flex-direction: row;
 			position: relative;
 			height: 120rpx;
+			padding-bottom: $uni-spacing-col-sm;
 		}
 
 		.con {
 			width: 580rpx;
 
 			.song-list-name {
-				margin-top: $uni-spacing-col-sm;
 				margin-right: $uni-spacing-row-base;
 				line-height: 58rpx;
 			}

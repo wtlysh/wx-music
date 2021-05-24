@@ -49,16 +49,18 @@
 				</view>
 			</view>
 			<playBottom :isLike="isLike" @cancle="cancleLike" @confirm="addLike"></playBottom>
-			<view class="poplist-icon flex-align" @click="isOpentList=true">
+			<view class="poplist-icon flex-align" @click="opentList">
 				<view style="display: flex;flex-wrap: wrap;justify-content: center;">
 					<uni-icons type="list" color="#6b6b6b" size="50"></uni-icons>
 					<text style="font-size: 28rpx;">列表</text>
 				</view>
 			</view>
 		</view>
-		<popList :isOpentList="isOpentList" ref="child" 
-		@close="isOpentList=false"
-		@play="initPlay"></popList>
+		<uni-popup ref="popup" type="bottom">
+			<popList ref="child"
+			@close="closeList"
+			@play="initPlay"></popList>
+		</uni-popup>
 	</view>
 </template>
 
@@ -86,7 +88,6 @@
 			return {
 				color:'#fff',
 				bgColor:"",
-				isOpentList: false, //是否打开播放列表
 				song: {
 					id: '',
 					url: '',
@@ -147,6 +148,12 @@
 		},
 		methods: {
 			...mapMutations(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
+			opentList(){
+				this.$refs.popup.open('bottom');
+			},
+			closeList(){
+				this.$refs.popup.close();
+			},
 			//进度条
 			sliderChange(e) {
 				this.curPlayTime = e.detail.value;
@@ -162,6 +169,7 @@
 			next(isAuto) {
 				const index = this.$refs.child.getIndex('next', isAuto)
 				this.curPlayIndex = index;
+				// console.log(this.audiolist[index])
 				this.initPlay(this.audiolist[index].id)
 			},
 			//获取歌曲数据并开始播放

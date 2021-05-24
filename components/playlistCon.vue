@@ -13,12 +13,8 @@
 			</view>
 		</view>
 		<view class="playlist-list">
-			<view class="flex-align" v-for="(item,index) in tracks" 
-			:key="index" 
-			@longpress="longtap(index)"
-			@click="toSong(item.id,index)"
-			>
-				<view :class="['item-con',playdetail.id==item.id?'active':'']">
+			<view class="flex-align" v-for="(item,index) in tracks" :key="index" @longpress="longtap(index)">
+				<view @click="toSong(item.id,index)" :class="['item-con',playdetail.id==item.id?'active':'']">
 					<view style="font-size: 36rpx;width: 60rpx;" class="num text-color">
 						{{index+1}}
 					</view>
@@ -35,7 +31,7 @@
 						</image>
 					</view>
 				</view>
-				<uniPopup ref="popup" type="center">
+				<uni-popup ref="popup" type="center">
 					<view class="popup-list">
 						<view class="popup-list-item flex-align" @click.capture.stop="paste(item.name,index)">
 							复制歌名
@@ -43,14 +39,16 @@
 						<view class="popup-list-item flex-align" @click.capture.stop="search(item.name,index)">
 							搜一搜歌曲
 						</view>
-						<view v-if="isShowDelete" class="popup-list-item flex-align" @click.capture.stop="Delete(item.id,index)">
+						<view v-if="isShowDelete" class="popup-list-item flex-align"
+							@click.capture.stop="Delete(item.id,index)">
 							删除记录
 						</view>
-						<view v-if="isShowCancel" class="popup-list-item flex-align" @click.capture.stop="cancel(item.id,index)">
+						<view v-if="isShowCancel" class="popup-list-item flex-align"
+							@click.capture.stop="cancel(item.id,index)">
 							取消收藏
 						</view>
 					</view>
-				</uniPopup>
+				</uni-popup>
 			</view>
 		</view>
 	</view>
@@ -65,79 +63,75 @@
 		apiSongDetail
 	} from '../api/player.js'
 	import Vue from 'vue'
-	import uniPopup from './uni-popup/uni-popup.vue'
 	export default {
-		components: {
-			uniPopup
-		},
 		props: {
 			tracks: {
 				type: Array,
 				default: []
 			},
-			isShowDelete:{
+			isShowDelete: {
 				type: Boolean,
-				default:false
+				default: false
 			},
-			isShowCancel:{
+			isShowCancel: {
 				type: Boolean,
-				default:false
-			}
+				default: false
+			},
 		},
 		data() {
 			return {
+
 			}
 		},
 		computed: {
 			...mapGetters(['playdetail']),
 		},
 		methods: {
-			cancel(id,index){
+			cancel(id, index) {
 				this.$refs.popup[index].close();
-				this.$emit('cancel',id,index)
+				this.$emit('cancel', id, index)
 			},
 			//删除记录
-			Delete(id,index){
+			Delete(id, index) {
 				this.$refs.popup[index].close();
-				this.$emit('delete',id,index)
+				this.$emit('delete', id, index)
 			},
 			//搜索
-			search(value,index){
+			search(value, index) {
 				this.$refs.popup[index].close();
 				uni.navigateTo({
-					url:"/pages/search/index?keyword="+value,
+					url: "/pages/search/index?keyword=" + value,
 				})
 			},
 			//复制歌名
-			paste(value,index){
+			paste(value, index) {
 				this.$refs.popup[index].close();
-				uni.setClipboardData({ 
+				uni.setClipboardData({
 					data: value,
-					success:()=>{
+					success: () => {
 						uni.showToast({
-							title:'复制成功',
-							icon:'none'
+							title: '复制成功',
+							icon: 'none'
 						});
 					}
 				});
 			},
 			//长按出现弹窗
-			longtap(index){
-				// console.log(this.$refs.popup[index])
+			longtap(index) {
 				this.$refs.popup[index].open('center');
 			},
 			//跳转到歌曲播放页面
-			toSong(id,index) {
+			toSong(id, index) {
 				const list = this.tracks;
-				// console.log(index)
 				uni.navigateTo({
-					url: '/pages/song/player?songId=' + id + '&index=' + index + '&list=' + encodeURIComponent(JSON
+					url: '/pages/song/player?songId=' + id + '&index=' + index + '&list=' + encodeURIComponent(
+						JSON
 						.stringify(list))
 				})
 			},
 			//播放全部歌曲
 			playAll() {
-				this.toSong(this.tracks[0].id)
+				this.toSong(this.tracks[0].id, 0)
 			},
 			//删除或取消收藏
 			change(id) {
@@ -180,12 +174,12 @@
 		.playlist-list {
 			position: relative;
 			top: $uni-spacing-col-base;
-			
-			.popup-list{
+
+			.popup-list {
 				width: 600rpx;
 				background-color: $uni-bg-color;
-				
-				.popup-list-item{
+
+				.popup-list-item {
 					height: 50rpx;
 					font-size: $uni-font-size-base;
 					padding: 30rpx 0 30rpx 50rpx;

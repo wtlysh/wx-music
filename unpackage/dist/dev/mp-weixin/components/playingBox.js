@@ -81,6 +81,9 @@ try {
   components = {
     uniIcons: function() {
       return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 100))
+    },
+    uniPopup: function() {
+      return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 213))
     }
   }
 } catch (e) {
@@ -104,15 +107,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  if (!_vm._isMounted) {
-    _vm.e0 = function($event) {
-      _vm.isOpentList = true
-    }
-
-    _vm.e1 = function($event) {
-      _vm.isOpentList = false
-    }
-  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -168,6 +162,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _vuex = __webpack_require__(/*! vuex */ 8);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var popList = function popList() {Promise.all(/*! require.ensure | components/popList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/popList")]).then((function () {return resolve(__webpack_require__(/*! ./popList.vue */ 185));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
@@ -178,8 +174,7 @@ var _vuex = __webpack_require__(/*! vuex */ 8);function ownKeys(object, enumerab
     popList: popList },
 
   data: function data() {
-    return {
-      isOpentList: false };
+    return {};
 
   },
   computed: _objectSpread({},
@@ -187,6 +182,13 @@ var _vuex = __webpack_require__(/*! vuex */ 8);function ownKeys(object, enumerab
 
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive'])), {}, {
+    openList: function openList() {
+      this.$refs.popup.open('bottom');
+      // console.log(this.$refs.popup);
+    },
+    closeList: function closeList() {
+      this.$refs.popup.close();
+    },
     //控制歌曲播放
     playCtrol: function playCtrol() {
       var isPlay = this.isplayingmusic;

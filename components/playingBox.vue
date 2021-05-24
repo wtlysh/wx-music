@@ -12,10 +12,12 @@
 					<image class="isplay-img" v-if="isplayingmusic==false" src="../static/images/notplaying.svg"
 						mode=""></image>
 				</view>
-				<uni-icons @click="isOpentList=true" type="list" color="#6b6b6b" size="50"></uni-icons>
+				<uni-icons @click="openList" type="list" color="#6b6b6b" size="50"></uni-icons>
 			</view>
 		</view>
-		<popList :isOpentList="isOpentList" @close="isOpentList=false"></popList>
+		<uni-popup ref="popup" type="bottom">
+			<popList  @close="closeList"></popList>
+		</uni-popup>
 	</view>
 </template>
 
@@ -31,7 +33,6 @@
 		},
 		data() {
 			return {
-				isOpentList: false,
 			}
 		},
 		computed: {
@@ -39,6 +40,13 @@
 		},
 		methods: {
 			...mapMutations(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
+			openList(){
+				this.$refs.popup.open('bottom');
+				// console.log(this.$refs.popup);
+			},
+			closeList(){
+				this.$refs.popup.close();
+			},
 			//控制歌曲播放
 			playCtrol() {
 				let isPlay = this.isplayingmusic;
