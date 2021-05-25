@@ -3,6 +3,10 @@ page {
 	background: $uni-bg-color-grey;
 }
 
+.box{
+	margin-bottom: 110rpx;
+}
+
 .list-con{
 	position: relative;
 }
@@ -83,18 +87,7 @@ page {
 	filter: blur(35px);
 	background-position: 0 0;
 	background-repeat: no-repeat;
-    /* background-size: cover; */
 	background-size: 100%;
 }
 
 // 背景图
-.bg-img{
-	position: absolute;
-	left: 0;
-	width: 100%;
-	filter: blur(20px);
-	background-repeat: no-repeat;
-	background-position: 0 0;
-	/* background-size: cover; */
-	background-size: 100%;
-}

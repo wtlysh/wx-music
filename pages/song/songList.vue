@@ -13,7 +13,7 @@
 				</swiper-item>
 			</block>
 		</swiper>
-		<playlistCon :top="top" :tracks="songList[current].tracks" ></playlistCon>
+		<playlistCon :top="top" :tracks="songList[current].tracks"></playlistCon>
 		<playing-box></playing-box>
 	</view>
 </template>
@@ -31,7 +31,7 @@
 		data() {
 			return {
 				title: '音乐',
-				leftIcon:"back",
+				leftIcon: "back",
 				songList: [{
 					tracks: [],
 				}],
@@ -71,9 +71,19 @@
 					for (let i = 0; i < cat.length; i++) {
 						// console.log(res.playlist)
 						let list = res[i].playlist;
+						let songs = list.tracks.map(item => {
+							let singer = item.ar.map(t => {
+								return t.name
+							}).join('/');
+							return {
+								id: item.id,
+								name: item.name,
+								singer: singer,
+							}
+						});
 						vm.imgs[i] = list.backgroundCoverUrl;
 						vm.songList[i] = {
-							tracks: list.tracks
+							tracks:songs
 						}
 					}
 				})

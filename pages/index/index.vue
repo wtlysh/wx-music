@@ -3,7 +3,7 @@
 	<view class="home">
 		<nav-bar :showIcon="false"></nav-bar>
 		<Search></Search>
-		<view class="home-con">
+		<view :class="['home-con',playdetail?'box':'']">
 			<hotsongList :songs="Hotsongs"></hotsongList>
 			<newsongList :songs="Newsongs" :newId="newId"></newsongList>
 			<playlist :playlist="playlist"></playlist>
@@ -23,7 +23,7 @@
 		getMuListDetail,
 		getHotMuList
 	} from '../../api/index.js'
-	import { mapMutations } from 'vuex'
+	import { mapMutations,mapGetters } from 'vuex'
 	export default {
 		components: {
 			Search,
@@ -33,7 +33,7 @@
 		},
 		data() {
 			return {
-				hotId: "2250011882", //热门榜单ID
+				hotId: "3778678", //热门榜单ID
 				Hotsongs: [],
 				newId: "3779629",
 				Newsongs: [],
@@ -50,6 +50,9 @@
 					// console.log(height)
 				}
 			});
+		},
+		computed:{
+			...mapGetters(['playdetail']),
 		},
 		methods: {
 			...mapMutations(['setTopHeight']),

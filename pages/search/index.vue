@@ -89,7 +89,7 @@
 			searchplaylist
 		},
 		computed:{
-			...mapGetters(['topHeight'])
+			...mapGetters(['topHeight','playdetail'])
 		},
 		created() {
 			this.loadDefaultKeyword();
@@ -103,6 +103,9 @@
 		onLoad(param) {
 			if(param.keyword){
 				this.doSearch(param.keyword);
+			};
+			if(this.playdetail){
+				this.swiperHeight = this.swiperHeight-110;
 			}
 		},
 		methods: {

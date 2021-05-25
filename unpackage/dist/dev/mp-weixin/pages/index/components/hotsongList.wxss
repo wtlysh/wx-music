@@ -41,6 +41,7 @@
 }
 .hotsong .hotsong-list .hotsong-li .hotsong-item.data-v-8edca806 {
   margin-bottom: 20rpx;
+  width: 100%;
 }
 .hotsong .hotsong-list .hotsong-li .hotsong-item .hotsong-img.data-v-8edca806 {
   width: 130rpx;

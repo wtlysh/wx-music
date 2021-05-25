@@ -226,9 +226,19 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 24);function _interop
                     for (var i = 0; i < cat.length; i++) {
                       // console.log(res.playlist)
                       var list = res[i].playlist;
+                      var songs = list.tracks.map(function (item) {
+                        var singer = item.ar.map(function (t) {
+                          return t.name;
+                        }).join('/');
+                        return {
+                          id: item.id,
+                          name: item.name,
+                          singer: singer };
+
+                      });
                       vm.imgs[i] = list.backgroundCoverUrl;
                       vm.songList[i] = {
-                        tracks: list.tracks };
+                        tracks: songs };
 
                     }
                   }));case 3:

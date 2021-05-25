@@ -1,6 +1,6 @@
 <!-- 推荐歌单页面 -->
 <template>
-	<view class="playlists">
+	<view :class="['playlists',playdetail?'box':'']">
 		<nav-bar :title="title"></nav-bar>
 		<view class="box-width">
 			<view class="playlists-list" v-for="(item,index) in playLists" :key="index">
@@ -33,6 +33,9 @@
 	import {
 		numberFormat
 	} from '../../utils/numberFormat.js'
+	import {
+		mapGetters
+	} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -43,6 +46,9 @@
 		},
 		created() {
 			this.getPlaylists(this.cat);
+		},
+		computed: {
+			...mapGetters(['playdetail']),
 		},
 		methods: {
 			//获取推荐歌单数据

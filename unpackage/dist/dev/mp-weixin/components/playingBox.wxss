@@ -30,14 +30,13 @@
   background: #fff;
   padding: 0 37.5rpx;
   height: 90rpx;
-  border-top: 1px solid #ccc;
 }
 .playing-box .playing-to.data-v-1432e090 {
   width: 565rpx;
 }
 .playing-box .playing-to .playing-img.data-v-1432e090 {
-  -webkit-animation: rotate-data-v-1432e090 25s linear infinite;
-          animation: rotate-data-v-1432e090 25s linear infinite;
+  -webkit-animation: rotate-data-v-1432e090 15s linear infinite;
+          animation: rotate-data-v-1432e090 15s linear infinite;
   width: 100rpx;
   height: 100rpx;
   border-radius: 50%;

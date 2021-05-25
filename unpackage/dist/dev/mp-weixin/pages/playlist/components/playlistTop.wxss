@@ -31,6 +31,16 @@
   z-index: 100;
   background: #fff;
 }
+.playlist-top .bg-img.data-v-a2131ec4 {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  -webkit-filter: blur(20px);
+          filter: blur(20px);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 100%;
+}
 .playlist-top .playlist-con.data-v-a2131ec4 {
   width: 100%;
   display: -webkit-box;

@@ -55,6 +55,15 @@
 		position: fixed;
 		z-index: 100;
 		background: #fff;
+		.bg-img{
+			position: absolute;
+			left: 0;
+			width: 100%;
+			filter: blur(20px);
+			background-repeat: no-repeat;
+			background-position: 0 0;
+			background-size: 100%;
+		}
 		
 		.playlist-con {
 			width: 100%;

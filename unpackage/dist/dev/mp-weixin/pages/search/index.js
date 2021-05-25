@@ -247,7 +247,7 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
     searchplaylist: searchplaylist },
 
   computed: _objectSpread({},
-  (0, _vuex.mapGetters)(['topHeight'])),
+  (0, _vuex.mapGetters)(['topHeight', 'playdetail'])),
 
   created: function created() {var _this = this;
     this.loadDefaultKeyword();
@@ -261,6 +261,9 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
   onLoad: function onLoad(param) {
     if (param.keyword) {
       this.doSearch(param.keyword);
+    };
+    if (this.playdetail) {
+      this.swiperHeight = this.swiperHeight - 110;
     }
   },
   methods: {

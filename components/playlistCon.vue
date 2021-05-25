@@ -1,6 +1,6 @@
 <!-- 歌曲列表公共组件 -->
 <template>
-	<view class="playlist-list-con">
+	<view :class="['playlist-list-con',playdetail?'box':'']">
 		<view class="playlist-list">
 			<scroll-view scroll-y="true" :style="{height:height+'rpx'}">
 				<view :class="['flex-align',index==0?'first':'']" v-for="(item,index) in tracks" :key="index" @longpress="longtap(index)">

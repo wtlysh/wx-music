@@ -83,6 +83,9 @@
 		},
 		onShow() {
 			this.getData();
+			if(this.playdetail){
+				this.swiperHeight = this.swiperHeight-110;
+			}
 		},
 		created() {
 			uni.getSystemInfo({
@@ -101,7 +104,7 @@
 			})
 		},
 		computed:{
-			...mapGetters(['topHeight'])
+			...mapGetters(['topHeight','playdetail'])
 		},
 		methods: {
 			/*获取用户信息*/

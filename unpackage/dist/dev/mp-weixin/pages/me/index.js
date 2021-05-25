@@ -241,6 +241,9 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
   },
   onShow: function onShow() {
     this.getData();
+    if (this.playdetail) {
+      this.swiperHeight = this.swiperHeight - 110;
+    }
   },
   created: function created() {var _this = this;
     uni.getSystemInfo({
@@ -259,7 +262,7 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 
   },
   computed: _objectSpread({},
-  (0, _vuex.mapGetters)(['topHeight'])),
+  (0, _vuex.mapGetters)(['topHeight', 'playdetail'])),
 
   methods: {
     /*获取用户信息*/

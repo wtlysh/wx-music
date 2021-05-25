@@ -74,7 +74,6 @@
 		background: #fff;
 		padding: 0 37.5rpx;
 		height: 90rpx;
-		border-top: 1px solid #ccc;
 
 		.playing-to {
 			width: 565rpx;
@@ -84,7 +83,7 @@
 					animation-play-state: paused;
 				}
 
-				animation: rotate 25s linear infinite;
+				animation: rotate 15s linear infinite;
 				width: 100rpx;
 				height: 100rpx;
 				border-radius: $uni-border-radius-circle;

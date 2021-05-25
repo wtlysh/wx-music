@@ -196,7 +196,7 @@ var _vuex = __webpack_require__(/*! vuex */ 8);function _interopRequireDefault(o
 
   data: function data() {
     return {
-      hotId: "2250011882", //热门榜单ID
+      hotId: "3778678", //热门榜单ID
       Hotsongs: [],
       newId: "3779629",
       Newsongs: [],
@@ -214,6 +214,9 @@ var _vuex = __webpack_require__(/*! vuex */ 8);function _interopRequireDefault(o
       } });
 
   },
+  computed: _objectSpread({},
+  (0, _vuex.mapGetters)(['playdetail'])),
+
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['setTopHeight'])), {}, {
     //获取首页所有数据

@@ -11,11 +11,11 @@
 					<view :id="'card_'+index" class="hotsong-li" v-for="(list,index) in songs" :key="index">
 						<view class="hotsong-item flex-align" @click="toSong(list,item.id,i)" v-for="(item,i) in list" :key="item.id">
 							<image class="hotsong-img" :src="item.picUrl" mode=""></image>
-							<view style="padding-left: 20rpx;">
-								<view class="name" style="padding-bottom:10rpx;">
+							<view style="padding-left: 20rpx;width: 450rpx;">
+								<view class="name ellipsis" style="padding-bottom:10rpx;">
 									{{item.name}}
 								</view>
-								<view class="song-text">
+								<view class="song-text ellipsis">
 									{{item.desc}}
 								</view>
 							</view>
@@ -98,6 +98,7 @@
 
 				.hotsong-item {
 					margin-bottom: $uni-spacing-col-base;
+					width: 100%;
 
 					.hotsong-img {
 						width: 130rpx;
