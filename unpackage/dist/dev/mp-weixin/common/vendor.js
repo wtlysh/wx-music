@@ -2157,7 +2157,8 @@ var state = {
   isplayingmusic: false,
   isplayactive: false,
   playdetail: '',
-  audiolist: [] };
+  audiolist: [],
+  topHeight: 0 };
 
 var getters = {
   isplayingmusic: function isplayingmusic(state) {
@@ -2171,6 +2172,9 @@ var getters = {
   },
   audiolist: function audiolist(state) {
     return state.audiolist;
+  },
+  topHeight: function topHeight(state) {
+    return state.topHeight;
   } };
 
 var mutations = {
@@ -2185,6 +2189,9 @@ var mutations = {
   },
   setAudiolist: function setAudiolist(state, param) {
     state.audiolist = param;
+  },
+  setTopHeight: function setTopHeight(state, param) {
+    state.topHeight = param;
   } };
 
 var actions = {
@@ -9380,6 +9387,41 @@ var tRequest = function tRequest(opts) {
   request: request,
   tRequest: tRequest };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 262:
+/*!**************************************************************!*\
+  !*** F:/workSpace/wx/wx-music/components/uni-popup/popup.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+{
+  data: function data() {
+    return {};
+
+
+  },
+  created: function created() {
+    this.popup = this.getParent();
+  },
+  methods: {
+    /**
+              * 获取父元素实例
+              */
+    getParent: function getParent() {var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'uniPopup';
+      var parent = this.$parent;
+      var parentName = parent.$options.name;
+      while (parentName !== name) {
+        parent = parent.$parent;
+        if (!parent) return false;
+        parentName = parent.$options.name;
+      }
+      return parent;
+    } } };exports.default = _default;
 
 /***/ }),
 

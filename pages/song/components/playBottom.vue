@@ -1,7 +1,7 @@
 <template>
 	<view class="play-bottom">
 		<view class="play-opration">
-			<view class="play-text flex-center" @click="toLike">
+			<view class="play-text flex-center" @click.stop="toLike">
 				<view class="img-box">
 					<uni-icons size="50" :type="isLike?'heart-filled':'heart'" :color="isLike?'#dd524d':'#fff'"></uni-icons>
 				</view>
@@ -9,7 +9,7 @@
 			</view>
 		</view>
 		<view class="play-opration">
-			<view class="play-text flex-center">
+			<view class="play-text flex-center" @click.stop="share">
 				<view class="img-box">
 					<uni-icons size="50" type="redo" color="#fff"></uni-icons>
 				</view>
@@ -35,7 +35,10 @@
 				}else{
 					this.$emit('confirm')
 				}
-			}
+			},
+			share(){
+				this.$emit('open');
+			},
 		}
 	}
 </script>
@@ -46,7 +49,7 @@
 		width: 100%;
 		position: absolute;
 		bottom: 0;
-		margin: 100rpx 0;
+		margin:100rpx 0;
 	
 		.play-opration {
 			width: 50%;

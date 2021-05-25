@@ -2,7 +2,7 @@
 	<view class="type">
 		<view class="type-box box-width">
 		    <view v-for="(item, index) in tab" :key="index" 
-			class="type-list" 
+			:class="['type-list',isWhite?'white':'grey']" 
 			@tap="switchNav(index)">
 			<text :class="isActive==index ? 'active' : ''">{{item}}</text>
 			</view>
@@ -20,6 +20,10 @@
 			isActive: {
 				type: Number,
 				default: 0
+			},
+			isWhite:{
+				type:Boolean,
+				default:false
 			}
 		},
 		methods: {
@@ -33,8 +37,6 @@
 <style lang="scss" scoped>
 	.type {
 		width: 100%;
-		border-bottom: 1px solid #f2f2f2;
-		background: $uni-bg-color-grey;
 
 		.type-box {
 			display: flex;
@@ -45,7 +47,12 @@
 				text-align: center;
 				height: 100rpx;
 				line-height: 100rpx;
-				color: $uni-text-color;
+				&.grey{
+					color: $uni-text-color;
+				}
+				&.white{
+					color: $uni-text-color-inverse;
+				}
 
 				.active {
 					color: $uni-color-success;

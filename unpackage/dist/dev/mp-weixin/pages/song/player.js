@@ -102,7 +102,7 @@ try {
       return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 100))
     },
     uniPopup: function() {
-      return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 213))
+      return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 108))
     }
   }
 } catch (e) {
@@ -226,6 +226,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 8);
 
 
@@ -237,13 +250,15 @@ var _player = __webpack_require__(/*! ../../api/player.js */ 75);
 
 
 
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var playBottom = function playBottom() {__webpack_require__.e(/*! require.ensure | pages/song/components/playBottom */ "pages/song/components/playBottom").then((function () {return resolve(__webpack_require__(/*! ./components/playBottom.vue */ 178));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var popList = function popList() {Promise.all(/*! require.ensure | components/popList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/popList")]).then((function () {return resolve(__webpack_require__(/*! ../../components/popList.vue */ 185));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var popupShare = function popupShare() {Promise.all(/*! require.ensure | components/uni-popup/popupShare */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-popup/popupShare")]).then((function () {return resolve(__webpack_require__(/*! ../../components/uni-popup/popupShare.vue */ 185));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var playBottom = function playBottom() {__webpack_require__.e(/*! require.ensure | pages/song/components/playBottom */ "pages/song/components/playBottom").then((function () {return resolve(__webpack_require__(/*! ./components/playBottom.vue */ 192));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var popList = function popList() {Promise.all(/*! require.ensure | components/popList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/popList")]).then((function () {return resolve(__webpack_require__(/*! ../../components/popList.vue */ 199));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 var update = true;
 var db = wx.cloud.database();var _default =
 {
   components: {
     playBottom: playBottom,
-    popList: popList },
+    popList: popList,
+    popupShare: popupShare },
 
   data: function data() {
     return {
@@ -260,12 +275,11 @@ var db = wx.cloud.database();var _default =
       isCanPlay: true, //资源是否有用
       isPlay: true, //是否播放
       lyric: [], //歌词
-      lytop: '',
       lycur: '',
-      lybot: '',
       isLyric: false, //是否显示全部歌词
       lyricIndex: 0, //定位当前歌词
-      ctrolIndex: 0, //控制高亮歌词
+      lyIndex: 0, //显示部分时控制高亮歌词
+      ctrolIndex: 0, //全部显示时控制高亮歌词
       curPlayIndex: 0, //当前播放歌曲在list内的索引
       playTime: 0,
       curPlayTime: 0,
@@ -273,9 +287,8 @@ var db = wx.cloud.database();var _default =
       leftIcon: 'back',
       likeSong: {}, //收藏歌曲
       isLike: false, //是否收藏
-      userId: "", //用户收藏id
-      windowHeight: 0 };
-
+      userId: "" //用户收藏id
+    };
   },
   onLoad: function onLoad(param) {var _this = this;
     if (!param.songId) {
@@ -283,9 +296,8 @@ var db = wx.cloud.database();var _default =
     }
     uni.getSystemInfo({
       success: function success(res) {
-        _this.height = res.windowHeight - res.statusBarHeight - 40;
-        _this.windowHeight = res.windowHeight;
-        _this.height = _this.height * (750 / res.windowWidth); //将高度乘以换算后的该设备的rpx与px的比例
+        _this.height = res.windowHeight * (750 / res.windowWidth) - _this.
+        topHeight; //将高度乘以换算后的该设备的rpx与px的比例
       } });
 
     var id = param.songId;
@@ -295,11 +307,11 @@ var db = wx.cloud.database();var _default =
     if (param.list) {
       var list = JSON.parse(decodeURIComponent(param.list));
       this.setAudiolist(list);
+      // console.log(list)
     }
-    // console.log(this.playdetail)
   },
   computed: _objectSpread(_objectSpread({},
-  (0, _vuex.mapGetters)(['playdetail', 'audiolist', 'isplayingmusic'])), {}, {
+  (0, _vuex.mapGetters)(['topHeight', 'playdetail', 'audiolist', 'isplayingmusic'])), {}, {
     playTimeNum: function playTimeNum() {
       return this.$util.formatTime(this.playTime);
     },
@@ -309,6 +321,59 @@ var db = wx.cloud.database();var _default =
 
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive'])), {}, {
+    shareWX: function shareWX() {var _this2 = this;
+      uni.getStorage({
+        key: 'userInfo',
+        success: function success(res) {
+          uni.share({
+            provider: "weixin",
+            scene: "WXSceneSession",
+            type: 0,
+            href: "http://uniapp.dcloud.io/",
+            title: "uni-app分享",
+            summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+            imageUrl: "https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/d8590190-4f28-11eb-b680-7980c8a877b8.png",
+            success: function success(res) {
+              console.log("success:" + JSON.stringify(res));
+            },
+            fail: function fail(err) {
+              console.log("fail:" + JSON.stringify(err));
+            } });
+
+        }, fail: function fail(err) {
+          _this2.authority();
+        } });
+
+    },
+    openShare: function openShare() {var _this3 = this;
+      uni.getStorage({
+        key: 'userInfo',
+        success: function success(res) {
+          _this3.$refs.share.open('bottom');
+        }, fail: function fail(err) {
+          uni.getUserProfile({
+            desc: '用于完善资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+            success: function success(res) {
+              _this3.$refs.share.open('bottom');
+              var userInfo = {
+                nickName: res.userInfo.nickName,
+                avatarUrl: res.userInfo.avatarUrl };
+
+              uni.setStorage({
+                key: 'userInfo',
+                data: userInfo });
+
+            },
+            fail: function fail() {
+              uni.showToast({
+                title: "为了更好的功能体验,请先登录授权",
+                icon: "none" });
+
+            } });
+
+        } });
+
+    },
     opentList: function opentList() {
       this.$refs.popup.open('bottom');
     },
@@ -334,7 +399,7 @@ var db = wx.cloud.database();var _default =
       this.initPlay(this.audiolist[index].id);
     },
     //获取歌曲数据并开始播放
-    initPlay: function initPlay(id) {var _this2 = this;
+    initPlay: function initPlay(id) {var _this4 = this;
       _vue.default.prototype.cusPlay = this.onPlayFn;
       _vue.default.prototype.cusTimeUpdate = this.onTimeUpdateFn;
       _vue.default.prototype.cusEnded = this.onEndedFn;
@@ -346,7 +411,7 @@ var db = wx.cloud.database();var _default =
         // console.log(res[0])
         var surl = res[0].data[0].url;
         if (!surl) {
-          _this2.isCanPlay = false;
+          _this4.isCanPlay = false;
           setTimeout(function () {
             uni.showToast({
               icon: 'none',
@@ -357,11 +422,11 @@ var db = wx.cloud.database();var _default =
         }
         var sdetail = res[1].songs[0];
         // console.log(sdetail)
-        var singer = sdetail.ar[0].name;
-        _this2.lybot = '';
-        _this2.lycur = '';
-        _this2.lytop = '';
-        _this2.song = {
+        var singer = sdetail.ar.map(function (t) {
+          return t.name;
+        }).join('/');
+        _this4.lycur = '';
+        _this4.song = {
           id: id,
           url: surl,
           name: sdetail.name,
@@ -371,36 +436,37 @@ var db = wx.cloud.database();var _default =
         };
         // console.log(this.song)
         uni.setNavigationBarTitle({
-          title: _this2.song.name });
+          title: _this4.song.name });
 
-        _this2.setPlaydetail({
-          index: _this2.curPlayIndex,
+        _this4.setPlaydetail({
+          index: _this4.curPlayIndex,
           id: id,
           picUrl: sdetail.al.picUrl,
           desc: sdetail.name,
           time: Math.floor(sdetail.dt / 1000) // 播放时长
         });
-        _this2.$au_player.url = _this2.song.url;
-        _this2.$au_player.title = _this2.song.name;
-        _this2.$au_player.coverImgUrl = _this2.song.picUrl;
-        _this2.$au_player.singer = _this2.song.singer;
+        _this4.$au_player.url = _this4.song.url;
+        _this4.$au_player.title = _this4.song.name;
+        _this4.$au_player.coverImgUrl = _this4.song.picUrl;
+        _this4.$au_player.singer = _this4.song.singer;
         //h5
-        _this2.$au_player.autoplay = true;
+        _this4.$au_player.autoplay = true;
         //app
-        _this2.$au_player.src = _this2.song.url;
+        _this4.$au_player.src = _this4.song.url;
+
         var OldSong = {
           id: id,
           name: sdetail.name,
-          ar: sdetail.ar };
+          singer: singer };
 
         // console.log(OldSong)
-        _this2.saveSong(OldSong);
-        _this2.likeSong = OldSong;
+        _this4.saveSong(OldSong);
+        _this4.likeSong = OldSong;
         // console.log(this.likeSong)
 
       }).catch(function (e) {
         console.info(e);
-        _this2.setIsplayactive(false);
+        _this4.setIsplayactive(false);
       });
       //歌词可以 不用同步加载
       (0, _player.apiLyic)({
@@ -409,11 +475,11 @@ var db = wx.cloud.database();var _default =
         // console.log(res)
         if (res.uncollected) {
           console.log('暂未收录歌词');
-          _this2.lycur = '~暂未收录歌词~';
+          _this4.lycur = '~暂未收录歌词~';
           return;
         }
         if (res.nolyric) {
-          _this2.lycur = '~此歌曲为纯音乐，请欣赏~';
+          _this4.lycur = '~此歌曲为纯音乐，请欣赏~';
           return;
         }
         var lines = res.lrc.lyric.split('\n');
@@ -430,14 +496,9 @@ var db = wx.cloud.database();var _default =
             text: lines[k].replace(/^.+?\]/, '') });
 
         }
-        _this2.lyric = target;
+        _this4.lyric = target;
         // console.log(this.lyric)
       });
-      // .catch(err => {
-      // 	this.$au_player.play();
-      // 	// console.log('歌词加载失败', err)
-      // 	this.lycur = '~歌词加载失败~'
-      // })
       this.$forceUpdate();
     },
     //歌曲正在播放
@@ -457,14 +518,14 @@ var db = wx.cloud.database();var _default =
         for (var i = 0; i < lyric.length - 1; i++) {
           if (lyric[i] !== null && curtime - lyric[i].time < 0.15) {
             this.lyricIndex = i - 1;
-            if (this.lyricIndex > 6) {
+            if (this.lyricIndex > 2) {
+              this.lyIndex = this.lyricIndex - 2;
+            } else if (this.lyricIndex > 6) {
               this.ctrolIndex = this.lyricIndex - 6;
             } else {
+              this.lyIndex = 0;
               this.ctrolIndex = 0;
             }
-            if (i > 2) this.lytop = lyric[i - 2].text;
-            if (i > 1) this.lycur = lyric[i - 1].text ? lyric[i - 1].text : '~~~~~~~~';
-            if (i < lyric.length - 1) this.lybot = lyric[i].text;
             break;
           }
         }
@@ -504,8 +565,7 @@ var db = wx.cloud.database();var _default =
         } });
 
     },
-    //添加收藏
-    addLike: function addLike() {
+    like: function like() {
       this.isLike = true;
       var id = this.userId;
       var likeSong = this.likeSong;
@@ -542,6 +602,36 @@ var db = wx.cloud.database();var _default =
         } });
 
     },
+    //添加收藏
+    addLike: function addLike() {var _this5 = this;
+      uni.getStorage({
+        key: 'userInfo',
+        success: function success(res) {
+          _this5.like();
+        }, fail: function fail(err) {
+          uni.getUserProfile({
+            desc: '用于完善资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+            success: function success(res) {
+              _this5.like();
+              var userInfo = {
+                nickName: res.userInfo.nickName,
+                avatarUrl: res.userInfo.avatarUrl };
+
+              uni.setStorage({
+                key: 'userInfo',
+                data: userInfo });
+
+            },
+            fail: function fail() {
+              uni.showToast({
+                title: "为了更好的功能体验,请先登录授权",
+                icon: "none" });
+
+            } });
+
+        } });
+
+    },
     //取消收藏
     cancleLike: function cancleLike() {
       this.isLike = false;
@@ -571,19 +661,19 @@ var db = wx.cloud.database();var _default =
 
     },
     //判断歌曲是否收藏
-    judgeLike: function judgeLike(id) {var _this3 = this;
+    judgeLike: function judgeLike(id) {var _this6 = this;
       uni.getStorage({
         key: "userId",
         success: function success(res) {
           var _id = res.data;
-          _this3.userId = _id;
+          _this6.userId = _id;
           db.collection('userLike').doc(_id).get({
             success: function success(res) {
               console.log("成功：");
               var song = res.data.like_songs;
               song.forEach(function (item) {
                 if (item.id == id) {
-                  _this3.isLike = true;
+                  _this6.isLike = true;
                 }
               });
             } });

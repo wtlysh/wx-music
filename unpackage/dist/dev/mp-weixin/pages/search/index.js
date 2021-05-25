@@ -203,12 +203,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var _vuex = __webpack_require__(/*! vuex */ 8);
+
+
 var _search = __webpack_require__(/*! ../../api/search.js */ 50);
 
 
 
 
-var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var searchKeyword = function searchKeyword() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchKeyword */ "pages/search/components/searchKeyword").then((function () {return resolve(__webpack_require__(/*! ./components/searchKeyword.vue */ 150));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 157));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchsonglist = function searchsonglist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchsonglist */ "pages/search/components/searchsonglist").then((function () {return resolve(__webpack_require__(/*! ./components/searchsonglist.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchplaylist = function searchplaylist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchplaylist */ "pages/search/components/searchplaylist").then((function () {return resolve(__webpack_require__(/*! ./components/searchplaylist.vue */ 171));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var searchKeyword = function searchKeyword() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchKeyword */ "pages/search/components/searchKeyword").then((function () {return resolve(__webpack_require__(/*! ./components/searchKeyword.vue */ 157));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchsonglist = function searchsonglist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchsonglist */ "pages/search/components/searchsonglist").then((function () {return resolve(__webpack_require__(/*! ./components/searchsonglist.vue */ 171));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var searchplaylist = function searchplaylist() {__webpack_require__.e(/*! require.ensure | pages/search/components/searchplaylist */ "pages/search/components/searchplaylist").then((function () {return resolve(__webpack_require__(/*! ./components/searchplaylist.vue */ 178));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -243,13 +246,15 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
     searchsonglist: searchsonglist,
     searchplaylist: searchplaylist },
 
+  computed: _objectSpread({},
+  (0, _vuex.mapGetters)(['topHeight'])),
+
   created: function created() {var _this = this;
     this.loadDefaultKeyword();
     uni.getSystemInfo({
       success: function success(res) {
         var item = 750 / res.windowWidth;
-        _this.height = (res.statusBarHeight + 44) * item;
-        _this.swiperHeight = res.windowHeight * item - _this.height - 210;
+        _this.swiperHeight = res.windowHeight * item - _this.topHeight - 210;
       } });
 
   },
@@ -399,12 +404,14 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);f
                   (0, _search.apiSearch)(par_0), (0, _search.apiSearch)(par_1)]).
                   then(function (res) {
                     _this4.songList = res[0].result.songs.map(function (item) {
-                      var desc = item.artists.map(function (t) {
+                      var singer = item.artists.map(function (t) {
                         return t.name;
-                      }).join('/') + ' · ' + item.name;
+                      }).join('/');
+                      var desc = singer + ' · ' + item.name;
                       return _defineProperty({
                         id: item.id,
                         name: item.name,
+                        singer: singer,
                         desc: desc }, "desc",
                       desc);
 

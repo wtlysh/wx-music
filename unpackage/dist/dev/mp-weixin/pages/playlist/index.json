@@ -1,6 +1,4 @@
 {
-  "navigationBarTitleText": "推荐歌单",
-  "enablePullDownRefresh": false,
   "usingComponents": {
     "nav-bar": "/components/nav-bar/nav-bar",
     "uni-icons": "/components/uni-icons/uni-icons"

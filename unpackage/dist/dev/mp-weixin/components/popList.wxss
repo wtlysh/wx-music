@@ -90,4 +90,7 @@
   line-height: 100rpx;
   font-size: 32rpx;
 }
+.poplist-box .hover-close.data-v-593ad0b8 {
+  background: #f2f2f2;
+}
 

@@ -1,0 +1,100 @@
+page {
+	height: 100%;
+	background: $uni-bg-color-grey;
+}
+
+.list-con{
+	position: relative;
+}
+
+/* 是否播放 */
+.playing {
+	margin-bottom: 110rpx;
+}
+
+/* 文本溢出省略 */
+.ellipsis {
+	white-space: nowrap; //文本强制不换行；
+	text-overflow: ellipsis; //文本溢出显示省略号；
+	overflow: hidden; //溢出的部分隐藏
+}
+
+.ellipsis_2 {
+	display: -webkit-box; // 将对象作为弹性伸缩盒子模型显示
+	word-break: break-all;
+	-webkit-box-orient: vertical; // 设置或检索伸缩盒对象的子元素的排列方式
+	-webkit-line-clamp: 2; // 需要显示的行数
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* flex布局 */
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.flex-between {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.flex-align {
+	display: flex;
+	align-items: center;
+}
+
+// 宽度
+.box-width{
+	width: 90%;
+	margin: 0 auto;
+}
+
+/* 文字 */
+.title {
+	font-size: $uni-font-size-lg;
+	font-weight: bold;
+}
+
+.name {
+	font-size: $uni-font-size-base;
+	font-weight: bold;
+}
+
+.song-text {
+	font-size: $uni-font-size-sm;
+	color: $uni-text-color;
+}
+
+// 图片
+.img{
+	
+}
+
+/* 背景图模糊 */
+.bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	filter: blur(35px);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+    /* background-size: cover; */
+	background-size: 100%;
+}
+
+// 背景图
+.bg-img{
+	position: absolute;
+	left: 0;
+	width: 100%;
+	filter: blur(20px);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	/* background-size: cover; */
+	background-size: 100%;
+}

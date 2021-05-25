@@ -23,22 +23,34 @@
 						<uni-icons type="arrowright" color="#fff" size="50"></uni-icons>
 					</view>
 				</view>
-				<view class="lyric-opcity player-lyric" @click="toLyric">
-					<view class="ric ellipsis">{{lytop}}</view>
-					<view class="ric cur ellipsis">{{lycur}}</view>
-					<view class="ric ellipsis">{{lybot}}</view>
-				</view>
-				<view class="slider-bar flex-align">
-					<view class="time start">{{curPlayTimeNum}}</view>
-					<slider class="line" :value="curPlayTime" :min="0" :max="playTime" @change="sliderChange" block-size="15"
-					 backgroundColor="rgba(255,255,255,.5)" activeColor="rgba(255,255,255,.5)" />
-					<view class="time end">{{playTimeNum}}</view>
+				<view class="player-con-bot">
+					<view class="lyric-opcity player-lyric" @click="toLyric">
+						<scroll-view v-if="lyric.length>0" scroll-y="true" :scroll-into-view="'cur-' + lyIndex"
+							style="height: 100%;">
+							<view :class="['ric','ellipsis',index==lyricIndex?'cur':'']" :id="'cur-'+index"
+								style="height:60rpx" v-for="(item,index) in lyric" :key="index">
+								{{item.text}}
+							</view>
+						</scroll-view>
+						<view v-if="lyric.length<=0" class="nolyric ric cur flex-center">
+							{{lycur}}
+						</view>
+						<!-- <view class="ric ellipsis">{{lytop}}</view>
+						<view class="ric cur ellipsis">{{lycur}}</view>
+						<view class="ric ellipsis">{{lybot}}</view> -->
+					</view>
+					<view class="slider-bar flex-align">
+						<view class="time start">{{curPlayTimeNum}}</view>
+						<slider class="line" :value="curPlayTime" :min="0" :max="playTime" @change="sliderChange"
+							block-size="15" backgroundColor="rgba(255,255,255,.5)" activeColor="rgba(255,255,255,.5)" />
+						<view class="time end">{{playTimeNum}}</view>
+					</view>
 				</view>
 			</view>
 			<view v-show="isLyric" class="lyric-opcity all-lyric" :style="{height:(height-300) + 'rpx'}"
 				@click="toLyric">
 				<scroll-view v-if="lyric.length>0" scroll-y="true" :scroll-into-view="'view-' + ctrolIndex"
-				style="height: 100%;">
+					style="height: 100%;">
 					<view :class="['ric','ellipsis',index==lyricIndex?'cur':'']" :id="'view-'+index"
 						:style="{height:((height-300)/13) + 'rpx'}" v-for="(item,index) in lyric" :key="index">
 						{{item.text}}
@@ -48,7 +60,7 @@
 					{{lycur}}
 				</view>
 			</view>
-			<playBottom :isLike="isLike" @cancle="cancleLike" @confirm="addLike"></playBottom>
+			<playBottom :isLike="isLike" @cancle="cancleLike" @confirm="addLike" @open="openShare"></playBottom>
 			<view class="poplist-icon flex-align" @click="opentList">
 				<view style="display: flex;flex-wrap: wrap;justify-content: center;">
 					<uni-icons type="list" color="#6b6b6b" size="50"></uni-icons>
@@ -57,9 +69,10 @@
 			</view>
 		</view>
 		<uni-popup ref="popup" type="bottom">
-			<popList ref="child"
-			@close="closeList"
-			@play="initPlay"></popList>
+			<popList ref="child" @close="closeList" @play="initPlay"></popList>
+		</uni-popup>
+		<uni-popup type="share" ref="share">
+			<popupShare @select="shareWX"></popupShare>
 		</uni-popup>
 	</view>
 </template>
@@ -74,6 +87,7 @@
 		apiSongDetail,
 		apiLyic
 	} from '../../api/player.js'
+	import popupShare from '../../components/uni-popup/popupShare.vue'
 	import playBottom from './components/playBottom.vue'
 	import popList from '../../components/popList.vue'
 	import Vue from 'vue'
@@ -82,12 +96,13 @@
 	export default {
 		components: {
 			playBottom,
-			popList
+			popList,
+			popupShare
 		},
 		data() {
 			return {
-				color:'#fff',
-				bgColor:"",
+				color: '#fff',
+				bgColor: "",
 				song: {
 					id: '',
 					url: '',
@@ -97,23 +112,21 @@
 					picUrl: '',
 				},
 				isCanPlay: true, //资源是否有用
-				isPlay: true,//是否播放
+				isPlay: true, //是否播放
 				lyric: [], //歌词
-				lytop: '',
 				lycur: '',
-				lybot: '',
 				isLyric: false, //是否显示全部歌词
 				lyricIndex: 0, //定位当前歌词
-				ctrolIndex: 0, //控制高亮歌词
+				lyIndex: 0,    //显示部分时控制高亮歌词
+				ctrolIndex: 0, //全部显示时控制高亮歌词
 				curPlayIndex: 0, //当前播放歌曲在list内的索引
 				playTime: 0,
-				curPlayTime: 0 ,
+				curPlayTime: 0,
 				height: 0, //内容高度
-				leftIcon:'back',
+				leftIcon: 'back',
 				likeSong: {}, //收藏歌曲
 				isLike: false, //是否收藏
 				userId: "", //用户收藏id
-				windowHeight: 0
 			}
 		},
 		onLoad(param) {
@@ -122,23 +135,22 @@
 			}
 			uni.getSystemInfo({
 				success: (res) => {
-					this.height = res.windowHeight- res.statusBarHeight - 40;
-					this.windowHeight = res.windowHeight;
-					this.height = (this.height * (750 / res.windowWidth)); //将高度乘以换算后的该设备的rpx与px的比例
+					this.height = (res.windowHeight * (750 / res.windowWidth) - this
+					.topHeight); //将高度乘以换算后的该设备的rpx与px的比例
 				}
 			});
 			let id = param.songId;
 			this.curPlayIndex = Number(param.index);
 			this.initPlay(id);
 			this.judgeLike(id);
-			if(param.list){
+			if (param.list) {
 				const list = JSON.parse(decodeURIComponent(param.list));
 				this.setAudiolist(list);
+				// console.log(list)
 			}
-			// console.log(this.playdetail)
 		},
 		computed: {
-			...mapGetters(['playdetail','audiolist','isplayingmusic']),
+			...mapGetters(['topHeight', 'playdetail', 'audiolist', 'isplayingmusic']),
 			playTimeNum() {
 				return this.$util.formatTime(this.playTime)
 			},
@@ -148,10 +160,63 @@
 		},
 		methods: {
 			...mapMutations(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
-			opentList(){
+			shareWX(){
+				uni.getStorage({
+					key: 'userInfo',
+					success:res=>{
+						uni.share({
+						    provider: "weixin",
+						    scene: "WXSceneSession",
+						    type: 0,
+						    href: "http://uniapp.dcloud.io/",
+						    title: "uni-app分享",
+						    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+						    imageUrl: "https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/d8590190-4f28-11eb-b680-7980c8a877b8.png",
+						    success: function (res) {
+						        console.log("success:" + JSON.stringify(res));
+						    },
+						    fail: function (err) {
+						        console.log("fail:" + JSON.stringify(err));
+						    }
+						});
+					},fail:err=>{
+						this.authority();
+					}
+				})
+			},
+			openShare(){
+				uni.getStorage({
+					key: 'userInfo',
+					success:res=>{
+						this.$refs.share.open('bottom');
+					},fail:err=>{
+						uni.getUserProfile({
+							desc: '用于完善资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+							success: (res) => {
+								this.$refs.share.open('bottom');
+								let userInfo = {
+									nickName:res.userInfo.nickName,
+									avatarUrl:res.userInfo.avatarUrl
+								};
+								uni.setStorage({
+									key: 'userInfo',
+									data: userInfo
+								});
+							},
+							fail: () => {
+								uni.showToast({
+									title: "为了更好的功能体验,请先登录授权",
+									icon: "none"
+								})
+							}
+						})
+					}
+				})
+			},
+			opentList() {
 				this.$refs.popup.open('bottom');
 			},
-			closeList(){
+			closeList() {
 				this.$refs.popup.close();
 			},
 			//进度条
@@ -196,10 +261,10 @@
 					}
 					const sdetail = res[1].songs[0];
 					// console.log(sdetail)
-					const singer = sdetail.ar[0].name;
-					this.lybot = '';
+					const singer = sdetail.ar.map(t => {
+						return t.name
+					}).join('/');
 					this.lycur = '';
-					this.lytop = '';
 					this.song = {
 						id,
 						url: surl,
@@ -213,7 +278,7 @@
 						title: this.song.name
 					})
 					this.setPlaydetail({
-						index:this.curPlayIndex,
+						index: this.curPlayIndex,
 						id,
 						picUrl: sdetail.al.picUrl,
 						desc: sdetail.name,
@@ -227,10 +292,11 @@
 					this.$au_player.autoplay = true;
 					//app
 					this.$au_player.src = this.song.url;
+					
 					let OldSong = {
 						id,
 						name: sdetail.name,
-						ar: sdetail.ar,
+						singer: singer,
 					}
 					// console.log(OldSong)
 					this.saveSong(OldSong);
@@ -272,11 +338,6 @@
 					this.lyric = target;
 					// console.log(this.lyric)
 				})
-				// .catch(err => {
-				// 	this.$au_player.play();
-				// 	// console.log('歌词加载失败', err)
-				// 	this.lycur = '~歌词加载失败~'
-				// })
 				this.$forceUpdate();
 			},
 			//歌曲正在播放
@@ -296,14 +357,14 @@
 					for (let i = 0; i < lyric.length - 1; i++) {
 						if (lyric[i] !== null && curtime - lyric[i].time < 0.15) {
 							this.lyricIndex = i - 1;
-							if (this.lyricIndex > 6) {
+							if (this.lyricIndex > 2) {
+								this.lyIndex = this.lyricIndex - 2;
+							} else if(this.lyricIndex > 6){
 								this.ctrolIndex = this.lyricIndex - 6;
-							} else {
+							}else{
+								this.lyIndex = 0;
 								this.ctrolIndex = 0;
 							}
-							if (i > 2) this.lytop = lyric[i - 2].text;
-							if (i > 1) this.lycur = lyric[i - 1].text ? lyric[i - 1].text : '~~~~~~~~';
-							if (i < lyric.length - 1) this.lybot = lyric[i].text;
 							break;
 						}
 					}
@@ -343,8 +404,7 @@
 					}
 				})
 			},
-			//添加收藏
-			addLike() {
+			like(){
 				this.isLike = true;
 				let id = this.userId;
 				let likeSong = this.likeSong;
@@ -378,6 +438,36 @@
 								// console.log(res)
 							}
 						})
+					}
+				})
+			},
+			//添加收藏
+			addLike() {
+				uni.getStorage({
+					key: 'userInfo',
+					success:res=>{
+						this.like();
+					},fail:err=>{
+					   uni.getUserProfile({
+					   	desc: '用于完善资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+					   	success: (res) => {
+							this.like();
+					   		let userInfo = {
+					   			nickName:res.userInfo.nickName,
+					   			avatarUrl:res.userInfo.avatarUrl
+					   		};
+					   		uni.setStorage({
+					   			key: 'userInfo',
+					   			data: userInfo
+					   		});
+					   	},
+					   	fail: () => {
+					   		uni.showToast({
+					   			title: "为了更好的功能体验,请先登录授权",
+					   			icon: "none"
+					   		})
+					   	}
+					   })
 					}
 				})
 			},
@@ -453,9 +543,9 @@
 <style lang='scss' scoped>
 	.song-player {
 		height: 100%;
-		overflow:hidden;
+		overflow: hidden;
 		position: relative;
-	
+
 		.player-bgimg {
 			position: absolute;
 			width: 100%;
@@ -473,7 +563,7 @@
 
 			.poplist-icon {
 				position: fixed;
-				bottom: 450rpx;
+				bottom: 650rpx;
 				right: 60rpx;
 				height: 60px;
 				width: 30px;
@@ -508,22 +598,24 @@
 					}
 				}
 			}
-            
-			.play-ctrol{
+
+			.play-ctrol {
 				position: relative;
 				top: 250rpx;
 				height: 100rpx;
 				width: 90%;
 				margin: 0 auto;
-				
-				.flex-item{
+
+				.flex-item {
 					width: 50rpx;
 					height: 100%;
 				}
+
 				.isplay {
 					width: 450rpx;
 					height: 100%;
 					margin: 0 auto;
+
 					.isplay-bg {
 						position: absolute;
 						width: 100rpx;
@@ -533,16 +625,17 @@
 						border-radius: $uni-border-radius-circle;
 						z-index: 1;
 					}
-				
+
 					.isplay-img {
 						width: 50rpx;
 						height: 50rpx;
 						z-index: 100;
 					}
-				
+
 				}
-				
+
 			}
+
 			.lyric-opcity {
 				-webkit-mask-image: linear-gradient(to bottom,
 						rgba(255, 255, 255, 0) 0,
@@ -553,53 +646,55 @@
 						rgba(255, 255, 255, 0) 100%);
 			}
 
-			.player-lyric {
-				position: relative;
-				top: 500rpx;
+			.player-con-bot {
+				position: fixed;
+				bottom: 20%;
 				width: 100%;
-				height: 180rpx;
-			}
-			.slider-bar {
-				/* bottom: 160rpx; */
-				position: relative;
-				top: 600rpx;
-				width: 90%;
-				margin: 0 auto;
-				color: $uni-bg-color;
-			
-				.line {
-					flex: 1;
-				}
-			
-				.time {
-					height: 28rpx;
-					line-height: 28rpx;
-					font-size: $uni-font-size-sm;
-					min-width: 66rpx;
-				}
-			
-				.line {
-					margin: $uni-spacing-col-base $uni-spacing-row-base;
-				}
-			
-				.start {
-					margin-left: $uni-spacing-row-lg;
-				}
-			
-				.end {
-					margin-right: $uni-spacing-row-lg;
-				}
-			}
-			
 
-			.all-lyric {
-				width: 100%;
-				margin-top: 70rpx;
-
+				.player-lyric {
+					width: 100%;
+					height: 240rpx;
+					margin-bottom: 50rpx;
+				}
+				
 				.nolyric {
 					height: 100%;
 					width: 100%;
 				}
+
+				.slider-bar {
+					width: 90%;
+					margin: 0 auto;
+					color: $uni-bg-color;
+
+					.line {
+						flex: 1;
+					}
+
+					.time {
+						height: 28rpx;
+						line-height: 28rpx;
+						font-size: $uni-font-size-sm;
+						min-width: 66rpx;
+					}
+
+					.line {
+						margin: $uni-spacing-col-base $uni-spacing-row-base;
+					}
+
+					.start {
+						margin-left: $uni-spacing-row-lg;
+					}
+
+					.end {
+						margin-right: $uni-spacing-row-lg;
+					}
+				}
+			}
+
+			.all-lyric {
+				width: 100%;
+				margin-top: 70rpx;
 			}
 
 			.ric {

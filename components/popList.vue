@@ -27,8 +27,8 @@
 					<view class="item-name ellipsis">
 						{{item.name}}
 					</view>
-					<view class="num song-text text-color">
-						{{item.ar[0].name}}
+					<view class="num song-text text-color ellipsis">
+						{{item.singer}}
 					</view>
 				</view>
 				<view style="width: 90rpx;">
@@ -37,7 +37,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="poplist-close" @tap.stop="closeList">
+		<view class="poplist-close" hover-class="hover-close" @tap.stop="closeList">
 			关闭
 		</view>
 	</view>
@@ -187,7 +187,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../static/scss/songList.scss";
+	@import "../style/scss/songList.scss";
 	.poplist-box {
 		display: block;
 		height: 800rpx;
@@ -222,6 +222,9 @@
 			text-align: center;
 			line-height: 100rpx;
 			font-size: $uni-font-size-base;
+		}
+		.hover-close{
+			background: $uni-bg-color-hover;
 		}
 	}
 </style>

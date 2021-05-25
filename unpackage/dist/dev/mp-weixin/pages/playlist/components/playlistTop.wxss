@@ -25,13 +25,13 @@
 /* 透明度 */
 /* 文章场景相关 */
 .playlist-top.data-v-a2131ec4 {
-  height: 400rpx;
-  padding-top: 20rpx;
-  background: #fff;
+  padding-top: 40rpx;
   width: 100%;
+  position: fixed;
+  z-index: 100;
+  background: #fff;
 }
 .playlist-top .playlist-con.data-v-a2131ec4 {
-  position: absolute;
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -39,8 +39,6 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
-  padding-top: 46rpx;
-  z-index: 10;
 }
 .playlist-top .playlist-con .playlist-detail-con.data-v-a2131ec4 {
   display: -webkit-box;
@@ -63,16 +61,6 @@
   -webkit-align-items: center;
           align-items: center;
   margin: 10rpx 0 20rpx 0;
-  height: 55rpx;
-}
-.playlist-top .playlist-con .playlist-detail-con .playlist-description.data-v-a2131ec4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  height: 35rpx;
-}
-.playlist-top .playlist-con .playlist-detail-con .playlist-description .playlist-desc-txt.data-v-a2131ec4 {
-  font-size: 28rpx;
-  width: 400rpx;
+  height: 100rpx;
 }
 

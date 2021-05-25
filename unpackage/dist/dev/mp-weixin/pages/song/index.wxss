@@ -25,15 +25,18 @@
 /* 透明度 */
 /* 文章场景相关 */
 .songlist .songlist-top.data-v-57e4cc91 {
-  height: 400rpx;
-  padding-top: 20rpx;
-  background: #fff;
-  position: relative;
+  background: -webkit-linear-gradient(top, #7A88FF, #7AFFAF);
+  background: linear-gradient(to bottom, #7A88FF, #7AFFAF);
+  position: fixed;
+  z-index: 100;
 }
-.songlist .songlist-top .songlist-img.data-v-57e4cc91 {
-  position: absolute;
-  top: 0;
-  height: 450rpx;
-  width: 750rpx;
+.songlist .songlist-top .newsong-title.data-v-57e4cc91 {
+  margin: 50rpx 0;
+  height: 100rpx;
+  width: 200rpx;
+  color: #fff;
+  font-size: 50rpx;
+  font-weight: bold;
+  border-radius: 100rpx;
 }
 

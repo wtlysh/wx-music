@@ -24,8 +24,29 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.me .me-swiper-item.data-v-373b9194 {
-  background-color: #fff;
+.me.data-v-373b9194 {
+  height: 100%;
+}
+.me .user-authority.data-v-373b9194 {
+  width: 100%;
+  text-align: center;
+}
+.me .user-authority .authority-text.data-v-373b9194 {
+  font-size: 28rpx;
+  color: #8a8a8a;
+  margin: 30rpx;
+}
+.me .user-authority .authority-btn.data-v-373b9194 {
+  width: 50%;
+  background: #1E90FF;
+  height: 80rpx;
+  font-size: 36rpx;
+  line-height: 80rpx;
+}
+.me .no-record.data-v-373b9194 {
+  height: 100%;
+  color: #6b6b6b;
+  font-size: 32rpx;
 }
 .me .delete-fab.data-v-373b9194 {
   position: fixed;

@@ -3,17 +3,20 @@
 	<view class="hotsong">
 		<songTop :title="title" @child="toSongList"></songTop>
 		<view class="flex-between">
-			<scroll-view @touchstart="start" @touchend="end" scroll-x="true" scroll-with-animation="true" :scroll-into-view="'card_'+cardIndex">
+			<scroll-view @touchstart="start" @touchend="end" 
+			scroll-x="true" 
+			scroll-with-animation="true" 
+			:scroll-into-view="'card_'+cardIndex">
 				<view class="hotsong-list">
 					<view :id="'card_'+index" class="hotsong-li" v-for="(list,index) in songs" :key="index">
-						<view class="hotsong-item flex-align" @click="toSong(item)" v-for="item in list" :key="item.id">
-							<image class="hotsong-img" :src="item.al.picUrl" mode=""></image>
+						<view class="hotsong-item flex-align" @click="toSong(list,item.id,i)" v-for="(item,i) in list" :key="item.id">
+							<image class="hotsong-img" :src="item.picUrl" mode=""></image>
 							<view style="padding-left: 20rpx;">
 								<view class="name" style="padding-bottom:10rpx;">
 									{{item.name}}
 								</view>
 								<view class="song-text">
-									{{item.ar[0].name}}-{{item.name}}
+									{{item.desc}}
 								</view>
 							</view>
 						</view>
@@ -55,17 +58,16 @@
 					}
 					this.cardIndex--;
 				} else if (subX < -10) {
-					if(this.cardIndex==2){
+					if(this.cardIndex==1){
 						return ;
 					}
 					this.cardIndex++;
 				}
 			},
 			//跳转到歌曲播放页面
-			toSong(item) {
-				let list = [item];
+			toSong(list,id,index) {
 				uni.navigateTo({
-					url: '/pages/song/player?songId=' + item.id + '&index=0' + '&list=' + encodeURIComponent(JSON
+					url: '/pages/song/player?songId=' + id + '&index='+index + '&list=' + encodeURIComponent(JSON
 						.stringify(list))
 				})
 
@@ -85,7 +87,7 @@
 		margin-bottom: $uni-spacing-col-lg;
 
 		.hotsong-list {
-			width: 2025rpx;
+			width: 1350rpx;
 			height: 450rpx;
 			display: flex;
 			padding-right: 75rpx;

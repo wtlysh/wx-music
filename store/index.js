@@ -7,6 +7,7 @@ const state = {
 	isplayactive:false,
 	playdetail:'',
 	audiolist:[],
+	topHeight: 0,
 }
 const getters = {
 	isplayingmusic(state) {
@@ -20,6 +21,9 @@ const getters = {
 	},
 	audiolist(state) {
 		return state.audiolist
+	},
+	topHeight(state){
+		return state.topHeight
 	}
 }
 const mutations = {
@@ -34,6 +38,9 @@ const mutations = {
 	},
 	setAudiolist(state, param) {
 		state.audiolist = param
+	},
+	setTopHeight(state, param){
+		state.topHeight = param
 	}
 }
 const actions = {

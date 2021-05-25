@@ -30,7 +30,7 @@
 			@search="doSearch"></searchKeyword>
 		<!-- 搜索结果 -->
 		<view v-show="isShowSongList">
-			<typeTab class="search-tab" :style="{top:(height+110)+'rpx'}" :tab="tab" :isActive="isActive" @tab="switchNav"></typeTab>
+			<typeTab class="search-tab" :style="{top:(topHeight+110)+'rpx'}" :tab="tab" :isActive="isActive" @tab="switchNav"></typeTab>
 			<swiper class="search-list" :current="isActive" @change="handleChange" :style="{height:swiperHeight+'rpx'}">
 				<swiper-item>
 					<searchsonglist :height="swiperHeight" class="search-songlist" :songList="songList"></searchsonglist>
@@ -45,6 +45,9 @@
 </template>
 
 <script>
+	import {
+		mapGetters
+	} from 'vuex'
 	import {
 		apiSerchSuggest,
 		apiSearchDefault,
@@ -85,13 +88,15 @@
 			searchsonglist,
 			searchplaylist
 		},
+		computed:{
+			...mapGetters(['topHeight'])
+		},
 		created() {
 			this.loadDefaultKeyword();
 			uni.getSystemInfo({
 				success: (res) => {
 					let item = (750 / res.windowWidth);
-					this.height = ((res.statusBarHeight + 44) * item);
-					this.swiperHeight = ((res.windowHeight * item)-this.height - 210);
+					this.swiperHeight = ((res.windowHeight * item)-this.topHeight - 210);
 				}
 			});
 		},
@@ -241,12 +246,14 @@
 					apiSearch(par_0), apiSearch(par_1)
 				]).then(res => {
 					this.songList = res[0].result.songs.map(item => {
-						let desc = item.artists.map(t => {
+						let singer = item.artists.map(t => {
 							return t.name
-						}).join('/') + ' · ' + item.name;
+						}).join('/');
+						let desc = singer + ' · ' + item.name;
 						return {
 							id: item.id,
 							name: item.name,
+							singer:singer,
 							desc: desc,
 							desc
 						}

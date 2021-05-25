@@ -3,36 +3,15 @@
 		{
 			"path": "pages/index/index"
 		},{
-		    "path" : "pages/playlist/index",
-		   "style" :
-		   {
-		       "navigationBarTitleText": "推荐歌单",
-		       "enablePullDownRefresh": false
-		   }  
+		    "path" : "pages/playlist/index" 
 		},{
-		    "path" : "pages/playlist/playlistDetail",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "歌单详情",
-		        "enablePullDownRefresh": false
-		    }
-		    
+		    "path" : "pages/playlist/playlistDetail"
 		},{
 		    "path" : "pages/search/index"
 		},{
-		    "path" : "pages/song/index",
-			"style" :
-			{
-			    "navigationBarTitleText": "新歌榜"
-			}    
+		    "path" : "pages/song/index"   
 		},{
-		    "path" : "pages/song/songList",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "音乐推荐",
-		        "enablePullDownRefresh": false
-		    }
-		    
+		    "path" : "pages/song/songList"
 		},{
 			"path":"pages/song/player"
 		},{

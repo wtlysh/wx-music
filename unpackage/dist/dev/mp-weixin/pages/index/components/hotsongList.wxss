@@ -28,7 +28,7 @@
   margin-bottom: 30rpx;
 }
 .hotsong .hotsong-list.data-v-8edca806 {
-  width: 2025rpx;
+  width: 1350rpx;
   height: 450rpx;
   display: -webkit-box;
   display: -webkit-flex;

@@ -137,7 +137,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var StatusBar = function StatusBar() {__webpack_require__.e(/*! require.ensure | components/nav-bar/status-bar */ "components/nav-bar/status-bar").then((function () {return resolve(__webpack_require__(/*! ./status-bar.vue */ 199));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var StatusBar = function StatusBar() {__webpack_require__.e(/*! require.ensure | components/nav-bar/status-bar */ "components/nav-bar/status-bar").then((function () {return resolve(__webpack_require__(/*! ./status-bar.vue */ 213));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 

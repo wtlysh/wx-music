@@ -53,29 +53,11 @@
 .item-con .text-color.data-v-4c5cbf36 {
   color: #6b6b6b;
 }
-.playlist-list-con.data-v-4c5cbf36 {
-  background: #FFFFFF;
-  position: relative;
-}
-.playlist-list-con .playlist-list-top.data-v-4c5cbf36 {
-  z-index: 1000;
-  background: #fff;
-  width: 675rpx;
-  height: 70rpx;
-  padding: 0 37.5rpx;
-  border-top-left-radius: 50rpx;
-  border-bottom: 1px solid #f2f2f2;
-}
-.playlist-list-con .playlist-list-top .top-con.data-v-4c5cbf36 {
-  height: 100%;
-}
-.playlist-list-con .playlist-list-top .top-con .play-all.data-v-4c5cbf36 {
-  text-align: right;
-  font-size: 32rpx;
-}
 .playlist-list-con .playlist-list.data-v-4c5cbf36 {
   position: relative;
-  top: 20rpx;
+}
+.playlist-list-con .playlist-list .first.data-v-4c5cbf36 {
+  padding-top: 40rpx;
 }
 .playlist-list-con .playlist-list .popup-list.data-v-4c5cbf36 {
   width: 600rpx;

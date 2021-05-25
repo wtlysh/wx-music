@@ -1,26 +1,57 @@
 <!-- 个人中心页面 -->
 <template>
 	<view class="me">
-		<nav-bar :title="title" :showIcon="false"></nav-bar>
-		<meTop :bg="bg"></meTop>
-		<typeTab style="position: relative;background: #fff;" :tab="tab" :isActive="isActive" @tab="switchNav">
-		</typeTab>
-		<view v-show="isActive==0">
-			<plylistCon class="his_list" :height="(swiperHeight-70)" :tracks="hisTracks" :isShowDelete="true"
-				@delete="deleteSong">
-			</plylistCon>
-			<view class="delete-fab" v-if="hisTracks.length>0 && isActive==0" @click="deleteAll">
-				<uni-icons type="trash-filled" color="#fff" size="50"></uni-icons>
+		<view v-if="!hasUserInfo" class="flex-center" style="height: 100%;">
+			<view class="user-authority">
+				<view class="authority-logo">
+					音乐
+				</view>
+				<view class="authority-text">
+					<text>登录后可以访问音乐</text>
+				</view>
+				<button class="authority-btn"
+				type="primary" lang="zh_CN" withCredentials="true"
+					@click.stop="authority">微信授权登录</button>
 			</view>
 		</view>
-		<plylistCon v-show="isActive==1" class="like_list" :height="(swiperHeight-70)" :tracks="likeTracks" :isShowCancel="true"
-			@cancel="cancelLike">
-		</plylistCon>
-		<playing-box></playing-box>
+		<view v-if="hasUserInfo">
+			<nav-bar :color="color"  :backgroundColor="bgColor" :showIcon="false"></nav-bar>
+			<meTop :bg="bg" :userInfo="userInfo"></meTop>
+			<typeTab style="position: relative;" :isWhite="true" :tab="tab" :isActive="isActive" @tab="switchNav">
+			</typeTab>
+			<swiper :current="isActive" @change="handleChange" :style="{height:swiperHeight+'rpx'}">
+				<swiper-item>
+					<view v-if="hisTracks.length>0" v-show="isActive==0">
+						<plylistCon class="his_list" :height="(swiperHeight)" :tracks="hisTracks" :isShowDelete="true"
+							@delete="deleteSong">
+						</plylistCon>
+						<view class="delete-fab" v-if="hisTracks.length>0 && isActive==0" @click="deleteAll">
+							<uni-icons type="trash-filled" color="#fff" size="50"></uni-icons>
+						</view>
+					</view>
+					<view v-if="hisTracks.length==0" class="flex-center no-record">
+						没有播放记录哟，快去听歌吧
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<plylistCon v-if="likeTracks.length>0" v-show="isActive==1" class="like_list" 
+					     :height="(swiperHeight)" :tracks="likeTracks" :isShowCancel="true"
+						@cancel="cancelLike">
+					</plylistCon>
+					<view v-if="likeTracks.length==0" class="flex-center no-record">
+						没有收藏歌曲哟，快去听歌吧
+					</view>
+				</swiper-item>
+			</swiper>
+			<playing-box></playing-box>
+		</view>
 	</view>
 </template>
 
 <script>
+	import {
+		mapGetters
+	} from 'vuex'
 	import meTop from './components/meTop.vue'
 	import typeTab from '../../components/typeTab.vue'
 	import plylistCon from '../../components/playlistCon.vue'
@@ -34,20 +65,73 @@
 		},
 		data() {
 			return {
-				title: "音乐",
-				bg: 'http://p4.music.126.net/NDdtSac66rpsF_jMBh1JMQ==/109951164929306650.jpg',
+				color:"#fff",
+				bgColor:'transparent',
 				isActive: 0,
 				tab: ['最近', '喜欢'],
 				hisTracks: [],
 				top: 420,
 				likeTracks: [],
 				userId: "",
+				swiperHeight:0,
+				userInfo:{
+					nickName:"",
+					avatarUrl:""
+				},
+				hasUserInfo:true
 			}
 		},
 		onShow() {
 			this.getData();
 		},
+		created() {
+			uni.getSystemInfo({
+				success: (res) => {
+					let item = (750 / res.windowWidth);
+					this.swiperHeight = ((res.windowHeight * item)-this.topHeight - 420);
+				}
+			});
+			uni.getStorage({
+				key: 'userInfo',
+				success:res=>{
+					this.userInfo = res.data;
+				},fail:err=>{
+					this.hasUserInfo = false;
+				}
+			})
+		},
+		computed:{
+			...mapGetters(['topHeight'])
+		},
 		methods: {
+			/*获取用户信息*/
+			authority() {
+				uni.getUserProfile({
+					desc: '用于完善资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+					success: (res) => {
+						this.userInfo = {
+							nickName:res.userInfo.nickName,
+							avatarUrl:res.userInfo.avatarUrl
+						};
+						// console.log(this.userInfo)
+						uni.setStorage({
+							key: 'userInfo',
+							data: this.userInfo
+						});
+						this.hasUserInfo = true; // 隐藏授权按钮
+					},
+					fail: () => {
+						uni.showToast({
+							title: "为了更好的功能体验,请先登录授权",
+							icon: "none"
+						})
+					}
+				})
+			},
+			handleChange(e) {
+				let vm = this;
+				vm.isActive = e.mp.detail.current;
+			},
 			switchNav(index) {
 				this.isActive = index;
 			},
@@ -128,8 +212,27 @@
 
 <style lang="scss" scoped>
 	.me {
-		.me-swiper-item {
-			background-color: $uni-bg-color;
+		height: 100%;
+		.user-authority{
+			width: 100%;
+			text-align: center;
+			.authority-text{
+				font-size: 28rpx;
+				color: #8a8a8a;
+				margin: 30rpx;
+			}
+			.authority-btn{
+				width: 50%;
+				background: #1E90FF;
+				height: 80rpx;
+				font-size: 36rpx;
+				line-height: 80rpx;
+			}
+		}
+		.no-record{
+			height: 100%;
+			color: $uni-text-color;
+			font-size: $uni-font-size-base;
 		}
 
 		.delete-fab {

@@ -3,8 +3,8 @@
 	<view class="me-top">
 		<view class="bg" :style="'background-image:url(' + bg + ')'"></view>
 		<view class="me-top-con">
-			<image class="me-avatar" :src="bg"></image>
-			<text space="true" class="me-name title">wtlysh</text>
+			<image class="me-avatar" :src="userInfo.avatarUrl"></image>
+			<text space="true" class="me-name title">{{userInfo.nickName}}</text>
 		</view>
 	</view>
 </template>
@@ -12,9 +12,14 @@
 <script>
 	export default{
 		props:{
-			bg:{
-				type:String,
-				default:''
+			userInfo:{
+				type:Object,
+				default:{}
+			}
+		},
+		data(){
+			return{
+				bg: 'http://p4.music.126.net/NDdtSac66rpsF_jMBh1JMQ==/109951164929306650.jpg',
 			}
 		}
 	}

@@ -161,7 +161,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 20));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 20));
 
 
 
@@ -181,11 +181,12 @@ var _numberFormat = __webpack_require__(/*! ../../utils/numberFormat.js */ 23);
 
 
 
-var _index = __webpack_require__(/*! ../../api/index.js */ 24);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var Search = function Search() {__webpack_require__.e(/*! require.ensure | pages/index/components/search */ "pages/index/components/search").then((function () {return resolve(__webpack_require__(/*! ./components/search.vue */ 108));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hotsongList = function hotsongList() {__webpack_require__.e(/*! require.ensure | pages/index/components/hotsongList */ "pages/index/components/hotsongList").then((function () {return resolve(__webpack_require__(/*! ./components/hotsongList.vue */ 115));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var newsongList = function newsongList() {__webpack_require__.e(/*! require.ensure | pages/index/components/newsongList */ "pages/index/components/newsongList").then((function () {return resolve(__webpack_require__(/*! ./components/newsongList.vue */ 122));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var playlist = function playlist() {__webpack_require__.e(/*! require.ensure | pages/index/components/playlist */ "pages/index/components/playlist").then((function () {return resolve(__webpack_require__(/*! ./components/playlist.vue */ 129));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _index = __webpack_require__(/*! ../../api/index.js */ 24);
 
 
 
 
+var _vuex = __webpack_require__(/*! vuex */ 8);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var Search = function Search() {__webpack_require__.e(/*! require.ensure | pages/index/components/search */ "pages/index/components/search").then((function () {return resolve(__webpack_require__(/*! ./components/search.vue */ 115));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hotsongList = function hotsongList() {__webpack_require__.e(/*! require.ensure | pages/index/components/hotsongList */ "pages/index/components/hotsongList").then((function () {return resolve(__webpack_require__(/*! ./components/hotsongList.vue */ 122));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var newsongList = function newsongList() {__webpack_require__.e(/*! require.ensure | pages/index/components/newsongList */ "pages/index/components/newsongList").then((function () {return resolve(__webpack_require__(/*! ./components/newsongList.vue */ 129));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var playlist = function playlist() {__webpack_require__.e(/*! require.ensure | pages/index/components/playlist */ "pages/index/components/playlist").then((function () {return resolve(__webpack_require__(/*! ./components/playlist.vue */ 136));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     Search: Search,
@@ -195,7 +196,6 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 24);function _interop
 
   data: function data() {
     return {
-      title: "音乐",
       hotId: "2250011882", //热门榜单ID
       Hotsongs: [],
       newId: "3779629",
@@ -203,12 +203,21 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 24);function _interop
       playlist: [] };
 
   },
-  created: function created() {
+  created: function created() {var _this = this;
     this.getData(this.hotId, this.newId);
+    uni.getSystemInfo({
+      success: function success(res) {
+        var item = 750 / res.windowWidth;
+        var height = (res.statusBarHeight + 44) * item;
+        _this.setTopHeight(height);
+        // console.log(height)
+      } });
+
   },
-  methods: {
+  methods: _objectSpread(_objectSpread({},
+  (0, _vuex.mapMutations)(['setTopHeight'])), {}, {
     //获取首页所有数据
-    getData: function getData(id, _id) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+    getData: function getData(id, _id) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
                   Promise.all([(0, _index.getMuListDetail)({
                     id: id }),
                   (0, _index.getMuListDetail)({
@@ -216,13 +225,36 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 24);function _interop
                   (0, _index.getMuList)({
                     limit: 6 })]).
                   then(function (res) {
-                    // console.log(res);
-                    var list = res[0].playlist.tracks;
-                    for (var i = 0; i < 3; i++) {
-                      _this.Hotsongs[i] = list.slice(i * 3, (i + 1) * 3);
+                    // console.log(res[1].playlist.tracks);
+                    var list = res[0].playlist.tracks.slice(0, 6).map(function (item) {
+                      var singer = item.ar.map(function (t) {
+                        return t.name;
+                      }).join('/');
+                      var desc = singer + '-' + item.name;
+                      return _defineProperty({
+                        id: item.id,
+                        name: item.name,
+                        singer: singer,
+                        picUrl: item.al.picUrl,
+                        desc: desc }, "desc",
+                      desc);
+
+                    });
+                    for (var i = 0; i < 2; i++) {
+                      _this2.Hotsongs[i] = list.slice(i * 3, (i + 1) * 3);
                     }
-                    _this.Newsongs = res[1].playlist.tracks.slice(0, 6);
-                    _this.playlist = res[2].playlists.map(function (item) {
+                    _this2.Newsongs = res[1].playlist.tracks.slice(0, 6).map(function (item) {
+                      var singer = item.ar.map(function (t) {
+                        return t.name;
+                      }).join('/');
+                      return {
+                        id: item.id,
+                        name: item.name,
+                        singer: singer,
+                        picUrl: item.al.picUrl };
+
+                    });
+                    _this2.playlist = res[2].playlists.map(function (item) {
                       var desc = (0, _numberFormat.numberFormat)(item.playCount);
                       return {
                         id: item.id,
@@ -233,8 +265,9 @@ var _index = __webpack_require__(/*! ../../api/index.js */ 24);function _interop
                     });
                   }));case 2:
                 //数据强制更新
-                _this.$forceUpdate();case 3:case "end":return _context.stop();}}}, _callee);}))();
-    } } };exports.default = _default;
+                _this2.$forceUpdate();case 3:case "end":return _context.stop();}}}, _callee);}))();
+    } }) };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 20 */,

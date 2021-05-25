@@ -156,7 +156,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var meTop = function meTop() {__webpack_require__.e(/*! require.ensure | pages/me/components/meTop */ "pages/me/components/meTop").then((function () {return resolve(__webpack_require__(/*! ./components/meTop.vue */ 192));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 157));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var plylistCon = function plylistCon() {Promise.all(/*! require.ensure | components/playlistCon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/playlistCon")]).then((function () {return resolve(__webpack_require__(/*! ../../components/playlistCon.vue */ 143));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -177,6 +177,37 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 8);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var meTop = function meTop() {__webpack_require__.e(/*! require.ensure | pages/me/components/meTop */ "pages/me/components/meTop").then((function () {return resolve(__webpack_require__(/*! ./components/meTop.vue */ 206));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var typeTab = function typeTab() {__webpack_require__.e(/*! require.ensure | components/typeTab */ "components/typeTab").then((function () {return resolve(__webpack_require__(/*! ../../components/typeTab.vue */ 164));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var plylistCon = function plylistCon() {Promise.all(/*! require.ensure | components/playlistCon */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/playlistCon")]).then((function () {return resolve(__webpack_require__(/*! ../../components/playlistCon.vue */ 150));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 
@@ -192,20 +223,73 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 
   data: function data() {
     return {
-      title: "音乐",
-      bg: 'http://p4.music.126.net/NDdtSac66rpsF_jMBh1JMQ==/109951164929306650.jpg',
+      color: "#fff",
+      bgColor: 'transparent',
       isActive: 0,
       tab: ['最近', '喜欢'],
       hisTracks: [],
       top: 420,
       likeTracks: [],
-      userId: "" };
+      userId: "",
+      swiperHeight: 0,
+      userInfo: {
+        nickName: "",
+        avatarUrl: "" },
+
+      hasUserInfo: true };
 
   },
   onShow: function onShow() {
     this.getData();
   },
+  created: function created() {var _this = this;
+    uni.getSystemInfo({
+      success: function success(res) {
+        var item = 750 / res.windowWidth;
+        _this.swiperHeight = res.windowHeight * item - _this.topHeight - 420;
+      } });
+
+    uni.getStorage({
+      key: 'userInfo',
+      success: function success(res) {
+        _this.userInfo = res.data;
+      }, fail: function fail(err) {
+        _this.hasUserInfo = false;
+      } });
+
+  },
+  computed: _objectSpread({},
+  (0, _vuex.mapGetters)(['topHeight'])),
+
   methods: {
+    /*获取用户信息*/
+    authority: function authority() {var _this2 = this;
+      uni.getUserProfile({
+        desc: '用于完善资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+        success: function success(res) {
+          _this2.userInfo = {
+            nickName: res.userInfo.nickName,
+            avatarUrl: res.userInfo.avatarUrl };
+
+          // console.log(this.userInfo)
+          uni.setStorage({
+            key: 'userInfo',
+            data: _this2.userInfo });
+
+          _this2.hasUserInfo = true; // 隐藏授权按钮
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: "为了更好的功能体验,请先登录授权",
+            icon: "none" });
+
+        } });
+
+    },
+    handleChange: function handleChange(e) {
+      var vm = this;
+      vm.isActive = e.mp.detail.current;
+    },
     switchNav: function switchNav(index) {
       this.isActive = index;
     },
@@ -223,7 +307,7 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 
     },
     //删除所有历史播放记录
-    deleteAll: function deleteAll() {var _this = this;
+    deleteAll: function deleteAll() {var _this3 = this;
       uni.showModal({
         content: '确定删除所有播放记录？',
         success: function success(res) {
@@ -232,7 +316,7 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
             uni.removeStorage({
               key: 'OldSongs',
               success: function success() {
-                _this.hisTracks = [];
+                _this3.hisTracks = [];
               } });
 
           } else if (res.cancel) {
@@ -260,21 +344,21 @@ var statusBarHeight = uni.getSystemInfoSync().statusBarHeight;var _default =
 
     },
     //获取历史播放和收藏歌曲
-    getData: function getData() {var _this2 = this;
+    getData: function getData() {var _this4 = this;
       uni.getStorage({
         key: 'OldSongs',
         success: function success(res) {
-          _this2.hisTracks = res.data;
+          _this4.hisTracks = res.data;
         } });
 
       uni.getStorage({
         key: "userId",
         success: function success(res) {
           var id = res.data;
-          _this2.userId = id;
+          _this4.userId = id;
           db.collection('userLike').doc(id).get({
             success: function success(re) {
-              _this2.likeTracks = re.data.like_songs;
+              _this4.likeTracks = re.data.like_songs;
             } });
 
         } });

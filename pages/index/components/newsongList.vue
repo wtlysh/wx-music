@@ -3,23 +3,16 @@
  	<view class="newsong">
  		<songTop :title="title" @child="toSongList"></songTop>
  		<view class="box-width flex-between">
- 			<view class="newsong-list" v-for="(item,index) in songs" :key="item.id" @click="toSong(item)">
+ 			<view class="newsong-list" v-for="(item,index) in songs" :key="item.id" @click="toSong(item.id,index)">
  				<view>
- 					<image class="newsong-img" :src="item.al.picUrl" mode=""></image>
+ 					<image class="newsong-img" :src="item.picUrl" mode=""></image>
  				</view>
  				<view class="newsong-content">
  					<view class="name ellipsis">
  						{{item.name}}
  					</view>
- 					<view class="ellipsis">
- 						<text v-for="(list,index) in item.ar" :key="list.id">
- 							<text class="song-text" v-if="index==0">
- 								{{list.name}}
- 							</text>
- 							<text class="song-text" v-else>
- 								/{{list.name}}
- 							</text>
- 						</text>
+ 					<view class="ellipsis song-text">
+ 						{{item.singer}}
  					</view>
  				</view>
  			</view>
@@ -50,10 +43,10 @@
  		},
  		methods: {
  			//跳转到歌曲播放
- 			toSong(item) {
- 				let list = [item];
+ 			toSong(id,index) {
+ 				let list = this.songs;
  				uni.navigateTo({
- 					url: '/pages/song/player?songId=' + item.id + '&index=0' + '&list=' + encodeURIComponent(JSON
+ 					url: '/pages/song/player?songId=' + id + '&index='+index + '&list=' + encodeURIComponent(JSON
  						.stringify(list))
  				})
 
