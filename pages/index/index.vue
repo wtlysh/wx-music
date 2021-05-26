@@ -79,7 +79,7 @@
 					limit: 6
 				})]).then(res => {
 					// console.log(res[1].playlist.tracks);
-					let list = res[0].playlist.tracks.slice(0, 6).map(item => {
+					this.Hotsongs = res[0].playlist.tracks.slice(0, 4).map(item => {
 						let singer = item.ar.map(t => {
 							return t.name
 						}).join('/');
@@ -93,9 +93,6 @@
 							desc
 						}
 					});
-					for (let i = 0; i < 2; i++) {
-						this.Hotsongs[i] = list.slice(i * 3, (i + 1) * 3);
-					}
 					this.Newsongs = res[1].playlist.tracks.slice(0, 6).map(item => {
 						let singer = item.ar.map(t => {
 							return t.name

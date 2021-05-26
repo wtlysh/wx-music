@@ -35,9 +35,6 @@
 						<view v-if="lyric.length<=0" class="nolyric ric cur flex-center">
 							{{lycur}}
 						</view>
-						<!-- <view class="ric ellipsis">{{lytop}}</view>
-						<view class="ric cur ellipsis">{{lycur}}</view>
-						<view class="ric ellipsis">{{lybot}}</view> -->
 					</view>
 					<view class="slider-bar flex-align">
 						<view class="time start">{{curPlayTimeNum}}</view>
@@ -61,11 +58,11 @@
 				</view>
 			</view>
 			<playBottom :isLike="isLike" @cancle="cancleLike" @confirm="addLike" @open="openShare"></playBottom>
-			<view class="poplist-icon flex-align" @click="opentList">
-				<view style="display: flex;flex-wrap: wrap;justify-content: center;">
-					<uni-icons type="list" color="#6b6b6b" size="50"></uni-icons>
-					<text style="font-size: 28rpx;">列表</text>
-				</view>
+		</view>
+		<view class="poplist-icon flex-align" @click="opentList">
+			<view style="display: flex;flex-wrap: wrap;justify-content: center;">
+				<uni-icons type="list" color="#6b6b6b" size="50"></uni-icons>
+				<text style="font-size: 28rpx;">列表</text>
 			</view>
 		</view>
 		<uni-popup ref="popup" type="bottom">
@@ -117,7 +114,7 @@
 				lycur: '',
 				isLyric: false, //是否显示全部歌词
 				lyricIndex: 0, //定位当前歌词
-				lyIndex: 0,    //显示部分时控制高亮歌词
+				lyIndex: 0, //显示部分时控制高亮歌词
 				ctrolIndex: 0, //全部显示时控制高亮歌词
 				curPlayIndex: 0, //当前播放歌曲在list内的索引
 				playTime: 0,
@@ -136,7 +133,7 @@
 			uni.getSystemInfo({
 				success: (res) => {
 					this.height = (res.windowHeight * (750 / res.windowWidth) - this
-					.topHeight); //将高度乘以换算后的该设备的rpx与px的比例
+						.topHeight); //将高度乘以换算后的该设备的rpx与px的比例
 				}
 			});
 			let id = param.songId;
@@ -152,7 +149,11 @@
 		computed: {
 			...mapGetters(['topHeight', 'playdetail', 'audiolist', 'isplayingmusic']),
 			playTimeNum() {
-				return this.$util.formatTime(this.playTime)
+				if (this.playdetail) {
+					return this.$util.formatTime(this.playdetail.time)
+				} else {
+					return this.$util.formatTime(this.playTime)
+				}
 			},
 			curPlayTimeNum() {
 				return this.$util.formatTime(this.curPlayTime)
@@ -160,43 +161,45 @@
 		},
 		methods: {
 			...mapMutations(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
-			shareWX(){
+			shareWX() {
 				uni.getStorage({
 					key: 'userInfo',
-					success:res=>{
+					success: res => {
 						uni.share({
-						    provider: "weixin",
-						    scene: "WXSceneSession",
-						    type: 0,
-						    href: "http://uniapp.dcloud.io/",
-						    title: "uni-app分享",
-						    summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-						    imageUrl: "https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/d8590190-4f28-11eb-b680-7980c8a877b8.png",
-						    success: function (res) {
-						        console.log("success:" + JSON.stringify(res));
-						    },
-						    fail: function (err) {
-						        console.log("fail:" + JSON.stringify(err));
-						    }
+							provider: "weixin",
+							scene: "WXSceneSession",
+							type: 0,
+							href: "http://uniapp.dcloud.io/",
+							title: "uni-app分享",
+							summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+							imageUrl: "https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-uni-app-doc/d8590190-4f28-11eb-b680-7980c8a877b8.png",
+							success: function(res) {
+								console.log("success:" + JSON.stringify(res));
+							},
+							fail: function(err) {
+								console.log("fail:" + JSON.stringify(err));
+							}
 						});
-					},fail:err=>{
+					},
+					fail: err => {
 						this.authority();
 					}
 				})
 			},
-			openShare(){
+			openShare() {
 				uni.getStorage({
 					key: 'userInfo',
-					success:res=>{
+					success: res => {
 						this.$refs.share.open('bottom');
-					},fail:err=>{
+					},
+					fail: err => {
 						uni.getUserProfile({
 							desc: '用于完善资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
 							success: (res) => {
 								this.$refs.share.open('bottom');
 								let userInfo = {
-									nickName:res.userInfo.nickName,
-									avatarUrl:res.userInfo.avatarUrl
+									nickName: res.userInfo.nickName,
+									avatarUrl: res.userInfo.avatarUrl
 								};
 								uni.setStorage({
 									key: 'userInfo',
@@ -221,6 +224,7 @@
 			},
 			//进度条
 			sliderChange(e) {
+				// console.log(e)
 				this.curPlayTime = e.detail.value;
 				this.$au_player.seek(this.curPlayTime)
 			},
@@ -231,7 +235,7 @@
 				this.initPlay(this.audiolist[index].id)
 			},
 			//下一首播放
-			next(isAuto) {
+			next(isAuto, isCon) {
 				const index = this.$refs.child.getIndex('next', isAuto)
 				this.curPlayIndex = index;
 				// console.log(this.audiolist[index])
@@ -247,20 +251,19 @@
 				}), apiSongDetail({
 					ids: id
 				})]).then(res => {
-					// console.log(res[0])
 					const surl = res[0].data[0].url;
 					if (!surl) {
 						this.isCanPlay = false;
 						setTimeout(() => {
 							uni.showToast({
 								icon: 'none',
-								title: '资源已失效!请返回'
+								title: '资源已失效'
 							})
-						}, 1000);
+						}, 500);
 						return;
 					}
+					this.isCanPlay = true;
 					const sdetail = res[1].songs[0];
-					// console.log(sdetail)
 					const singer = sdetail.ar.map(t => {
 						return t.name
 					}).join('/');
@@ -273,7 +276,6 @@
 						singer,
 						time: Math.floor(sdetail.dt / 1000) // 播放时长
 					}
-					// console.log(this.song)
 					uni.setNavigationBarTitle({
 						title: this.song.name
 					})
@@ -288,21 +290,15 @@
 					this.$au_player.title = this.song.name;
 					this.$au_player.coverImgUrl = this.song.picUrl;
 					this.$au_player.singer = this.song.singer;
-					//h5
-					this.$au_player.autoplay = true;
-					//app
 					this.$au_player.src = this.song.url;
-					
+
 					let OldSong = {
 						id,
 						name: sdetail.name,
 						singer: singer,
 					}
-					// console.log(OldSong)
 					this.saveSong(OldSong);
 					this.likeSong = OldSong;
-					// console.log(this.likeSong)
-
 				}).catch(e => {
 					console.info(e)
 					this.setIsplayactive(false)
@@ -345,7 +341,8 @@
 				this.playTime = this.song.time;
 				this.isPlay = true;
 				this.setIsplayingmusic(true);
-				this.setIsplayactive(true)
+				this.setIsplayactive(true);
+				this.$forceUpdate()
 				// console.log('onplaying')
 			},
 			//根据时间处理歌词，显示高亮
@@ -359,9 +356,9 @@
 							this.lyricIndex = i - 1;
 							if (this.lyricIndex > 2) {
 								this.lyIndex = this.lyricIndex - 2;
-							} else if(this.lyricIndex > 6){
+							} else if (this.lyricIndex > 6) {
 								this.ctrolIndex = this.lyricIndex - 6;
-							}else{
+							} else {
 								this.lyIndex = 0;
 								this.ctrolIndex = 0;
 							}
@@ -404,7 +401,7 @@
 					}
 				})
 			},
-			like(){
+			like() {
 				this.isLike = true;
 				let id = this.userId;
 				let likeSong = this.likeSong;
@@ -445,29 +442,30 @@
 			addLike() {
 				uni.getStorage({
 					key: 'userInfo',
-					success:res=>{
+					success: res => {
 						this.like();
-					},fail:err=>{
-					   uni.getUserProfile({
-					   	desc: '用于完善资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-					   	success: (res) => {
-							this.like();
-					   		let userInfo = {
-					   			nickName:res.userInfo.nickName,
-					   			avatarUrl:res.userInfo.avatarUrl
-					   		};
-					   		uni.setStorage({
-					   			key: 'userInfo',
-					   			data: userInfo
-					   		});
-					   	},
-					   	fail: () => {
-					   		uni.showToast({
-					   			title: "为了更好的功能体验,请先登录授权",
-					   			icon: "none"
-					   		})
-					   	}
-					   })
+					},
+					fail: err => {
+						uni.getUserProfile({
+							desc: '用于完善资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+							success: (res) => {
+								this.like();
+								let userInfo = {
+									nickName: res.userInfo.nickName,
+									avatarUrl: res.userInfo.avatarUrl
+								};
+								uni.setStorage({
+									key: 'userInfo',
+									data: userInfo
+								});
+							},
+							fail: () => {
+								uni.showToast({
+									title: "为了更好的功能体验,请先登录授权",
+									icon: "none"
+								})
+							}
+						})
 					}
 				})
 			},
@@ -508,7 +506,7 @@
 						this.userId = _id;
 						db.collection('userLike').doc(_id).get({
 							success: res => {
-								console.log("成功：");
+								// console.log("成功：");
 								let song = res.data.like_songs;
 								song.forEach(item => {
 									if (item.id == id) {
@@ -545,6 +543,16 @@
 		height: 100%;
 		overflow: hidden;
 		position: relative;
+		
+		.poplist-icon {
+			position: fixed;
+			bottom: 650rpx;
+			right: 60rpx;
+			height: 60px;
+			width: 30px;
+			background: #FFFFFF;
+			border-radius: 15px;
+		}
 
 		.player-bgimg {
 			position: absolute;
@@ -554,22 +562,14 @@
 			background-position: center center;
 			background-repeat: no-repeat;
 			background-size: cover;
+			background-color: #778899;
+			background-blend-mode: multiply;
 			transform: scale(1.5);
 		}
 
 		.player-content {
 			position: relative;
 			overflow: hidden;
-
-			.poplist-icon {
-				position: fixed;
-				bottom: 650rpx;
-				right: 60rpx;
-				height: 60px;
-				width: 30px;
-				background: #FFFFFF;
-				border-radius: 15px;
-			}
 
 			.player-img {
 				&.stoped {
@@ -656,7 +656,7 @@
 					height: 240rpx;
 					margin-bottom: 50rpx;
 				}
-				
+
 				.nolyric {
 					height: 100%;
 					width: 100%;

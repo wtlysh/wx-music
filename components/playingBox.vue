@@ -6,7 +6,7 @@
 				<text class="playing-desc ellipsis">{{playdetail.desc}}</text>
 			</view>
 			<view class="flex-align">
-				<view @click="playCtrol" style="margin-right: 10rpx;">
+				<view @click="playCtrol" style="margin-right: 30rpx;">
 					<image class="isplay-img" v-if="isplayingmusic" src="../static/images/playing.svg" mode="">
 					</image>
 					<image class="isplay-img" v-if="isplayingmusic==false" src="../static/images/notplaying.svg"
@@ -16,7 +16,7 @@
 			</view>
 		</view>
 		<uni-popup ref="popup" type="bottom">
-			<popList  @close="closeList"></popList>
+			<popList @close="closeList"></popList>
 		</uni-popup>
 	</view>
 </template>
@@ -29,10 +29,11 @@
 	import popList from './popList.vue'
 	export default {
 		components: {
-			popList
+			popList,
 		},
 		data() {
 			return {
+				time:0,
 			}
 		},
 		computed: {
@@ -40,11 +41,11 @@
 		},
 		methods: {
 			...mapMutations(['setAudiolist', 'setPlaydetail', 'setIsplayingmusic', 'setIsplayactive']),
-			openList(){
+			openList() {
 				this.$refs.popup.open('bottom');
 				// console.log(this.$refs.popup);
 			},
-			closeList(){
+			closeList() {
 				this.$refs.popup.close();
 			},
 			//控制歌曲播放
@@ -76,7 +77,7 @@
 		height: 90rpx;
 
 		.playing-to {
-			width: 565rpx;
+			width: 545rpx;
 
 			.playing-img {
 				&.stoped {
@@ -92,9 +93,9 @@
 			}
 
 			.playing-desc {
-				font-size: $uni-font-size-base;
-				width: 410rpx;
-				margin: 0 $uni-spacing-row-base;
+                 width: 410rpx;
+                 margin: 0 $uni-spacing-row-base;
+                 font-size: $uni-font-size-base;
 			}
 		}
 

@@ -29,6 +29,15 @@
   overflow: hidden;
   position: relative;
 }
+.song-player .poplist-icon.data-v-108ee09c {
+  position: fixed;
+  bottom: 650rpx;
+  right: 60rpx;
+  height: 60px;
+  width: 30px;
+  background: #FFFFFF;
+  border-radius: 15px;
+}
 .song-player .player-bgimg.data-v-108ee09c {
   position: absolute;
   width: 100%;
@@ -38,21 +47,14 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-color: #778899;
+  background-blend-mode: multiply;
   -webkit-transform: scale(1.5);
           transform: scale(1.5);
 }
 .song-player .player-content.data-v-108ee09c {
   position: relative;
   overflow: hidden;
-}
-.song-player .player-content .poplist-icon.data-v-108ee09c {
-  position: fixed;
-  bottom: 650rpx;
-  right: 60rpx;
-  height: 60px;
-  width: 30px;
-  background: #FFFFFF;
-  border-radius: 15px;
 }
 .song-player .player-content .player-img.data-v-108ee09c {
   -webkit-animation: rotate-data-v-108ee09c 25s linear infinite;

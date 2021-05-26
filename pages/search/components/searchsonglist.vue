@@ -1,8 +1,8 @@
 <!-- 搜索结果歌曲列表组件 -->
 <template>
-	<view class="song-list box-width">
+	<view class="song-list">
 		<scroll-view scroll-y="true" :style="{height:height+'rpx'}">
-			<view class="song-list-item flex-align" v-for="(item, index) in songList" :key="index"
+			<view class="song-list-item flex-align" hover-class="hover-color" v-for="(item, index) in songList" :key="index"
 				@click="toPlay(item)">
 				<view class="con">
 					<view class="song-list-name name ellipsis">{{item.name}}</view>
@@ -17,6 +17,9 @@
 </template>
 
 <script>
+	import {
+		apiSong
+	} from '../../../api/player.js'
 	export default {
 		props: {
 			songList: {
@@ -33,11 +36,22 @@
 		},
 		methods: {
 			//跳转到播放页面
-			toPlay(item) {
-				let list = [item];
-				uni.navigateTo({
-					url: '/pages/song/player?songId=' + item.id + '&index=0' + '&list=' + encodeURIComponent(JSON
-						.stringify(list))
+			async toPlay(item) {
+				await apiSong({id:item.id}).then(res=>{
+					if(!res.data[0].url){
+						setTimeout(() => {
+							uni.showToast({
+								icon: 'none',
+								title: '资源已失效'
+							})
+						}, 500);
+						return;
+					}
+					let list = [item];
+					uni.navigateTo({
+						url: '/pages/song/player?songId=' + item.id + '&index=0' + '&list=' + encodeURIComponent(JSON
+							.stringify(list))
+					})
 				})
 			}
 
@@ -51,7 +65,8 @@
 			flex-direction: row;
 			position: relative;
 			height: 120rpx;
-			padding-bottom: $uni-spacing-col-sm;
+			margin-bottom: $uni-spacing-col-sm;
+			padding: 0 37.5rpx;
 		}
 
 		.con {

@@ -1,10 +1,10 @@
 <!-- 搜索结构歌单列表 -->
 <template>
-	<view class="playlist box-width">
+	<view class="playlist">
 		<scroll-view scroll-y="true" :style="{height:height+'rpx'}">
-			<view :class="['playlist-item','flex-align',index==0 ? 'playlist-firstitem':'']"
+			<view hover-class="hover-color" :class="['playlist-item','flex-align',index==0 ? 'playlist-firstitem':'']"
 				v-for="(item, index) in playlist" :key="index" @click="toPlaylist(item.id)">
-				<view class="playlist-item-img">
+				<view class="playlist-item-img flex-align">
 					<image class="playlist-img" :src="item.picUrl" mode=""></image>
 				</view>
 				<view class="playlist-content">
@@ -44,10 +44,11 @@
 	.playlist {
 		.playlist-item {
 			height: 120rpx;
-			padding-bottom: $uni-spacing-col-lg;
+			padding: 0 37.5rpx;
+			margin-bottom: $uni-spacing-col-lg;
 
 			&.playlist-firstitem {
-				padding-top: $uni-spacing-col-lg;
+				margin-top: $uni-spacing-col-lg;
 			}
 
 			.playlist-item-img {

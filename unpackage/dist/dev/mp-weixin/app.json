@@ -43,6 +43,5 @@
     "uni-icons": "/components/uni-icons/uni-icons",
     "uni-popup": "/components/uni-popup/uni-popup",
     "loading": "/components/loading"
-  },
-  "sitemapLocation": "sitemap52.json"
+  }
 }

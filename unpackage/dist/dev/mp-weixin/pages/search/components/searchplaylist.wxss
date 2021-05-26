@@ -26,10 +26,11 @@
 /* 文章场景相关 */
 .playlist .playlist-item.data-v-34f1cb36 {
   height: 120rpx;
-  padding-bottom: 30rpx;
+  padding: 0 37.5rpx;
+  margin-bottom: 30rpx;
 }
 .playlist .playlist-item.playlist-firstitem.data-v-34f1cb36 {
-  padding-top: 30rpx;
+  margin-top: 30rpx;
 }
 .playlist .playlist-item .playlist-item-img .playlist-img.data-v-34f1cb36 {
   width: 120rpx;

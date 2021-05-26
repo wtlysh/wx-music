@@ -4,11 +4,11 @@
 		<view class="playlist-list">
 			<scroll-view scroll-y="true" :style="{height:height+'rpx'}">
 				<view :class="['flex-align',index==0?'first':'']" v-for="(item,index) in tracks" :key="index" @longpress="longtap(index)">
-					<view @click="toSong(item.id,index)" :class="['item-con',playdetail.id==item.id?'active':'']">
+					<view hover-class="hover-color"  @click="toSong(item.id,index)" :class="['item-con',playdetail.id==item.id?'active':'']">
 						<view style="font-size: 36rpx;width: 60rpx;" class="num text-color">
 							{{index+1}}
 						</view>
-						<view style="padding-left: 30rpx;width: 470rpx;">
+						<view style="padding-left: 30rpx;width: 500rpx;">
 							<view class="item-name ellipsis">
 								{{item.name}}
 							</view>
@@ -16,24 +16,24 @@
 								{{item.singer}}
 							</view>
 						</view>
-						<view style="width: 90rpx;">
+						<view style="flex: 1;text-align: right;">
 							<image class="item-img" src="../static/images/topaly.svg" mode="">
 							</image>
 						</view>
 					</view>
 					<uni-popup ref="popup" type="center">
 						<view class="popup-list">
-							<view class="popup-list-item flex-align" @click.capture.stop="paste(item.name,index)">
+							<view hover-class="hover-color" class="popup-list-item flex-align" @click.capture.stop="paste(item.name,index)">
 								复制歌名
 							</view>
-							<view class="popup-list-item flex-align" @click.capture.stop="search(item.name,index)">
+							<view hover-class="hover-color" class="popup-list-item flex-align" @click.capture.stop="search(item.name,index)">
 								搜一搜歌曲
 							</view>
-							<view v-if="isShowDelete" class="popup-list-item flex-align"
+							<view hover-class="hover-color" v-if="isShowDelete" class="popup-list-item flex-align"
 								@click.capture.stop="Delete(item.id,index)">
 								删除记录
 							</view>
-							<view v-if="isShowCancel" class="popup-list-item flex-align"
+							<view hover-class="hover-color" v-if="isShowCancel" class="popup-list-item flex-align"
 								@click.capture.stop="cancel(item.id,index)">
 								取消收藏
 							</view>
@@ -50,8 +50,7 @@
 		mapGetters
 	} from 'vuex'
 	import {
-		apiSong,
-		apiSongDetail
+		apiSong
 	} from '../api/player.js'
 	import Vue from 'vue'
 	export default {
@@ -116,12 +115,23 @@
 				this.$refs.popup[index].open('center');
 			},
 			//跳转到歌曲播放页面
-			toSong(id, index) {
-				const list = this.tracks;
-				uni.navigateTo({
-					url: '/pages/song/player?songId=' + id + '&index=' + index + '&list=' + encodeURIComponent(
-						JSON
-						.stringify(list))
+			async toSong(id, index) {
+				await apiSong({id}).then(res=>{
+					if(!res.data[0].url){
+						setTimeout(() => {
+							uni.showToast({
+								icon: 'none',
+								title: '资源已失效'
+							})
+						}, 500);
+						return;
+					}
+					const list = this.tracks;
+					uni.navigateTo({
+						url: '/pages/song/player?songId=' + id + '&index=' + index + '&list=' + encodeURIComponent(
+							JSON
+							.stringify(list))
+					})
 				})
 			},
 			//删除或取消收藏

@@ -1870,7 +1870,7 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 106:
+/***/ 105:
 /*!**************************************************************!*\
   !*** F:/workSpace/wx/wx-music/components/uni-icons/icons.js ***!
   \**************************************************************/
@@ -2248,7 +2248,7 @@ commonFuc;exports.default = _default;
 
 /***/ }),
 
-/***/ 198:
+/***/ 197:
 /*!**************************************************************!*\
   !*** F:/workSpace/wx/wx-music/components/uni-popup/popup.js ***!
   \**************************************************************/
@@ -8331,18 +8331,18 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 21:
+/***/ 20:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 22);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 21);
 
 /***/ }),
 
-/***/ 22:
+/***/ 21:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -8373,7 +8373,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 23);
+module.exports = __webpack_require__(/*! ./runtime */ 22);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -8390,7 +8390,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 23:
+/***/ 22:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -9122,7 +9122,32 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 234:
+/***/ 23:
+/*!******************************************************!*\
+  !*** F:/workSpace/wx/wx-music/utils/numberFormat.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.numberFormat = numberFormat;function numberFormat(value) {
+  var unit = '';
+  var k = 10000,
+  sizes = ['', '万', '亿', '万亿'],
+  i;
+  if (value < k) {
+    value = value;
+  } else {
+    i = Math.floor(Math.log(value) / Math.log(k));
+    value = (value / Math.pow(k, i)).toFixed(2);
+    unit = sizes[i];
+  }
+  return value + unit;
+}
+
+/***/ }),
+
+/***/ 233:
 /*!*****************************************************************************!*\
   !*** F:/workSpace/wx/wx-music/components/uni-transition/createAnimation.js ***!
   \*****************************************************************************/
@@ -9263,31 +9288,6 @@ function createAnimation(option, _this) {
 /***/ }),
 
 /***/ 24:
-/*!******************************************************!*\
-  !*** F:/workSpace/wx/wx-music/utils/numberFormat.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.numberFormat = numberFormat;function numberFormat(value) {
-  var unit = '';
-  var k = 10000,
-  sizes = ['', '万', '亿', '万亿'],
-  i;
-  if (value < k) {
-    value = value;
-  } else {
-    i = Math.floor(Math.log(value) / Math.log(k));
-    value = (value / Math.pow(k, i)).toFixed(2);
-    unit = sizes[i];
-  }
-  return value + unit;
-}
-
-/***/ }),
-
-/***/ 25:
 /*!*********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/index.js ***!
   \*********************************************/
@@ -9295,7 +9295,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.numberForm
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getMuListDetail = getMuListDetail;exports.getMuList = getMuList;exports.getHotMuList = getHotMuList;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 26));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.getMuListDetail = getMuListDetail;exports.getMuList = getMuList;exports.getHotMuList = getHotMuList;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //歌单详情
 function getMuListDetail(data) {
@@ -9324,7 +9324,7 @@ function getHotMuList(data) {
 
 /***/ }),
 
-/***/ 26:
+/***/ 25:
 /*!***********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/request.js ***!
   \***********************************************/
@@ -9467,7 +9467,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 51:
+/***/ 50:
 /*!**********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/search.js ***!
   \**********************************************/
@@ -9475,7 +9475,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.apiSearchDefault = apiSearchDefault;exports.apiSearchHot = apiSearchHot;exports.apiSerchSuggest = apiSerchSuggest;exports.apiSearch = apiSearch;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 26));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.apiSearchDefault = apiSearchDefault;exports.apiSearchHot = apiSearchHot;exports.apiSerchSuggest = apiSerchSuggest;exports.apiSearch = apiSearch;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //搜索关键字
 function apiSearchDefault(data) {
@@ -9512,7 +9512,7 @@ function apiSearch(data) {
 
 /***/ }),
 
-/***/ 76:
+/***/ 75:
 /*!**********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/player.js ***!
   \**********************************************/
@@ -9520,7 +9520,7 @@ function apiSearch(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.apiSong = apiSong;exports.apiSongDetail = apiSongDetail;exports.apiLyic = apiLyic;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 26));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.apiSong = apiSong;exports.apiSongDetail = apiSongDetail;exports.apiLyic = apiLyic;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 //单曲
 function apiSong(data) {
   return _request.default.request({

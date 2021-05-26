@@ -33,6 +33,7 @@
           align-items: center;
   padding: 0 37.5rpx;
   margin-bottom: 30rpx;
+  width: 100%;
 }
 .item-con.active.data-v-4c5cbf36 {
   color: #8dc63f;

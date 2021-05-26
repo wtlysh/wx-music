@@ -62,6 +62,8 @@
 			filter: blur(20px);
 			background-repeat: no-repeat;
 			background-position: 0 0;
+			background-color: #778899;
+			background-blend-mode: multiply;
 			background-size: 100%;
 		}
 		
@@ -79,7 +81,10 @@
 				.play-count {
 					position: absolute;
 					top: 170rpx;
-					left: 60rpx;
+					width: 190rpx;
+					display: flex;
+					justify-content: flex-end;
+					align-items: center;
 				}
 
 				.playlist-creator {

@@ -22,6 +22,9 @@
 
  <script>
  	import songTop from './songTop.vue'
+	import {
+		apiSong
+	} from '../../../api/player.js'
  	export default {
  		props: {
  			songs: {
@@ -43,13 +46,23 @@
  		},
  		methods: {
  			//跳转到歌曲播放
- 			toSong(id,index) {
- 				let list = this.songs;
- 				uni.navigateTo({
- 					url: '/pages/song/player?songId=' + id + '&index='+index + '&list=' + encodeURIComponent(JSON
- 						.stringify(list))
- 				})
-
+ 			async toSong(id,index) {
+				await apiSong({id}).then(res=>{
+					if(!res.data[0].url){
+						setTimeout(() => {
+							uni.showToast({
+								icon: 'none',
+								title: '资源已失效'
+							})
+						}, 500);
+						return;
+					}
+					let list = this.songs;
+					uni.navigateTo({
+						url: '/pages/song/player?songId=' + id + '&index='+index + '&list=' + encodeURIComponent(JSON
+							.stringify(list))
+					})
+				})
  			},
  			//跳转到新歌榜单页面
  			toSongList() {

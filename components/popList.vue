@@ -16,7 +16,7 @@
 			</text>
 		</view>
 		<scroll-view scroll-y="true" style="height: 578rpx;">
-			<view class="item-con" :class="[item.id == playdetail.id?'active':'']"
+			<view class="item-con" hover-class="hover-color" :class="[item.id == playdetail.id?'active':'']"
 				v-for="(item,index) in audiolist" :key="index" 
 				@click="initPlay(item.id,index)"
 				>
@@ -37,7 +37,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="poplist-close" hover-class="hover-close" @tap.stop="closeList">
+		<view class="poplist-close" hover-class="hover-color" @tap.stop="closeList">
 			关闭
 		</view>
 	</view>
@@ -99,6 +99,7 @@
 					this.$emit('play',id);
 					return;
 				};
+				// Vue.prototype.cusTimeUpdate = this.onTimeUpdateFn;
 				await Promise.all([apiSong({
 					id
 				}), apiSongDetail({
@@ -136,9 +137,6 @@
 					this.$au_player.title = song.name;
 					this.$au_player.coverImgUrl = song.picUrl;
 					this.$au_player.singer = song.singer ;
-					//h5
-					this.$au_player.autoplay = true;
-					//app
 					this.$au_player.src = surl;
 				
 					let OldSong = {
@@ -152,6 +150,9 @@
 					this.setIsplayactive(false)
 				})
 			},
+			// onTimeUpdateFn(){
+				
+			// },
 			//保存歌曲到历史记录
 			saveSong(OldSong) {
 				uni.getStorage({
@@ -222,9 +223,6 @@
 			text-align: center;
 			line-height: 100rpx;
 			font-size: $uni-font-size-base;
-		}
-		.hover-close{
-			background: $uni-bg-color-hover;
 		}
 	}
 </style>

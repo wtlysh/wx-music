@@ -32,7 +32,7 @@
   height: 90rpx;
 }
 .playing-box .playing-to.data-v-1432e090 {
-  width: 565rpx;
+  width: 545rpx;
 }
 .playing-box .playing-to .playing-img.data-v-1432e090 {
   -webkit-animation: rotate-data-v-1432e090 15s linear infinite;
@@ -48,9 +48,9 @@
           animation-play-state: paused;
 }
 .playing-box .playing-to .playing-desc.data-v-1432e090 {
-  font-size: 32rpx;
   width: 410rpx;
   margin: 0 20rpx;
+  font-size: 32rpx;
 }
 .playing-box .isplay-img.data-v-1432e090 {
   width: 50rpx;

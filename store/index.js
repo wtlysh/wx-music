@@ -24,7 +24,7 @@ const getters = {
 	},
 	topHeight(state){
 		return state.topHeight
-	}
+	},
 }
 const mutations = {
 	setIsplayingmusic(state, param) {

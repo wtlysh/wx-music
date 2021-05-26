@@ -40,6 +40,9 @@ page {
 .list-con {
   position: relative;
 }
+.hover-color {
+  background: #c0c0c0;
+}
 /* 是否播放 */
 .playing {
   margin-bottom: 110rpx;

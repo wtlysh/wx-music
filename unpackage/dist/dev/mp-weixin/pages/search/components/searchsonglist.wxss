@@ -31,7 +31,8 @@
           flex-direction: row;
   position: relative;
   height: 120rpx;
-  padding-bottom: 10rpx;
+  margin-bottom: 10rpx;
+  padding: 0 37.5rpx;
 }
 .song-list .con.data-v-9395d974 {
   width: 580rpx;

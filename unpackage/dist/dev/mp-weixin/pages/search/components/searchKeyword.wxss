@@ -38,7 +38,7 @@
   color: #8dc63f;
 }
 .list-box .keyword-list-box .keyword-entry-tap.data-v-9e3c1cf4 {
-  background-color: #f2f2f2;
+  background-color: #c0c0c0;
 }
 .list-box .keyword-list-box .keyword-entry.data-v-9e3c1cf4 {
   height: 80rpx;

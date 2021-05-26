@@ -17,6 +17,11 @@ page {
 	position: relative;
 }
 
+//hover颜色
+.hover-color{
+	background: $uni-bg-color-hover;
+}
+
 /* 是否播放 */
 .playing {
 	margin-bottom: 110rpx;
