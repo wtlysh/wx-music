@@ -2,18 +2,21 @@
 <template>
 	<view class="hotsong-li">
 		<nav-bar :title="title"></nav-bar>
-		<swiper circular="true" class="hotsong-swiper" @change="handleChange">
-			<block v-for="(item,index) in imgs" :key="index">
-				<swiper-item class="swiper-item">
-					<view class="bg" :style="'background-image:url(' + item + ')'"></view>
-					<view class="li-con">
-						<image class="li-img title" :src="item"></image>
-						<text space="true" class="li-name">{{cat[index].name}}</text>
-					</view>
-				</swiper-item>
-			</block>
-		</swiper>
-		<playlistCon :top="top" :tracks="songList[current].tracks"></playlistCon>
+		<loading class="loading-position" :show_model="loading"></loading>
+		<view :hidden="loading">
+			<swiper circular="true" class="hotsong-swiper" @change="handleChange">
+				<block v-for="(item,index) in imgs" :key="index">
+					<swiper-item class="swiper-item">
+						<view class="bg" :style="'background-image:url(' + item + ')'"></view>
+						<view class="li-con">
+							<image class="li-img title" :src="item"></image>
+							<text space="true" class="li-name">{{cat[index].name}}</text>
+						</view>
+					</swiper-item>
+				</block>
+			</swiper>
+			<playlistCon :top="top" :tracks="songList[current].tracks"></playlistCon>
+		</view>
 		<playing-box></playing-box>
 	</view>
 </template>
@@ -50,10 +53,14 @@
 					name: '韩 语'
 				}],
 				imgs: [],
+				loading: true
 			}
 		},
-		created() {
-			this.getData(this.cat)
+		onLoad() {
+			this.getData(this.cat);
+			setTimeout(()=>{
+				this.loading = false;
+			},1000)
 		},
 		methods: {
 			//获取热门歌曲数据 同时获取

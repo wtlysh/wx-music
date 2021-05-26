@@ -1870,7 +1870,7 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 105:
+/***/ 106:
 /*!**************************************************************!*\
   !*** F:/workSpace/wx/wx-music/components/uni-icons/icons.js ***!
   \**************************************************************/
@@ -2245,6 +2245,41 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 commonFuc;exports.default = _default;
+
+/***/ }),
+
+/***/ 198:
+/*!**************************************************************!*\
+  !*** F:/workSpace/wx/wx-music/components/uni-popup/popup.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+{
+  data: function data() {
+    return {};
+
+
+  },
+  created: function created() {
+    this.popup = this.getParent();
+  },
+  methods: {
+    /**
+              * 获取父元素实例
+              */
+    getParent: function getParent() {var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'uniPopup';
+      var parent = this.$parent;
+      var parentName = parent.$options.name;
+      while (parentName !== name) {
+        parent = parent.$parent;
+        if (!parent) return false;
+        parentName = parent.$options.name;
+      }
+      return parent;
+    } } };exports.default = _default;
 
 /***/ }),
 
@@ -8296,18 +8331,18 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 20:
+/***/ 21:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 21);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 22);
 
 /***/ }),
 
-/***/ 21:
+/***/ 22:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -8338,7 +8373,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 22);
+module.exports = __webpack_require__(/*! ./runtime */ 23);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -8355,7 +8390,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 22:
+/***/ 23:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -9087,10 +9122,10 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 225:
-/*!********************************************************************************************************!*\
-  !*** F:/workSpace/wx/wx-music/uni_modules/uni-transition/components/uni-transition/createAnimation.js ***!
-  \********************************************************************************************************/
+/***/ 234:
+/*!*****************************************************************************!*\
+  !*** F:/workSpace/wx/wx-music/components/uni-transition/createAnimation.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9227,7 +9262,7 @@ function createAnimation(option, _this) {
 
 /***/ }),
 
-/***/ 23:
+/***/ 24:
 /*!******************************************************!*\
   !*** F:/workSpace/wx/wx-music/utils/numberFormat.js ***!
   \******************************************************/
@@ -9252,7 +9287,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.numberForm
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /*!*********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/index.js ***!
   \*********************************************/
@@ -9260,7 +9295,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.numberForm
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getMuListDetail = getMuListDetail;exports.getMuList = getMuList;exports.getHotMuList = getHotMuList;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.getMuListDetail = getMuListDetail;exports.getMuList = getMuList;exports.getHotMuList = getHotMuList;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 26));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //歌单详情
 function getMuListDetail(data) {
@@ -9289,7 +9324,7 @@ function getHotMuList(data) {
 
 /***/ }),
 
-/***/ 25:
+/***/ 26:
 /*!***********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/request.js ***!
   \***********************************************/
@@ -9301,9 +9336,9 @@ function getHotMuList(data) {
 var baseUrl =  true ? "https://qqyifeng.cn:9001" : undefined;
 
 var request = function request(opts) {
-  uni.showLoading({
-    title: '努力加载中···' });
-
+  // uni.showLoading({
+  //     title: '努力加载中···'
+  // });
   var httpDefaultOpts = {
     url: baseUrl + opts.url,
     data: opts.data,
@@ -9326,12 +9361,12 @@ var request = function request(opts) {
       } else {
         resolve(res[1]);
       }
-      uni.hideLoading();
+      // uni.hideLoading()
     }).
     catch(
     function (response) {
       reject(response);
-      uni.hideLoading();
+      // uni.hideLoading()
     });
 
 
@@ -9390,41 +9425,6 @@ var tRequest = function tRequest(opts) {
 
 /***/ }),
 
-/***/ 262:
-/*!**************************************************************!*\
-  !*** F:/workSpace/wx/wx-music/components/uni-popup/popup.js ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-{
-  data: function data() {
-    return {};
-
-
-  },
-  created: function created() {
-    this.popup = this.getParent();
-  },
-  methods: {
-    /**
-              * 获取父元素实例
-              */
-    getParent: function getParent() {var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'uniPopup';
-      var parent = this.$parent;
-      var parentName = parent.$options.name;
-      while (parentName !== name) {
-        parent = parent.$parent;
-        if (!parent) return false;
-        parentName = parent.$options.name;
-      }
-      return parent;
-    } } };exports.default = _default;
-
-/***/ }),
-
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -9467,7 +9467,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 50:
+/***/ 51:
 /*!**********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/search.js ***!
   \**********************************************/
@@ -9475,7 +9475,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.apiSearchDefault = apiSearchDefault;exports.apiSearchHot = apiSearchHot;exports.apiSerchSuggest = apiSerchSuggest;exports.apiSearch = apiSearch;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.apiSearchDefault = apiSearchDefault;exports.apiSearchHot = apiSearchHot;exports.apiSerchSuggest = apiSerchSuggest;exports.apiSearch = apiSearch;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 26));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //搜索关键字
 function apiSearchDefault(data) {
@@ -9512,7 +9512,7 @@ function apiSearch(data) {
 
 /***/ }),
 
-/***/ 75:
+/***/ 76:
 /*!**********************************************!*\
   !*** F:/workSpace/wx/wx-music/api/player.js ***!
   \**********************************************/
@@ -9520,7 +9520,7 @@ function apiSearch(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.apiSong = apiSong;exports.apiSongDetail = apiSongDetail;exports.apiLyic = apiLyic;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 25));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.apiSong = apiSong;exports.apiSongDetail = apiSongDetail;exports.apiLyic = apiLyic;var _request = _interopRequireDefault(__webpack_require__(/*! ./request.js */ 26));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 //单曲
 function apiSong(data) {
   return _request.default.request({

@@ -2,18 +2,24 @@
 <template>
 	<view class="home">
 		<nav-bar :showIcon="false"></nav-bar>
-		<Search></Search>
-		<view :class="['home-con',playdetail?'box':'']">
-			<hotsongList :songs="Hotsongs"></hotsongList>
-			<newsongList :songs="Newsongs" :newId="newId"></newsongList>
-			<playlist :playlist="playlist"></playlist>
+		<!-- 自定义loading组件 -->
+		<loading :show_model="loading"></loading>
+		<view :hidden="loading">
+			<Search></Search>
+			<view :class="['home-con',playdetail?'box':'']">
+				<hotsongList :songs="Hotsongs"></hotsongList>
+				<newsongList :songs="Newsongs" :newId="newId"></newsongList>
+				<playlist :playlist="playlist"></playlist>
+			</view>
 		</view>
 		<playing-box></playing-box>
 	</view>
 </template>
 
 <script>
-	import {numberFormat} from '../../utils/numberFormat.js'
+	import {
+		numberFormat
+	} from '../../utils/numberFormat.js'
 	import Search from './components/search.vue'
 	import hotsongList from './components/hotsongList.vue'
 	import newsongList from './components/newsongList.vue'
@@ -23,7 +29,10 @@
 		getMuListDetail,
 		getHotMuList
 	} from '../../api/index.js'
-	import { mapMutations,mapGetters } from 'vuex'
+	import {
+		mapMutations,
+		mapGetters
+	} from 'vuex'
 	export default {
 		components: {
 			Search,
@@ -38,20 +47,24 @@
 				newId: "3779629",
 				Newsongs: [],
 				playlist: [],
+				loading: true, //控制loading组件的显示
 			}
 		},
-		created() {
-			this.getData(this.hotId, this.newId);
+		onLoad() {
 			uni.getSystemInfo({
 				success: (res) => {
 					let item = (750 / res.windowWidth);
 					let height = ((res.statusBarHeight + 44) * item);
 					this.setTopHeight(height);
-					// console.log(height)
 				}
 			});
+			this.getData(this.hotId, this.newId);
+			setTimeout(() => {
+				this.loading = false;
+			}, 1000)
+
 		},
-		computed:{
+		computed: {
 			...mapGetters(['playdetail']),
 		},
 		methods: {
@@ -66,7 +79,7 @@
 					limit: 6
 				})]).then(res => {
 					// console.log(res[1].playlist.tracks);
-					let list = res[0].playlist.tracks.slice(0,6).map(item => {
+					let list = res[0].playlist.tracks.slice(0, 6).map(item => {
 						let singer = item.ar.map(t => {
 							return t.name
 						}).join('/');
@@ -74,8 +87,8 @@
 						return {
 							id: item.id,
 							name: item.name,
-							singer:singer,
-							picUrl:item.al.picUrl,
+							singer: singer,
+							picUrl: item.al.picUrl,
 							desc: desc,
 							desc
 						}
@@ -90,17 +103,17 @@
 						return {
 							id: item.id,
 							name: item.name,
-							singer:singer,
-							picUrl:item.al.picUrl,
+							singer: singer,
+							picUrl: item.al.picUrl,
 						}
 					});
 					this.playlist = res[2].playlists.map(item => {
-						let desc =  numberFormat(item.playCount);
+						let desc = numberFormat(item.playCount);
 						return {
-							id:item.id,
-							name:item.name,
-							picUrl:item.coverImgUrl,
-							desc:desc,
+							id: item.id,
+							name: item.name,
+							picUrl: item.coverImgUrl,
+							desc: desc,
 						}
 					});
 				})

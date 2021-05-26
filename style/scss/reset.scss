@@ -3,6 +3,12 @@ page {
 	background: $uni-bg-color-grey;
 }
 
+.loading-position {
+	position: absolute;
+	width: 100%;
+	top: 400rpx;
+}
+
 .box{
 	margin-bottom: 110rpx;
 }

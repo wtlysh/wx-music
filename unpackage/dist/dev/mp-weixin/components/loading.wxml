@@ -1,0 +1,1 @@
+<block wx:if="{{show_model}}"><view class="loading data-v-f8abd85e"><view class="spinner data-v-f8abd85e"></view><view class="loading-text data-v-f8abd85e">loading...</view></view></block>

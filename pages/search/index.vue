@@ -31,14 +31,17 @@
 		<!-- 搜索结果 -->
 		<view v-show="isShowSongList">
 			<typeTab class="search-tab" :style="{top:(topHeight+110)+'rpx'}" :tab="tab" :isActive="isActive" @tab="switchNav"></typeTab>
-			<swiper class="search-list" :current="isActive" @change="handleChange" :style="{height:swiperHeight+'rpx'}">
-				<swiper-item>
-					<searchsonglist :height="swiperHeight" class="search-songlist" :songList="songList"></searchsonglist>
-				</swiper-item>
-				<swiper-item>
-					<searchplaylist :height="swiperHeight" class="search-playlist" :playlist="playlist"></searchplaylist>
-				</swiper-item>
-			</swiper>
+			<loading class="loading-position" :show_model="loading"></loading>
+			<view :hidden="loading">
+				<swiper class="search-list" :current="isActive" @change="handleChange" :style="{height:swiperHeight+'rpx'}">
+					<swiper-item>
+						<searchsonglist :height="swiperHeight" class="search-songlist" :songList="songList"></searchsonglist>
+					</swiper-item>
+					<swiper-item>
+						<searchplaylist :height="swiperHeight" class="search-playlist" :playlist="playlist"></searchplaylist>
+					</swiper-item>
+				</swiper>
+			</view>
 		</view>
 		<playing-box></playing-box>
 	</view>
@@ -80,6 +83,7 @@
 				searchTip: "",
 				height:0,//高度
 				swiperHeight:0,
+				loading: true,
 			}
 		},
 		components: {
@@ -91,7 +95,7 @@
 		computed:{
 			...mapGetters(['topHeight','playdetail'])
 		},
-		created() {
+		onLoad(param) {
 			this.loadDefaultKeyword();
 			uni.getSystemInfo({
 				success: (res) => {
@@ -99,8 +103,6 @@
 					this.swiperHeight = ((res.windowHeight * item)-this.topHeight - 210);
 				}
 			});
-		},
-		onLoad(param) {
 			if(param.keyword){
 				this.doSearch(param.keyword);
 			};
@@ -226,12 +228,16 @@
 			},
 			//执行搜索
 			doSearch(keyword) {
+				this.loading = true;
 				this.keyword = keyword ? keyword : this.keyword;
 				this.$refs.child.saveKeyword(keyword); //保存为历史
 				this.getSongList(keyword);
 				this.isFocus = false;
 				this.isShowSongList = true;
 				this.showCancel = false;
+				setTimeout(() => {
+					this.loading = false;
+				}, 1000)
 			},
 			//获取歌曲歌单
 			async getSongList(keyword) {

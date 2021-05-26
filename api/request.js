@@ -2,9 +2,9 @@
 const baseUrl = process.env.NODE_ENV === 'development' ? "https://qqyifeng.cn:9001" : "https://qqyifeng.cn:9001"
 
 const request = (opts) => {
-	uni.showLoading({
-	    title: '努力加载中···'
-	});
+	// uni.showLoading({
+	//     title: '努力加载中···'
+	// });
 	let httpDefaultOpts = {
 		url: baseUrl + opts.url,
 		data: opts.data,
@@ -27,12 +27,12 @@ const request = (opts) => {
 				} else {
 					resolve(res[1])
 				}
-				uni.hideLoading()
+				// uni.hideLoading()
 			}
 		).catch(
 			(response) => {
 				reject(response)
-				uni.hideLoading()
+				// uni.hideLoading()
 			}
 			
 		)

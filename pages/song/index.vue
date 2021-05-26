@@ -9,54 +9,63 @@
 				</view>
 			</view>
 		</view>
-		<playlistCon class="list-con" :tracks="tracks" :style="{top:(topHeight+200)+'rpx'}"></playlistCon>
-		<playing-box></playing-box>
+		<loading class="loading-position" :show_model="loading"></loading>
+		<view :hidden="loading">
+			<playlistCon class="list-con" :tracks="tracks" :style="{top:(topHeight+200)+'rpx'}"></playlistCon>
+			<playing-box></playing-box>
+		</view>
 	</view>
 </template>
 
 <script>
-	import  { mapGetters } from 'vuex'
+	import {
+		mapGetters
+	} from 'vuex'
 	import playlistCon from '../../components/playlistCon.vue'
 	import {
 		getMuListDetail,
 	} from '../../api/index.js'
-	export default{
-		components:{
+	export default {
+		components: {
 			playlistCon
 		},
-		data(){
-			return{
-				top:380,
-				tracks:[],
-			    bg:'',
-				color:"#fff"
+		data() {
+			return {
+				top: 380,
+				tracks: [],
+				bg: '',
+				color: "#fff",
+				loading: true
 			}
 		},
 		onLoad(param) {
-			this.getData(param.id)
+			this.getData(param.id);
+			setTimeout(()=>{
+				this.loading = false;
+			},500)
 		},
-		computed:{
+		computed: {
 			...mapGetters(['topHeight'])
 		},
-		methods:{
+		methods: {
 			//获取新歌榜数据
-			async getData(id){
+			async getData(id) {
 				await getMuListDetail({
-					id:id
-				}).then(res=>{
+					id: id
+				}).then(res => {
 					// console.log(res)
-					let list =res.playlist
-					this.tracks=list.tracks.map(item=>{
+					let list = res.playlist
+					this.tracks = list.tracks.map(item => {
 						let singer = item.ar.map(t => {
 							return t.name
 						}).join('/');
 						return {
 							id: item.id,
 							name: item.name,
-							singer:singer,
+							singer: singer,
 						}
 					});
-					this.bgimg=list.coverImgUrl;
+					this.bgimg = list.coverImgUrl;
 				})
 			}
 		}
@@ -64,15 +73,15 @@
 </script>
 
 <style lang="scss" scoped>
-	.songlist{
-		.songlist-top{
-			background:linear-gradient(to bottom ,#7A88FF, #7AFFAF);
+	.songlist {
+		.songlist-top {
+			background: linear-gradient(to bottom, #7A88FF, #7AFFAF);
 			position: fixed;
 			z-index: 100;
 			// border-bottom-left-radius: 50rpx;
 			// border-bottom-right-radius: 50rpx;
-			
-			.newsong-title{
+
+			.newsong-title {
 				margin: 50rpx 0;
 				height: 100rpx;
 				width: 200rpx;

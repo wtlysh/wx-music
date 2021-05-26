@@ -10,10 +10,12 @@ import playingBox from './components/playingBox.vue'
 import NavBar from './components/nav-bar/nav-bar.vue'
 import UniIcons from './components/uni-icons/uni-icons.vue'
 import UniPopup from './components/uni-popup/uni-popup.vue'
+import loading from './components/loading.vue'
 Vue.component('playing-box', playingBox)
 Vue.component('nav-bar', NavBar)
 Vue.component('uni-icons', UniIcons)
 Vue.component('uni-popup', UniPopup)
+Vue.component('loading', loading)
 Vue.config.productionTip = false
 
 App.mpType = 'app'
